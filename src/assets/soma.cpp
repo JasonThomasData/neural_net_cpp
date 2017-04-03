@@ -10,7 +10,7 @@ float Soma::add_incoming_values()
 {
     float incoming_values = 0;
 
-    for(const auto& synapse: all_synapses)
+    for(auto& synapse: all_synapses)
     {
         incoming_values += synapse.get_weighted_incoming_value();
     }
