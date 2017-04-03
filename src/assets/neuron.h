@@ -3,7 +3,8 @@
 
 #include "soma.h"
 
-/* The neuron is responsible for owning the Soma, and has its own input to send to other neurons via Synapses.
+/* The neuron is responsible for owning the Soma, and has its own output to send to other neurons
+ * via Synapses (in biology, via an Axon and its Terminals).
  */
 
 class Synapse;
