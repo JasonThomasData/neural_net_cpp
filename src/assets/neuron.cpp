@@ -1,8 +1,7 @@
 #include "synapse.h"
 #include "neuron.h"
 
-Neuron::Neuron(float init_output_value, float init_threshold) 
-    : Soma(init_threshold), output_value(init_output_value){}
+Neuron::Neuron(){}
 
 void Neuron::add_synapse(Synapse& new_synapse)
 {

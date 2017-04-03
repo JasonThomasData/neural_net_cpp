@@ -1,7 +1,7 @@
 #include "synapse.h"
-#include "neuron.h"
+#include "neuron_interface.h"
 
-Synapse::Synapse(Neuron& from_neuron, Neuron& to_neuron)
+Synapse::Synapse(NeuronInterface& from_neuron, NeuronInterface& to_neuron)
     : from_neuron(from_neuron), to_neuron(to_neuron){}
 
 float Synapse::get_weighted_incoming_value()

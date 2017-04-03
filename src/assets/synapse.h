@@ -10,15 +10,15 @@
  * be available to the network to modify.
  */
 
-class Neuron;
+class NeuronInterface;
 
 class Synapse
 {
     private:
-        Neuron& from_neuron;
-        Neuron& to_neuron;
+        NeuronInterface& from_neuron;
+        NeuronInterface& to_neuron;
     public:
-        Synapse(Neuron& from_neuron, Neuron& to_neuron);
+        Synapse(NeuronInterface& from_neuron, NeuronInterface& to_neuron);
         void update_weight(float change_value);
         float weight = 1.0;
         float get_weighted_incoming_value();
