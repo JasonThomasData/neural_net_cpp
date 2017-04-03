@@ -1,8 +1,8 @@
+#include "assets/input_neuron.h"
 #include "assets/neuron.h"
 #include "assets/synapse.h"
 #include "assets/soma.h"
 #include <vector>
-#include <stdio.h>
 
 /* To create a neural_network class, you'll need a few functions:
  *
@@ -25,24 +25,32 @@
  *
  */
 
+/* Need this duplication until I can understand how to pass around the NeuronInterface */
+void connect_input_hidden_layers(std::vector<InputNeuron>& from_layer, std::vector<Neuron>& to_layer)
+{
+    for(auto& from_neuron: from_layer)
+    {
+        for(auto& to_neuron: to_layer)
+        {
+            Synapse new_synapse(from_neuron, to_neuron);
+            to_neuron.add_synapse(new_synapse);
+        }
+    }
+}
 void connect_two_layers(std::vector<Neuron>& from_layer, std::vector<Neuron>& to_layer)
 {
-    int from_size = from_layer.size();
-    int to_size = to_layer.size();
-
-    for(int i=0; i<from_size; i++)
+    for(auto& from_neuron: from_layer)
     {
-        Neuron& from_neuron = from_layer.at(i);
-        for(int j=0; j<to_size; j++)
+        for(auto& to_neuron: to_layer)
         {
-            Neuron& to_neuron = to_layer.at(j);
             Synapse new_synapse(from_neuron, to_neuron);
             to_neuron.add_synapse(new_synapse);
         }
     }
 }
 
-void set_output_values(std::vector<Neuron>& layer)
+/* Put the function call inside another called feed_forward */
+void update_output_values(std::vector<Neuron>& layer)
 {
     int layer_size = layer.size();
 
@@ -55,18 +63,17 @@ void set_output_values(std::vector<Neuron>& layer)
 
 int main(int argc, char** argv)
 {
-    float init_output_value_input = 0.3;
-    float init_threshold_value_input = 0.0;
-    Neuron input_1(init_output_value_input, init_threshold_value_input);
-    Neuron input_2(init_output_value_input, init_threshold_value_input);
+    /* The output_value of InputNeuron can be set after initialising. */
+    InputNeuron input_1;
+    InputNeuron input_2;
+    input_1.output_value = 0.5;
+    input_2.output_value = 1.2;
 
-    float init_output_value = 0.0;
-    float init_threshold_value = 0.5;
-    Neuron hidden_1(init_output_value, init_threshold_value);
-    Neuron hidden_2(init_output_value, init_threshold_value);
-    Neuron output_1(init_output_value, init_threshold_value);
+    Neuron hidden_1;
+    Neuron hidden_2;
+    Neuron output_1;
 
-    std::vector<Neuron> input_layer;
+    std::vector<InputNeuron> input_layer;
     std::vector<Neuron> hidden_layer;
     std::vector<Neuron> output_layer;
 
@@ -76,10 +83,10 @@ int main(int argc, char** argv)
     hidden_layer.emplace_back(hidden_2);
     output_layer.emplace_back(output_1);
 
-    connect_two_layers(input_layer, hidden_layer);
+    connect_input_hidden_layers(input_layer, hidden_layer);
     connect_two_layers(hidden_layer, output_layer);
 
-    set_output_values(hidden_layer);
-    set_output_values(output_layer);
+    update_output_values(hidden_layer);
+    update_output_values(output_layer);
 
 };
