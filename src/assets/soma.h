@@ -14,9 +14,8 @@ class Synapse;
 class Soma
 {
     public:
-        Soma(float init_threshold);
+        Soma();
         std::vector <Synapse> all_synapses;
-        float threshold;
         float add_incoming_values();
         float activate(float incoming_values);
 };
