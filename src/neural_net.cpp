@@ -25,15 +25,22 @@
  *
  */
 
-/* Need this duplication until I can understand how to pass around the NeuronInterface */
-void connect_input_hidden_layers(std::vector<InputNeuron>& from_layer, std::vector<Neuron>& to_layer)
+
+
+/* Need this duplication until I can understand how to pass around the NeuronInterface.
+ * A key difference is one needs the add_outgoing_synapse and the other doesn't.
+ * Is it possible to define virtual functions for both of those functions, add_incoming_synapse and
+ * add_outgoing_synapse, and override the functions when and where we need to. The reason for this,
+ * is the InputNeuron does not have a list of outgoing Synapses.
+ */
+void connect_input_hidden_layer(std::vector<InputNeuron>& from_layer, std::vector<Neuron>& to_layer)
 {
     for(auto& from_neuron: from_layer)
     {
         for(auto& to_neuron: to_layer)
         {
             Synapse new_synapse(from_neuron, to_neuron);
-            to_neuron.add_synapse(new_synapse);
+            to_neuron.add_incoming_synapse(new_synapse);
         }
     }
 }
@@ -44,7 +51,8 @@ void connect_two_layers(std::vector<Neuron>& from_layer, std::vector<Neuron>& to
         for(auto& to_neuron: to_layer)
         {
             Synapse new_synapse(from_neuron, to_neuron);
-            to_neuron.add_synapse(new_synapse);
+            Synapse& added_synapse = to_neuron.add_incoming_synapse(new_synapse);
+            from_neuron.add_outgoing_synapse(added_synapse);
         }
     }
 }
@@ -57,7 +65,7 @@ void update_output_values(std::vector<Neuron>& layer)
     for(int i=0; i<layer_size; i++)
     {
         Neuron& neuron = layer.at(i);
-        neuron.set_output_value();
+        neuron.set_in_out_values();
     }
 }
 
@@ -66,8 +74,8 @@ int main(int argc, char** argv)
     /* The output_value of InputNeuron can be set after initialising. */
     InputNeuron input_1;
     InputNeuron input_2;
-    input_1.output_value = 0.5;
-    input_2.output_value = 1.2;
+    input_1.outgoing_value = 0.5;
+    input_2.outgoing_value = 1.2;
 
     Neuron hidden_1;
     Neuron hidden_2;
@@ -83,7 +91,7 @@ int main(int argc, char** argv)
     hidden_layer.emplace_back(hidden_2);
     output_layer.emplace_back(output_1);
 
-    connect_input_hidden_layers(input_layer, hidden_layer);
+    connect_input_hidden_layer(input_layer, hidden_layer);
     connect_two_layers(hidden_layer, output_layer);
 
     update_output_values(hidden_layer);
