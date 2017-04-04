@@ -8,7 +8,8 @@
 class NeuronInterface
 {
     public:
-        virtual float get_output_value() =0;
+        virtual float get_outgoing_value() =0;
+        virtual float get_incoming_values() =0;
 };
 
 #endif

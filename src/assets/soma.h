@@ -15,8 +15,9 @@ class Soma
 {
     public:
         Soma();
-        std::vector <Synapse> all_synapses;
-        float add_incoming_values();
+        std::vector <Synapse> incoming_synapses;
+        std::vector <Synapse> outgoing_synapses;
+        float calculate_incoming_values();
         float activate(float incoming_values);
 };
 #endif

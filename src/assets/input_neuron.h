@@ -10,9 +10,10 @@
 class InputNeuron : public NeuronInterface
 {
     public:
-        float output_value;
+        float outgoing_value;
         InputNeuron();
-        float get_output_value() override;
+        float get_outgoing_value() override;
+        float get_incoming_values() override;
 };
 
 #endif
