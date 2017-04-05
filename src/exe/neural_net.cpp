@@ -1,7 +1,7 @@
-#include "assets/input_neuron.h"
-#include "assets/neuron.h"
-#include "assets/synapse.h"
-#include "assets/soma.h"
+#include "../network/input_neuron/input_neuron.h"
+#include "../network/neuron/neuron.h"
+#include "../network/synapse/synapse.h"
+#include "../network/soma/soma.h"
 #include <vector>
 
 /* To create a neural_network class, you'll need a few functions:
@@ -68,6 +68,7 @@ void update_output_values(std::vector<Neuron>& layer)
         neuron.set_in_out_values();
     }
 }
+
 
 int main(int argc, char** argv)
 {

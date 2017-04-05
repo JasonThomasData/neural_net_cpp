@@ -1,5 +1,5 @@
 #include "synapse.h"
-#include "neuron_interface.h"
+#include "../neuron_interface/neuron_interface.h"
 
 Synapse::Synapse(NeuronInterface& from_neuron, NeuronInterface& to_neuron)
     : from_neuron(from_neuron), to_neuron(to_neuron){}

@@ -1,5 +1,5 @@
 #include "soma.h"
-#include "synapse.h"
+#include "../synapse/synapse.h"
 #include <cmath>
 
 Soma::Soma(){}
