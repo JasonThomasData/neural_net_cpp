@@ -24,8 +24,8 @@ void Neuron::add_outgoing_synapse(Synapse& outgoing_synapse)
 /* Called during the feed forward pass */
 void Neuron::set_in_out_values()
 {
-    incoming_values = calculate_incoming_values();
-    float activation_result = activate(incoming_values);
+    incoming_values = soma.calculate_incoming_values(incoming_synapses);
+    float activation_result = soma.activate(incoming_values);
     outgoing_value = activation_result;
 }
 

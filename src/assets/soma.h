@@ -5,7 +5,7 @@
 
 /* A soma is a cell body, and according to this explainer -
  * http://study.com/academy/lesson/what-is-a-cell-body-definition-function-types.html
- * - soma a is responsible for receiving all incoming values from other neurons (via Synapses), and deciding
+ * - soma a is responsible for combining all incoming values from other neurons (via Synapses), and deciding
  * whether to send an output signal along its own axon (which we have called output_value).
  */
 
@@ -15,9 +15,7 @@ class Soma
 {
     public:
         Soma();
-        std::vector <Synapse> incoming_synapses;
-        std::vector <Synapse> outgoing_synapses;
-        float calculate_incoming_values();
+        float calculate_incoming_values(std::vector <Synapse>&);
         float activate(float incoming_values);
 };
 #endif

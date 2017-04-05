@@ -11,12 +11,14 @@
 
 class Synapse;
 
-class Neuron: private Soma, public NeuronInterface
+class Neuron: public NeuronInterface
 {
     private:
+        std::vector <Synapse> incoming_synapses;
+        std::vector <Synapse> outgoing_synapses;
         float incoming_values;
         float outgoing_value;
-
+        Soma soma;
     public:
         Neuron();
         Synapse& add_incoming_synapse(Synapse incoming_synapse);

@@ -4,7 +4,7 @@
 
 Soma::Soma(){}
 
-float Soma::calculate_incoming_values()
+float Soma::calculate_incoming_values(std::vector<Synapse>& incoming_synapses)
 {
     float incoming_values = 0;
 
