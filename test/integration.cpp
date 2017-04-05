@@ -94,14 +94,17 @@ TEST_CASE( "soma - test this soma's sum function works - combine all incoming va
     new_synapse_1.weight = 0.5;
     Synapse new_synapse_2(from_neuron_2, to_neuron);
     new_synapse_2.weight = 0.8;
-    
+
+    /* Usually, this is a data member of Neuron class */
+    std::vector <Synapse> incoming_synapses;
+    incoming_synapses.emplace_back(new_synapse_1);
+    incoming_synapses.emplace_back(new_synapse_2);
+
     Soma soma;
-    soma.incoming_synapses.emplace_back(new_synapse_1);
-    soma.incoming_synapses.emplace_back(new_synapse_2);
 
     /* Result = 0.7*0.5 + 0.25*0.8 = 0.55 */
     float expected_result = 0.55;
-    float actual_result = soma.calculate_incoming_values();
+    float actual_result = soma.calculate_incoming_values(incoming_synapses);
     REQUIRE(actual_result == expected_result);
 }
 
