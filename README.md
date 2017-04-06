@@ -94,9 +94,9 @@ the incoming values from other Neurons. So these are what will be updated during
 
 Here's some pics to show how I've been reasoning about making this:
 
-![neuron](docs/pics/neuron.png)
-![soma](docs/pics/soma.png)
-![neural_net](docs/pics/neural_net.png)
+![neuron](docs/neuron.png)
+![soma](docs/soma.png)
+![neural_net](docs/neural_net.png)
 
 The concept of backpropagation deserves an explanation in itself. I've found
 [Matt Mazur's](https://mattmazur.com/2015/03/17/a-step-by-step-backpropagation-example/) explainer
@@ -110,7 +110,7 @@ look useful. However, it's not clear if backpropagation will need to change if t
 is not used because the articles I used as references to make the backpropagation use the logistic
 activation function; the learning rule uses the partial derivative of the logistic function.
 
-![activation_functions](docs/pics/activation_functions.png)
+![activation_functions](docs/activation_functions.png)
 
 ###Things to add
 
