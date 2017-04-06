@@ -1,5 +1,5 @@
 #include "../catch.h"
-#include "../../src/network/input_neuron/input_neuron.h"
+#include "../../src/network/neuron/input.h"
 #include "../../src/network/synapse/synapse.h"
 #include "../../src/network/neuron/neuron.h"
 
