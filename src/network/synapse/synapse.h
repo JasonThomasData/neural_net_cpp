@@ -19,9 +19,10 @@ class Synapse
     public:
         NeuronInterface& to_neuron;
         Synapse(NeuronInterface& from_neuron, NeuronInterface& to_neuron);
-        void update_weight(float change_value);
         float weight = 0.5;
-        float get_weighted_incoming_value();
+        float get_to_neuron_incoming_values();
+        float get_from_neuron_weighted_outgoing_value();
+        float get_from_neuron_outgoing_value();
 };
 
 #endif
