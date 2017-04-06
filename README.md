@@ -18,7 +18,7 @@ Mac. Make a pull request if that's what you want.
 
 If you're missing permissions, do: `chmod +x bin/*`
 
-When this project is finished, it will have two programs: `train` and `classify`.
+When this project is finished, it will have two programs: `train` and `classify`. This is a WIP.
 
 The `train` will allow you to train a neural network, and then dump all weights of all Synapses that
 connect Neurons into a file.
