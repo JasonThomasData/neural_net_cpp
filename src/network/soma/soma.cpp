@@ -10,7 +10,7 @@ float Soma::calculate_incoming_values(std::vector<Synapse>& incoming_synapses)
 
     for(auto& synapse: incoming_synapses)
     {
-        incoming_values += synapse.get_weighted_incoming_value();
+        incoming_values += synapse.get_from_neuron_weighted_outgoing_value();
     }
 
     return incoming_values;
