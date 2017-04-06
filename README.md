@@ -1,20 +1,13 @@
 This project implements a neural network in c++, which is useful for some types of classification.
 
-I was originally doing this in Python, while learning about making neural networks and how they
-work, when it occurred to me that making this in Python was pointless because Python (although I
-love that language) is unfortunately slow. So, I took this as a reason to learn c++, which I have
-enjoyed learning.
-
-###Compile
+### Compile
 
 On a Linux system, do: `make` at your terminal.
-
-My makefile is not the prettiest, but I can read it and I think it's OK for my first c++ project.
 
 This project was made on a Linux system, and there's no plan to make sure it works in Windows or
 Mac. Make a pull request if that's what you want.
 
-###Usage
+### Usage
 
 If you're missing permissions, do: `chmod +x bin/*`
 
@@ -48,7 +41,7 @@ Similarly, these --options mean
 Each of these could be a separate `int main()` inside its own executable, and they could each
 initialise a neural network to do their tasks.
 
-###Tests
+### Tests
 
 After compiling, these are found in bin/tests/, and can be run as executable files.
 
@@ -59,7 +52,7 @@ Then do `./bin/tests/integration`
 I have been unable to mock objects in C++ so far, so there are no unit tests for functions that have
 side effects.
 
-###Discussion
+### Discussion
 
 To make an artificial neural network, it's helpful to think about the different elements of biological
 neurons and networks.
@@ -112,7 +105,7 @@ activation function; the learning rule uses the partial derivative of the logist
 
 ![activation_functions](docs/activation_functions.png)
 
-###Things to add
+### Things to add
 
 - Learning rate - to modify how quickly/slowly backpropagation applies to neurons.
 - Bias - a constant rate across a network, or layer, that can assist in training.
@@ -122,8 +115,13 @@ activation function; the learning rule uses the partial derivative of the logist
   dataviz. Pretty colours, straight lines, etc. Could even just make some videos for fun.
 - Some analysis on how quickly different networks (size, shape, activation functions) can achieve an
   acceptable total error rate, counting by epoch.
+- Figure out how to mock objects so I can write actual unit tests.
+- Figure out how to pass the NeuronInterface around properly. Currently there's a functions that
+  work with two kinds of neurons, but if they share an interface, they should be able to take a
+  reference to the interface.
+- My makefile is not the prettiest, should probs clean that up if I get the chance.
 
-###Thoughts on project structure
+### Thoughts on project structure
 
 This project has two classes that important for doing stuff - `Classifier` and `Trainer`. Both accept
 a reference to the `NeuralNetwork`.
