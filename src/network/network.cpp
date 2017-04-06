@@ -1,13 +1,20 @@
 #include "network.h"
+#include <stdexcept>
 
 Network::Network(int input_count, int hidden_count, int output_count)
 {
-    add_neurons_to_input_layer(input_layer, input_count);
-    add_neurons_to_layer(hidden_layer, hidden_count);
-    add_neurons_to_layer(output_layer, output_count);
-    connect_input_hidden_layer(input_layer, hidden_layer);
-    connect_hidden_output_layer(hidden_layer, output_layer);
-    total_error = 0.0;
+    if((input_count > 0) && (hidden_count > 0) && (output_count > 0))
+    {
+        add_neurons_to_input_layer(input_layer, input_count);
+        add_neurons_to_layer(hidden_layer, hidden_count);
+        add_neurons_to_layer(output_layer, output_count);
+        connect_input_hidden_layer(input_layer, hidden_layer);
+        connect_hidden_output_layer(hidden_layer, output_layer);
+        total_error = 0.0;
+    } else
+    {
+        throw std::invalid_argument( "Network requires layers to be larger than 0" );
+    }
 }
 
 /* To test this, give it a list and int, and then get the size of list */
