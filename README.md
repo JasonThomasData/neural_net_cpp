@@ -119,22 +119,28 @@ activation function; the learning rule uses the partial derivative of the logist
 - Figure out how to pass the NeuronInterface around properly. Currently there's a functions that
   work with two kinds of neurons, but if they share an interface, they should be able to take a
   reference to the interface.
-- My makefile is not the prettiest, should probs clean that up if I get the chance.
+- Move the internal functions from the Soma to the Classifier class, since the Network is now just a
+  container, so Neurons should be too.
 
 ### Thoughts on project structure
 
 This project has two classes that important for doing stuff - `Classifier` and `Trainer`. Both accept
 a reference to the `NeuralNetwork`.
 
-The `NeuralNetwork` is a container for the data model. It has internal objects like `Neurons` and
+The `Network` is a container for the data model. It has internal objects like `Neurons` and
 `Synapses` that do their own logic internally. The network creates layers of these smaller objects
 when it is initialised.
 
-The `Classifier` and `Trainer` classes manipulate the network.
+The `Classifier` and `Trainer` classes manipulate the `Network`.
 
 The `./bin/train` program will use the `Classifier` and `Trainer` classes, while `./bin/classify`
 will only initialise and use the `Classifier` object.
 
+The data members in the i`Network` class for input_layer and output_layer can remain, but those will
+be to a layer class that's added with composition. The layer class will have references to former and
+next layers, allowing for as many hidden layers as the user wants.
+
 Actually the whole experience has taught me a lot more about OOP - my classes now use inheritance
 when the derived class "is a" thing of that parent class, but composition when the class "has a"
 data member. I didn't previously appreciate those class relationships in OOP until now.
+
