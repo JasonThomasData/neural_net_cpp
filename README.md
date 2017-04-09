@@ -119,8 +119,6 @@ activation function; the learning rule uses the partial derivative of the logist
 - Figure out how to pass the NeuronInterface around properly. Currently there's a functions that
   work with two kinds of neurons, but if they share an interface, they should be able to take a
   reference to the interface.
-- Move the internal functions from the Soma to the Classifier class, since the Network is now just a
-  container, so Neurons should be too.
 
 ### Thoughts on project structure
 
@@ -144,3 +142,8 @@ Actually the whole experience has taught me a lot more about OOP - my classes no
 when the derived class "is a" thing of that parent class, but composition when the class "has a"
 data member. I didn't previously appreciate those class relationships in OOP until now.
 
+I'm not decided whether I should move the functions in the `Soma` class into the `Classifier`. The
+`Classifier currently only tells each `Neuron` to update itself. Since the responsibility of doing
+backpropagation is entirely within the `Trainer` class, then it might make sense to treat the 
+`Neurons` and `Synapses` as structs with data members rather than having their own internal logic.
+Leaving it as is also has merits, mainly that each `Neuron` controls how its values are updated.`
