@@ -19,11 +19,11 @@ TEST_CASE( "classifier - set inputs") {
 
     classifier.set_input_neurons(update_values);
 
-    int actual_result1 = neural_network.input_layer.at(0).get_outgoing_value();
+    int actual_result1 = neural_network.input_layer.at(0).outgoing_value;
     int expected_result1 = 0;
     REQUIRE(actual_result1 == expected_result1);
 
-    int actual_result2 = neural_network.input_layer.at(1).get_outgoing_value();
+    int actual_result2 = neural_network.input_layer.at(1).outgoing_value;
     int expected_result2 = 1;
     REQUIRE(actual_result2 == expected_result2);
 
@@ -67,14 +67,16 @@ TEST_CASE( "classifier - feed forward") {
 
     Classifier classifier(neural_network);
 
+    /* This is to make sure the initial inputs have outgoing_values */
     std::vector<int> update_values;
     update_values.emplace_back(0);
     update_values.emplace_back(1);
 
     classifier.set_input_neurons(update_values);
 
-    classifier.feed_forward();
-    float actual_result = neural_network.output_layer.at(0).get_outgoing_value();
+    classifier.classify();
+
+    float actual_result = neural_network.output_layer.at(0).outgoing_value;
     float expected_result = 0.63914;
     REQUIRE( Approx(actual_result) == expected_result);
 }

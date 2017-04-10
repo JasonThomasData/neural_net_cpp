@@ -1,6 +1,6 @@
 #include "classifier.h"
 #include "../network/network.h"
-#include "../network/neuron/input.h"
+#include "../network/neuron/neuron.h"
 #include <stdexcept>
 
 Classifier::Classifier(Network& network_ref)
@@ -16,7 +16,7 @@ void Classifier::set_input_neurons(std::vector<int> new_input_values)
     {
         for(int i=0; i< input_layer_size; i++)
         {
-            InputNeuron& neuron = network.input_layer.at(i);
+            Neuron& neuron = network.input_layer.at(i);
             neuron.outgoing_value = new_input_values.at(i);
         }
     } else
@@ -25,16 +25,8 @@ void Classifier::set_input_neurons(std::vector<int> new_input_values)
     }
 }
 
-void Classifier::update_layer(std::vector<Neuron>& layer)
+void Classifier::classify()
 {
-    for(auto& neuron: layer)
-    {
-        neuron.set_in_out_values();
-    }
-}
-
-void Classifier::feed_forward()
-{
-    update_layer(network.hidden_layer);
-    update_layer(network.output_layer);
+    feed_forward.update_layer(network.hidden_layer);
+    feed_forward.update_layer(network.output_layer);
 }
