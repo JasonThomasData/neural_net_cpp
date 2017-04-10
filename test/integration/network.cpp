@@ -62,4 +62,3 @@ TEST_CASE( "network - initialise, connect neurons between layers with synapses")
     neural_network.output_layer.at(1).incoming_synapses.at(1).get_from_neuron_weighted_outgoing_value();
 }
 
-
