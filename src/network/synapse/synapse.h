@@ -10,19 +10,16 @@
  * be available to the network to modify.
  */
 
-class NeuronInterface;
+class Neuron;
 
 class Synapse
 {
-    private:
-        NeuronInterface& from_neuron;
     public:
-        NeuronInterface& to_neuron;
-        Synapse(NeuronInterface& from_neuron, NeuronInterface& to_neuron);
+        Neuron& from_neuron;
+        Neuron& to_neuron;
+        Synapse(Neuron& from_neuron, Neuron& to_neuron);
         float weight = 0.5;
-        float get_to_neuron_incoming_values();
         float get_from_neuron_weighted_outgoing_value();
-        float get_from_neuron_outgoing_value();
 };
 
 #endif

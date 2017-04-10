@@ -7,12 +7,10 @@ Soma::Soma(){}
 float Soma::calculate_incoming_values(std::vector<Synapse>& incoming_synapses)
 {
     float incoming_values = 0;
-
     for(auto& synapse: incoming_synapses)
     {
         incoming_values += synapse.get_from_neuron_weighted_outgoing_value();
     }
-
     return incoming_values;
 }
 
@@ -26,7 +24,6 @@ float Soma::activate(float incoming_values)
     float euler_number = 2.71828;
     float incoming_values_neg = incoming_values *= -1;
     float activation_result = 1/(1 + pow(euler_number, incoming_values_neg));
-
     return activation_result;
 }
 

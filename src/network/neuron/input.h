@@ -14,6 +14,7 @@ class InputNeuron : public NeuronInterface
         InputNeuron();
         float get_outgoing_value() override;
         float get_incoming_values() override;
+        float get_error_value() override;
 };
 
 #endif

@@ -10,6 +10,7 @@ class NeuronInterface
     public:
         virtual float get_outgoing_value() =0;
         virtual float get_incoming_values() =0;
+        virtual float get_error_value() =0;
 };
 
 #endif
