@@ -1,10 +1,9 @@
-all: $(objects) classify integration clean
+all: $(objects) train classify integration clean
 .PHONY: all CXXFLAGS objects clean
 CXXFLAGS = -std=c++14 -Wall
 
 objects = $(obj_network) $(obj_trainer) $(obj_classifier) $(obj_integration_tests) $(obj_main_files)
 
-#obj_network = build/synapse.o build/soma.o build/input.o build/neuron.o build/network.o
 obj_network = build/synapse.o build/neuron.o build/network.o
 obj_trainer = build/trainer.o build/backpropagation.o
 obj_classifier = build/feed_forward.o build/classifier.o
@@ -52,7 +51,7 @@ build/i_t_backpropagation.o: test/integration/backpropagation.cpp
 
 #Main file objects. Each has a main function
 build/train_main.o: src/exe/main.cpp
-	g++ -c $(CXXFLAGS) src/exe/main.cpp -o build/train_main.o
+	g++ -c $(CXXFLAGS) src/exe/train.cpp -o build/train_main.o
 build/classify_main.o: src/exe/main.cpp
 	g++ -c $(CXXFLAGS) src/exe/main.cpp -o build/classify_main.o
 build/i_t_main.o: test/main.cpp
