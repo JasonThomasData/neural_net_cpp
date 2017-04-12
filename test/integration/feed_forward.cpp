@@ -15,10 +15,10 @@ TEST_CASE( "feed_forward - test the sum function works - combine all incoming va
     Neuron from_neuron_2;
     from_neuron_2.outgoing_value = 0.25;
 
-    Synapse new_synapse_1(from_neuron_1, to_neuron);
-    new_synapse_1.weight = 0.5;
-    Synapse new_synapse_2(from_neuron_2, to_neuron);
-    new_synapse_2.weight = 0.8;
+    double weight_1 = 0.5;
+    Synapse new_synapse_1(from_neuron_1, to_neuron, weight_1);
+    double weight_2 = 0.8;
+    Synapse new_synapse_2(from_neuron_2, to_neuron, weight_2);
 
     /* Usually, this is a data member of Neuron class */
     std::vector <Synapse> incoming_synapses;
@@ -77,8 +77,8 @@ TEST_CASE( "feed_forward - activate one Neuron, via one incoming synapse #1 ") {
 
     Neuron neuron2;
 
-    Synapse new_synapse(neuron1, neuron2);
-    new_synapse.weight = 0.8;
+    double weight = 0.8;
+    Synapse new_synapse(neuron1, neuron2, weight);
     neuron2.add_incoming_synapse(new_synapse);
 
     /* Incoming weights are equal to 1.0*0.8 = 0.8 */
@@ -101,8 +101,8 @@ TEST_CASE( "neuron - activate, via one incoming synapse #2 ") {
 
     Neuron neuron2;
 
-    Synapse new_synapse(neuron1, neuron2);
-    new_synapse.weight = 0.5;
+    double weight = 0.5;
+    Synapse new_synapse(neuron1, neuron2, weight);
     neuron2.add_incoming_synapse(new_synapse);
 
     /* Incoming weights are equal to 0.5*0.8 = 0.4*/
@@ -131,12 +131,12 @@ TEST_CASE( "neuron - activate, via several incoming synapses, and only calling u
 
     Neuron neuron4;
 
-    Synapse new_synapse_1(neuron1, neuron4);
-    new_synapse_1.weight = 0.75;
-    Synapse new_synapse_2(neuron2, neuron4);
-    new_synapse_2.weight = 0.2;
-    Synapse new_synapse_3(neuron3, neuron4);
-    new_synapse_3.weight = 0.5;
+    double weight_1 = 0.75;
+    Synapse new_synapse_1(neuron1, neuron4, weight_1);
+    double weight_2 = 0.2;
+    Synapse new_synapse_2(neuron2, neuron4, weight_2);
+    double weight_3 = 0.5;
+    Synapse new_synapse_3(neuron3, neuron4, weight_3);
 
     neuron4.add_incoming_synapse(new_synapse_1);
     neuron4.add_incoming_synapse(new_synapse_2);

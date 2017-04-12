@@ -13,11 +13,11 @@ TEST_CASE( "classifier - set inputs") {
 
     Classifier classifier(neural_network);
 
-    std::vector<int> update_values;
+    std::vector<double> update_values;
     update_values.emplace_back(0);
     update_values.emplace_back(1);
 
-    classifier.set_input_neurons(update_values);
+    classifier.set_input_values(update_values);
 
     int actual_result1 = neural_network.input_layer.at(0).outgoing_value;
     int expected_result1 = 0;
@@ -39,12 +39,12 @@ TEST_CASE( "classifier - set inputs, fail cause the inputs are wrong size.") {
 
     Classifier classifier(neural_network);
 
-    std::vector<int> update_values;
+    std::vector<double> update_values;
     update_values.emplace_back(0);
     update_values.emplace_back(1.5);
     update_values.emplace_back(1);
 
-    REQUIRE_THROWS( classifier.set_input_neurons(update_values) );
+    REQUIRE_THROWS( classifier.set_input_values(update_values) );
 
 }
 
@@ -68,11 +68,11 @@ TEST_CASE( "classifier - feed forward") {
     Classifier classifier(neural_network);
 
     /* This is to make sure the initial inputs have outgoing_values */
-    std::vector<int> update_values;
+    std::vector<double> update_values;
     update_values.emplace_back(0);
     update_values.emplace_back(1);
 
-    classifier.set_input_neurons(update_values);
+    classifier.set_input_values(update_values);
 
     classifier.classify();
 

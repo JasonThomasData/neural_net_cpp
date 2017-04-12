@@ -17,7 +17,8 @@ TEST_CASE( "backpropagation - update one neuron's error")
      */
     output_neuron.outgoing_value = 0.507499;
 
-    Backpropagation backpropagation;
+    float learning_rate = 1.0;
+    Backpropagation backpropagation(learning_rate); /* learning rate not used */
 
     /* Neuron error = (output-target)*output*(1-output)
      * (0.507499-1.0)*0.507499*(1-0.507499) = −0.123097554
@@ -32,22 +33,25 @@ TEST_CASE( "backpropagation - update one neuron's error")
 
 }
 
-TEST_CASE( "backpropagation - update one incoming synapse")
+TEST_CASE( "backpropagation - output layer update one incoming synapse, learning 1.0")
 {
 
     Neuron hidden_neuron;
     hidden_neuron.outgoing_value = 0.3;
 
     Neuron output_neuron;
-    float neuron_error = 0.009;
-    Synapse synapse(hidden_neuron, output_neuron);
-    synapse.weight = 0.1;
+    double neuron_error = 0.009;
+
+    double weight = 0.1;
+    Synapse synapse(hidden_neuron, output_neuron, weight);
 
     /* For this test, the output neuron would have an output_value of 0.1 and a target of 0.0. So
      * therefore, it has a neuron_error of 0.009. The test won't actually use the output_neuron, but
      * the synapse needs it for initialisation */
 
-    Backpropagation backpropagation;
+    float learning_rate = 1.0;
+
+    Backpropagation backpropagation(learning_rate);
     backpropagation.output_layer_set_synapse_weight(synapse, neuron_error);
 
     float actual_result = synapse.weight;
@@ -56,6 +60,34 @@ TEST_CASE( "backpropagation - update one incoming synapse")
     REQUIRE(Approx(actual_result) == expected_result);
 
 }
+
+TEST_CASE( "backpropagation - output layer update one incoming synapse, learning 0.15")
+{
+
+    Neuron hidden_neuron;
+    hidden_neuron.outgoing_value = 0.3;
+
+    Neuron output_neuron;
+    double neuron_error = 0.009;
+
+    double weight = 0.1;
+    Synapse synapse(hidden_neuron, output_neuron, weight);
+
+    /* For this test, the output neuron would have an output_value of 0.1 and a target of 0.0. So
+     * therefore, it has a neuron_error of 0.009. The test won't actually use the output_neuron, but
+     * the synapse needs it for initialisation */
+
+    float learning_rate = 0.15;
+    Backpropagation backpropagation(learning_rate);
+    backpropagation.output_layer_set_synapse_weight(synapse, neuron_error);
+
+    float actual_result = synapse.weight;
+    float expected_result = 0.099595; /*0.1 - 0.3*0.009*0.15 */
+
+    REQUIRE(Approx(actual_result) == expected_result);
+
+}
+
 
 TEST_CASE( "backpropagation - update two incoming synapse")
 {
@@ -68,10 +100,10 @@ TEST_CASE( "backpropagation - update two incoming synapse")
     Neuron output_neuron;
     output_neuron.target_value = 1.0;
 
-    Synapse synapse_1(hidden_neuron_1, output_neuron);
-    synapse_1.weight = 0.4;
-    Synapse synapse_2(hidden_neuron_2, output_neuron);
-    synapse_2.weight = 0.12;
+    double weight_1 = 0.4;
+    Synapse synapse_1(hidden_neuron_1, output_neuron, weight_1);
+    double weight_2 = 0.12;
+    Synapse synapse_2(hidden_neuron_2, output_neuron, weight_2);
 
     /* The synapses are added to the Neuron's vector and returned as a reference */
     output_neuron.add_incoming_synapse(synapse_1);
@@ -85,8 +117,8 @@ TEST_CASE( "backpropagation - update two incoming synapse")
      * (outgoing_value - target_value) * outgoing_value*(1-outgoing_value) = -0.1120001491 
      * Therefore the weight change for synapse 1 will = hidden_neuron_1.outgoing_value * -0.11200
      */
-
-    Backpropagation backpropagation;
+    float learning_rate = 1.0;
+    Backpropagation backpropagation(learning_rate);
     backpropagation.output_layer_neuron(output_neuron);
 
     Synapse& synapse_1_in_place = output_neuron.incoming_synapses.at(0);
@@ -125,10 +157,10 @@ TEST_CASE( "backpropagation - same as before but do forward feed first.")
     Classifier classifier(neural_network);
 
     /* This is to make sure the initial inputs have outgoing_values */
-    std::vector<int> update_values;
+    std::vector<double> update_values;
     update_values.emplace_back(0);
     update_values.emplace_back(1);
-    classifier.set_input_neurons(update_values);
+    classifier.set_input_values(update_values);
 
     classifier.classify();
     /* Now, the output_value should have a value of -- 0.63914
@@ -139,7 +171,8 @@ TEST_CASE( "backpropagation - same as before but do forward feed first.")
     Neuron& output_neuron = neural_network.output_layer.at(0);
     output_neuron.target_value = 1.0;
 
-    Backpropagation backpropagation;
+    float learning_rate = 1.0;
+    Backpropagation backpropagation(learning_rate);
     backpropagation.output_layer(neural_network.output_layer);
 
     /*  Neuron's target of 1.0 will give a neuron error of =
@@ -173,17 +206,18 @@ TEST_CASE( "backpropagation - test hidden_layer total_errors")
     Neuron to_neuron_2;
     to_neuron_2.error_value = 0.52;
 
-    Synapse synapse_1(from_neuron, to_neuron_1);
-    synapse_1.weight = 0.31;
-    Synapse synapse_2(from_neuron, to_neuron_2);
-    synapse_2.weight = 0.67;
+    double weight_1 = 0.31;
+    Synapse synapse_1(from_neuron, to_neuron_1, weight_1);
+    double weight_2 = 0.67;
+    Synapse synapse_2(from_neuron, to_neuron_2, weight_2);
 
     Synapse& synapse_1_ref = to_neuron_1.add_incoming_synapse(synapse_1);
     from_neuron.add_outgoing_synapse(synapse_1_ref);
     Synapse& synapse_2_ref = to_neuron_2.add_incoming_synapse(synapse_2);
     from_neuron.add_outgoing_synapse(synapse_2_ref);
     
-    Backpropagation backpropagation;
+    float learning_rate = 1.0;
+    Backpropagation backpropagation(learning_rate);
     
     /* Result will be 0.68*0.31 + 0.52*0.67 = 0.5592*/
     float actual_result = backpropagation.hidden_layer_get_total_neuron_errors(from_neuron.outgoing_synapses);
@@ -192,23 +226,28 @@ TEST_CASE( "backpropagation - test hidden_layer total_errors")
 
 }
 
-
+/* This sets the weight of the incoming value to the hidden layer, not the synapse between hidden
+ * and output. */
 TEST_CASE( "backpropagation - test hidden_layer set synapse")
 {
 
-    Neuron from_neuron;
-    from_neuron.outgoing_value = 0.53;
-    Neuron to_neuron;
-    float total_neuron_errors = 0.732;
+    Neuron input_neuron;
+    input_neuron.outgoing_value = 0.53;
+    Neuron hidden_neuron;
+    double total_neuron_errors = 0.732;
 
-    Synapse synapse(from_neuron, to_neuron);
-    synapse.weight = 0.498;
+    double weight = 0.498;
+    Synapse synapse(input_neuron, hidden_neuron, weight);
 
-    Backpropagation backpropagation;
-    backpropagation.hidden_layer_set_synapse_weight(synapse, total_neuron_errors);
+    float learning_rate = 1.0;
+    Backpropagation backpropagation(learning_rate);
+    double logistic_derivative = 0.2491; /* 0.53*(1-0.53) */
+    backpropagation.hidden_layer_set_synapse_weight(synapse, logistic_derivative, total_neuron_errors);
 
+    /* 0.53 * 0.2491 * 0.732 * 1.0 = 0.096640836 */
+    /* 0.498 - 0.096640836 = 0.401359164 */
     float actual_result = synapse.weight;
-    float expected_result = 0.40719;
+    float expected_result = 0.40136;
     REQUIRE(Approx(actual_result) == expected_result);
 
 }

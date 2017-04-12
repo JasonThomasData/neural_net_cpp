@@ -14,7 +14,7 @@ TEST_CASE( "trainer - get total_error for network")
     output_neuron_2.target_value = 1.0;
     output_neuron_2.outgoing_value = 0.89;
 
-    float learning_rate = 0.0; /* used in backpropagation */
+    double learning_rate = 0.0; /* used in backpropagation */
 
     std::vector<Neuron> output_layer;
     output_layer.emplace_back(output_neuron_1);
@@ -39,10 +39,10 @@ TEST_CASE( "trainer - set target_values")
 
     Network neural_network(input_count, hidden_count, output_count);
 
-    float learning_rate = 0.0; /* used in backpropagation */
+    double learning_rate = 0.0; /* used in backpropagation */
     Trainer trainer(neural_network, learning_rate);
 
-    std::vector<float> update_values;
+    std::vector<double> update_values;
     update_values.emplace_back(0.3);
     update_values.emplace_back(0.7);
 
@@ -67,10 +67,10 @@ TEST_CASE( "trainer - set target_values, will fail because length of vectors don
 
     Network neural_network(input_count, hidden_count, output_count);
 
-    float learning_rate = 0.0; /* used in backpropagation */
+    double learning_rate = 0.0; /* used in backpropagation */
     Trainer trainer(neural_network, learning_rate);
 
-    std::vector<float> update_values;
+    std::vector<double> update_values;
     update_values.emplace_back(0.0);
     update_values.emplace_back(1.0);
     update_values.emplace_back(0.0);
