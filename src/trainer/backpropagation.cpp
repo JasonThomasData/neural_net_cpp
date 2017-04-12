@@ -3,17 +3,19 @@
 #include "../network/synapse/synapse.h"
 #include <vector>
 
-Backpropagation::Backpropagation(){}
+Backpropagation::Backpropagation(double learning_rate_init)
+    : learning_rate(learning_rate_init){}
+
 
 /* The change of each incoming_synapse depends on the output_value of the neuron before the Synapse'
  * weight was applied - the original output_value. Might want to add a learning rate here in
  * future. The from_neuron_outgoing_value is the final part of the delta rule for the output_layer
  * neurons.
  */
-void Backpropagation::output_layer_set_synapse_weight(Synapse& synapse, float neuron_error)
+void Backpropagation::output_layer_set_synapse_weight(Synapse& synapse, double neuron_error)
 {
-    float from_neuron_outgoing_value = synapse.from_neuron.outgoing_value;
-    float synapse_weight_change = neuron_error * from_neuron_outgoing_value;
+    double from_neuron_outgoing_value = synapse.from_neuron.outgoing_value;
+    double synapse_weight_change = neuron_error * from_neuron_outgoing_value * learning_rate;
     synapse.weight -= synapse_weight_change;
 }
 
@@ -24,8 +26,8 @@ void Backpropagation::output_layer_set_synapse_weight(Synapse& synapse, float ne
  */
 void Backpropagation::output_layer_set_neuron_error(Neuron& neuron)
 {
-    float target_value = neuron.target_value;
-    float outgoing_value = neuron.outgoing_value;
+    double target_value = neuron.target_value;
+    double outgoing_value = neuron.outgoing_value;
     neuron.error_value = (outgoing_value - target_value) * outgoing_value*(1 - outgoing_value);
 }
 
@@ -56,19 +58,20 @@ void Backpropagation::output_layer(std::vector<Neuron>& output_layer)
 /* This also uses the partial derivative of the logistic function, out(1-out), and would need to
  * change for a different activation function.
  */
-void Backpropagation::hidden_layer_set_synapse_weight(Synapse& synapse, float total_neuron_errors)
+void Backpropagation::hidden_layer_set_synapse_weight(Synapse& synapse, double logistic_derivative,
+        double total_neuron_errors)
 {
-    float from_neuron_outgoing_value = synapse.from_neuron.outgoing_value;
-    float synapse_weight_change = synapse.weight * from_neuron_outgoing_value*(1-from_neuron_outgoing_value) * total_neuron_errors;
+    double from_neuron_outgoing_value = synapse.from_neuron.outgoing_value;
+    double synapse_weight_change = logistic_derivative * total_neuron_errors * from_neuron_outgoing_value * learning_rate;
     synapse.weight -= synapse_weight_change;
 }
 
-float Backpropagation::hidden_layer_get_total_neuron_errors(std::vector<Synapse>& outgoing_synapses)
+double Backpropagation::hidden_layer_get_total_neuron_errors(std::vector<Synapse>& outgoing_synapses)
 {
-    float total_errors = 0.0;
+    double total_errors = 0.0;
     for(auto& synapse: outgoing_synapses)
     {
-        float error_to_add = synapse.weight * synapse.to_neuron.error_value;
+        double error_to_add = synapse.weight * synapse.to_neuron.error_value;
         total_errors += error_to_add;
     }
     return total_errors;
@@ -79,10 +82,11 @@ float Backpropagation::hidden_layer_get_total_neuron_errors(std::vector<Synapse>
  */
 void Backpropagation::hidden_layer_neuron(Neuron& neuron)
 {
-    float total_neuron_errors = hidden_layer_get_total_neuron_errors(neuron.outgoing_synapses);
+    double total_neuron_errors = hidden_layer_get_total_neuron_errors(neuron.outgoing_synapses);
+    double logistic_derivative = neuron.outgoing_value * (1-neuron.outgoing_value);
     for(auto& synapse: neuron.incoming_synapses)
     {
-        hidden_layer_set_synapse_weight(synapse, total_neuron_errors);
+        hidden_layer_set_synapse_weight(synapse, logistic_derivative, total_neuron_errors);
     }
 }
 
