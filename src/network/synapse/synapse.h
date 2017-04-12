@@ -17,9 +17,9 @@ class Synapse
     public:
         Neuron& from_neuron;
         Neuron& to_neuron;
-        Synapse(Neuron& from_neuron, Neuron& to_neuron);
-        float weight = 0.5;
-        float get_from_neuron_weighted_outgoing_value();
+        Synapse(Neuron& from_neuron, Neuron& to_neuron, double weight);
+        double weight;
+        double get_from_neuron_weighted_outgoing_value();
 };
 
 #endif
