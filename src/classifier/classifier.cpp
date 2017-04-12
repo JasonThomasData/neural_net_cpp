@@ -7,7 +7,7 @@ Classifier::Classifier(Network& network_ref)
     :network(network_ref){}
 
 /* If this doesn't meet the condition of being the same size, we should log the result. */
-void Classifier::set_input_neurons(std::vector<int> new_input_values)
+void Classifier::set_input_values(std::vector<double> new_input_values)
 {
     int input_layer_size = network.input_layer.size();
     int new_input_size = new_input_values.size();

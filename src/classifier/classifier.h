@@ -19,7 +19,7 @@ private:
     FeedForward feed_forward;
 public:
     Classifier(Network& network);
-    void set_input_neurons(std::vector<int> new_input_values);
+    void set_input_values(std::vector<double> new_input_values);
     void classify();
 };
 

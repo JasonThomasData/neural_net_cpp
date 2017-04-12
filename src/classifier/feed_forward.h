@@ -12,8 +12,8 @@ class FeedForward
 {
     public:
         FeedForward();
-        float calculate_incoming_values(std::vector<Synapse>& incoming_synapses);
-        float activate(float incoming_values);
+        double calculate_incoming_values(std::vector<Synapse>& incoming_synapses);
+        double activate(double incoming_values);
         void update_neuron(Neuron& neuron);
         void update_layer(std::vector<Neuron>& layer);
 };
