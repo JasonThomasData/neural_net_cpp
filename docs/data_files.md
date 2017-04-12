@@ -13,7 +13,7 @@ Eg - an Xor gate, with 2 input and 1 output:
     1 0 | 1
     1 1 | 0
 
-Eg - binary converter, with one input and 3 outputs:
+Eg - binary converter, with one input and 4 outputs:
 
     0 | 0 0 0 0
     1 | 0 0 0 1
@@ -36,6 +36,7 @@ The top row is the structure of the network to initialise in Neurons - input, hi
 Every row underneath describes the weight of a Synapse - layer, neuron, incoming_synapse, weight
 
 Eg:
+
     2 3 1
     hidden 0 0 0.56431
     hidden 0 1 0.71223
@@ -62,15 +63,4 @@ Eg:
     0 1
     1 0
     1 1
-
----
-
-`data/log/` - for displaying the results of classification
-
-Eg:
-
-    0 0 | 1
-    0 1 | 0
-    1 0 | 1
-    1 1 | 0
 
