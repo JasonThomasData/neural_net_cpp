@@ -15,7 +15,7 @@ class Network
         void add_neurons_to_layer(std::vector<Neuron>&, int neuron_count);
 
     public:
-        float total_error;
+        float epoch_average_total_error;
         std::vector<Neuron> input_layer;
         std::vector<Neuron> hidden_layer;
         std::vector<Neuron> output_layer;

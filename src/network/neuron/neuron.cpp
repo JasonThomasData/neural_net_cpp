@@ -1,11 +1,7 @@
 #include "../synapse/synapse.h"
 #include "neuron.h"
 
-Neuron::Neuron()
-{
-    target_value = 0.0;
-    error_value = 0.0;
-}
+Neuron::Neuron(){}
 
 /* When this new_synapse is added in place, return a reference added_synapse to add to the opposite
  * Neuron that is attached to this Synapse. This Neuron has ownership.

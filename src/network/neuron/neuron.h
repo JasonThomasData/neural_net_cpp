@@ -13,10 +13,10 @@ class Neuron
 {
     public:
         Neuron();
-        float incoming_values;
-        float outgoing_value;
-        float target_value;
-        float error_value;
+        double incoming_values;
+        double outgoing_value;
+        double target_value;
+        double error_value;
         std::vector<Synapse> incoming_synapses;
         std::vector<Synapse> outgoing_synapses;
         Synapse& add_incoming_synapse(Synapse incoming_synapse);

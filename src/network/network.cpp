@@ -11,7 +11,7 @@ Network::Network(int input_count, int hidden_count, int output_count)
         add_neurons_to_layer(output_layer, output_count);
         connect_layers(input_layer, hidden_layer);
         connect_layers(hidden_layer, output_layer);
-        total_error = 0.0;
+        epoch_average_total_error = 0.0;
     } else
     {
         throw std::invalid_argument( "Network requires layers to be larger than 0" );
@@ -30,11 +30,15 @@ void Network::add_neurons_to_layer(std::vector<Neuron>& layer, int neuron_count)
 
 void Network::connect_layers(std::vector<Neuron>& from_layer, std::vector<Neuron>& to_layer)
 {
+    srand(time(NULL));
+    int seed_range = 20;
     for(auto& from_neuron: from_layer)
     {
         for(auto& to_neuron: to_layer)
         {
-            Synapse new_synapse(from_neuron, to_neuron);
+            float random_sequence = rand() % seed_range;
+            float weight = random_sequence / seed_range;
+            Synapse new_synapse(from_neuron, to_neuron, weight);
             Synapse& added_synapse = to_neuron.add_incoming_synapse(new_synapse);
             from_neuron.add_outgoing_synapse(added_synapse);
         }
