@@ -7,7 +7,6 @@ On a Linux system, do: `make` at your terminal.
 This project was made on a Linux system, and there's no plan to make sure it works in Windows or
 Mac. Make a pull request if that's what you want.
 
-
 ### Tests
 
 After compiling, these are found in bin/tests/, and can be run as executable files.
