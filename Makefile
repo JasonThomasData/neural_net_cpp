@@ -1,4 +1,4 @@
-all: $(objects) train classify integration clean
+all: $(objects) train integration
 .PHONY: all CXXFLAGS objects clean
 CXXFLAGS = -std=c++14 -Wall
 
@@ -50,10 +50,10 @@ build/i_t_backpropagation.o: test/integration/backpropagation.cpp
 	g++ -c $(CXXFLAGS) test/integration/backpropagation.cpp -o build/i_t_backpropagation.o
 
 #Main file objects. Each has a main function
-build/train_main.o: src/exe/main.cpp
+build/train_main.o: src/exe/train.cpp
 	g++ -c $(CXXFLAGS) src/exe/train.cpp -o build/train_main.o
-build/classify_main.o: src/exe/main.cpp
-	g++ -c $(CXXFLAGS) src/exe/main.cpp -o build/classify_main.o
+build/classify_main.o: src/exe/classify.cpp
+	g++ -c $(CXXFLAGS) src/exe/classify.cpp -o build/classify_main.o
 build/i_t_main.o: test/main.cpp
 	g++ -c $(CXXFLAGS) test/main.cpp -o build/i_t_main.o
 
