@@ -9,14 +9,12 @@ Mac. Make a pull request if that's what you want.
 
 ### Tests
 
-After compiling, these are found in bin/tests/, and can be run as executable files.
+If you're missing permissions, do: `chmod +x bin/*`
 
-If you're missing permissions, do: `chmod +x bin/tests/*`
-
-Then do `./bin/tests/integration`
+Then do `./bin/tests`
 
 I have been unable to mock objects in C++ so far, so there are no unit tests for functions that have
-side effects. All tests are integration tests to some extent.
+side effects. Most tests are integration tests.
 
 ### Docs
 

@@ -1,4 +1,5 @@
-Several types of data are stored here. Spaces should be used as delimiters for all files.
+Several types of data are stored here. Spaces should be used as delimiters for separating files into
+two columns. Commas can be used to separate data in columns 8.
 
 It is easier to split lines by space first in C++, and then with a delimiter. All data files should
 have two columns separated by one space, and a further delimiter if it's needed.
@@ -7,12 +8,12 @@ have two columns separated by one space, and a further delimiter if it's needed.
 
 `data/training/` - for training a neural network
 
-The training data will be separated from the target lables/categories via a space
+The training data will be separated from the target labels/categories via a space
 
 Eg - an Xor gate, with 2 input and 1 output:
 
     structure 2,10,1
-    learn_rate 0.3
+    learning_rate 0.3
     target_total_error 0.0005
     0,0 0
     0,1 1

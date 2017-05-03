@@ -4,7 +4,7 @@
 
 Occasionally, a neural network's total error will grow instead of approaching zero. Currently I don't know
 how to fix that. If the total error during training grows then it's best to turn it off and start again,
-because the ones I've let run overnight never approach zero.
+because the ones I've let run overnight never approach zero. Not ideal.
 
 ![target total error grows](issue_target_total_error.png)
 
@@ -12,7 +12,9 @@ It's not an issue with a simple learning task, because if you see it growing you
 start again, but more complicated tasks might be an issue.
 
 This happens roughly 10-20% of all training cases. I've found that setting a higher `target_total_error`
-for the network will mean the network is trained before this anomaly happens.
+for the network will mean the network is trained before this anomaly happens. This will work for
+targets that can be rounded to either 0 or 1. That makes sense if you have several output neurons,
+since then your outputs can together represent a label in binary.
 
 ---
 
