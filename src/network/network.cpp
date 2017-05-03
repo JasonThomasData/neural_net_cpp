@@ -18,7 +18,6 @@ Network::Network(int input_count, int hidden_count, int output_count)
     }
 }
 
-/* To test this, give it a list and int, and then get the size of list */
 void Network::add_neurons_to_layer(std::vector<Neuron>& layer, int neuron_count)
 {
     for(int i=0; i<neuron_count; i++)

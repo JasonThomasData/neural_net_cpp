@@ -1,15 +1,17 @@
-all: $(objects) train integration
+all: $(objects) train test
 .PHONY: all CXXFLAGS objects clean
 CXXFLAGS = -std=c++14 -Wall
 
-objects = $(obj_network) $(obj_trainer) $(obj_classifier) $(obj_integration_tests) $(obj_main_files)
+objects = $(obj_network) $(obj_trainer) $(obj_classifier) $(obj_read_write) $(obj_tests) $(obj_main_files)
 
 obj_network = build/synapse.o build/neuron.o build/network.o
 obj_trainer = build/trainer.o build/backpropagation.o
 obj_classifier = build/feed_forward.o build/classifier.o
-obj_integration_tests = build/i_t_synapse.o build/i_t_network.o build/i_t_classifier.o \
-    build/i_t_feed_forward.o build/i_t_trainer.o build/i_t_backpropagation.o
-obj_main_files = build/train_main.o build/classify_main.o build/i_t_main.o
+obj_read_write = build/reader.o build/parser.o
+obj_tests = build/test_synapse.o build/test_network.o build/test_classifier.o \
+    build/test_feed_forward.o build/test_trainer.o build/test_backpropagation.o \
+	build/test_parser.o build/test_reader.o
+obj_main_files = build/train_main.o build/classify_main.o build/test_main.o
 
 #Network objects
 build/synapse.o: src/network/synapse/synapse.cpp
@@ -35,35 +37,45 @@ build/feed_forward.o: src/classifier/feed_forward.cpp
 build/classifier.o: src/classifier/classifier.cpp
 	g++ -c $(CXXFLAGS) src/classifier/classifier.cpp -o build/classifier.o
 
-#Integration test objects
-build/i_t_synapse.o: test/integration/synapse.cpp
-	g++ -c $(CXXFLAGS) test/integration/synapse.cpp -o build/i_t_synapse.o
-build/i_t_network.o: test/integration/network.cpp
-	g++ -c $(CXXFLAGS) test/integration/network.cpp -o build/i_t_network.o
-build/i_t_feed_forward.o: test/integration/feed_forward.cpp
-	g++ -c $(CXXFLAGS) test/integration/feed_forward.cpp -o build/i_t_feed_forward.o
-build/i_t_classifier.o: test/integration/classifier.cpp
-	g++ -c $(CXXFLAGS) test/integration/classifier.cpp -o build/i_t_classifier.o
-build/i_t_trainer.o: test/integration/trainer.cpp
-	g++ -c $(CXXFLAGS) test/integration/trainer.cpp -o build/i_t_trainer.o
-build/i_t_backpropagation.o: test/integration/backpropagation.cpp
-	g++ -c $(CXXFLAGS) test/integration/backpropagation.cpp -o build/i_t_backpropagation.o
+#Reader and writer objects
+build/reader.o: src/reader/reader.cpp
+	g++ -c $(CXXFLAGS) src/reader/reader.cpp -o build/reader.o
+build/parser.o: src/reader/parser.cpp
+	g++ -c $(CXXFLAGS) src/reader/parser.cpp -o build/parser.o
+
+#Test objects
+build/test_synapse.o: test/src/synapse.cpp
+	g++ -c $(CXXFLAGS) test/src/synapse.cpp -o build/test_synapse.o
+build/test_network.o: test/src/network.cpp
+	g++ -c $(CXXFLAGS) test/src/network.cpp -o build/test_network.o
+build/test_feed_forward.o: test/src/feed_forward.cpp
+	g++ -c $(CXXFLAGS) test/src/feed_forward.cpp -o build/test_feed_forward.o
+build/test_classifier.o: test/src/classifier.cpp
+	g++ -c $(CXXFLAGS) test/src/classifier.cpp -o build/test_classifier.o
+build/test_trainer.o: test/src/trainer.cpp
+	g++ -c $(CXXFLAGS) test/src/trainer.cpp -o build/test_trainer.o
+build/test_backpropagation.o: test/src/backpropagation.cpp
+	g++ -c $(CXXFLAGS) test/src/backpropagation.cpp -o build/test_backpropagation.o
+build/test_parser.o: test/src/parser.cpp
+	g++ -c $(CXXFLAGS) test/src/parser.cpp -o build/test_parser.o
+build/test_reader.o: test/src/reader.cpp
+	g++ -c $(CXXFLAGS) test/src/reader.cpp -o build/test_reader.o
 
 #Main file objects. Each has a main function
 build/train_main.o: src/exe/train.cpp
 	g++ -c $(CXXFLAGS) src/exe/train.cpp -o build/train_main.o
 build/classify_main.o: src/exe/classify.cpp
 	g++ -c $(CXXFLAGS) src/exe/classify.cpp -o build/classify_main.o
-build/i_t_main.o: test/main.cpp
-	g++ -c $(CXXFLAGS) test/main.cpp -o build/i_t_main.o
+build/test_main.o: test/main.cpp
+	g++ -c $(CXXFLAGS) test/main.cpp -o build/test_main.o
 
 # The actual executables
-train: $(obj_network) $(obj_classifier) $(obj_trainer) build/train_main.o
-	g++ $(CXXFLAGS) $(obj_network) $(obj_classifier) $(obj_trainer) build/train_main.o -o bin/train
+train: $(obj_network) $(obj_classifier) $(obj_trainer) $(obj_files) build/train_main.o
+	g++ $(CXXFLAGS) $(obj_network) $(obj_classifier) $(obj_trainer) $(obj_files) build/train_main.o -o bin/train
 classify: $(obj_network) $(obj_classifier) build/classify_main.o
 	g++ $(CXXFLAGS) $(obj_network) $(obj_classifier) build/classify_main.o -o bin/classify
-integration: $(obj_network) $(obj_classifier) $(obj_trainer) $(obj_integration_tests) build/i_t_main.o
-	g++ $(CXXFLAGS) $(obj_network) $(obj_classifier) $(obj_trainer) $(obj_integration_tests) build/i_t_main.o -o bin/tests/integration
+test: $(obj_network) $(obj_classifier) $(obj_trainer) $(obj_read_write) $(obj_tests) build/test_main.o
+	g++ $(CXXFLAGS) $(obj_network) $(obj_classifier) $(obj_trainer) $(obj_read_write) $(obj_tests) build/test_main.o -o bin/test
 
 clean:
 	\rm build/*
