@@ -4,10 +4,10 @@
 #include <fstream>
 #include "parser.h"
 
+struct TrainingData;
+
 /* Responsible for loading and parsing text files. One public member function for each type of file.
  */
-
-struct TrainingData;
 
 class Reader
 {

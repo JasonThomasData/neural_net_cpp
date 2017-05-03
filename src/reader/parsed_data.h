@@ -1,3 +1,6 @@
+#ifndef TrainingData_h
+#define TrainingData_h
+
 #include <vector>
 #include <fstream>
 
@@ -5,10 +8,11 @@
 
 struct TrainingData
 {
-    float learn_rate;
-    float target_total_error;
+    double learning_rate;
+    double target_total_error;
     std::vector<int> structure;
     std::vector<std::vector<double> > data;
     std::vector<std::vector<double> > targets;
 };
 
+#endif
