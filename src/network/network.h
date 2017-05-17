@@ -19,7 +19,7 @@ class Network
         std::vector<Neuron> input_layer;
         std::vector<Neuron> hidden_layer;
         std::vector<Neuron> output_layer;
-        Network(int input_count, int hidden_count, int output_count);
+        Network(std::vector<int> layer_counts);
 };
 
 #endif

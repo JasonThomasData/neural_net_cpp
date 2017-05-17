@@ -1,9 +1,14 @@
 #include "network.h"
 #include <stdexcept>
+#include <vector>
 #include "synapse/synapse.h"
 
-Network::Network(int input_count, int hidden_count, int output_count)
+Network::Network(std::vector<int> layer_counts)
 {
+    int input_count = layer_counts.at(0);
+    int hidden_count = layer_counts.at(1);
+    int output_count = layer_counts.at(2);
+
     if((input_count > 0) && (hidden_count > 0) && (output_count > 0))
     {
         add_neurons_to_layer(input_layer, input_count);
