@@ -70,8 +70,8 @@ build/test_main.o: test/main.cpp
 	g++ -c $(CXXFLAGS) test/main.cpp -o build/test_main.o
 
 # The actual executables
-train: $(obj_network) $(obj_classifier) $(obj_trainer) $(obj_files) build/train_main.o
-	g++ $(CXXFLAGS) $(obj_network) $(obj_classifier) $(obj_trainer) $(obj_files) build/train_main.o -o bin/train
+train: $(obj_network) $(obj_classifier) $(obj_trainer) $(obj_read_write) build/train_main.o
+	g++ $(CXXFLAGS) $(obj_network) $(obj_classifier) $(obj_trainer) $(obj_read_write) build/train_main.o -o bin/train
 classify: $(obj_network) $(obj_classifier) build/classify_main.o
 	g++ $(CXXFLAGS) $(obj_network) $(obj_classifier) build/classify_main.o -o bin/classify
 test: $(obj_network) $(obj_classifier) $(obj_trainer) $(obj_read_write) $(obj_tests) build/test_main.o
