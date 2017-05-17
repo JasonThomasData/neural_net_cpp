@@ -14,7 +14,8 @@ int Parser::to_int(std::string to_convert)
         return result;
     } catch (...)
     {
-        throw std::invalid_argument( "Your file contains information that is not alpha-numeric. See docs" );
+        std::string error_message = "Your file contains information that is not alpha-numeric. Check to_int + " + to_convert;
+        throw std::invalid_argument(error_message);
     }
 }
 /*These look very similar, as are the functions below. Is there a way to combine them?*/
@@ -26,7 +27,8 @@ double Parser::to_double(std::string to_convert)
         return result;
     } catch (...)
     {
-        throw std::invalid_argument( "Your file contains information that is not alpha-numeric. See docs" );
+        std::string error_message = "Your file contains information that is not alpha-numeric. Check to_double + " + to_convert;
+        throw std::invalid_argument(error_message);
     }
 }
 
