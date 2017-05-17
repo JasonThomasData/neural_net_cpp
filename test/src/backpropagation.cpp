@@ -4,6 +4,7 @@
 #include "../../src/network/neuron/neuron.h"
 #include "../../src/network/network.h"
 #include <vector>
+#include <iostream>
 
 
 TEST_CASE( "backpropagation - update one neuron's error")
@@ -140,11 +141,17 @@ TEST_CASE( "backpropagation - same as before but do forward feed first.")
 
     /* Neural network and classifier borrowed from integration/classifier.cpp */
 
-    /* Initialise network */
+    std::vector<int> layer_counts;
+
     int input_count = 2;
     int hidden_count = 2;
     int output_count = 1;
-    Network neural_network(input_count, hidden_count, output_count);
+
+    layer_counts.emplace_back(input_count);
+    layer_counts.emplace_back(hidden_count);
+    layer_counts.emplace_back(output_count);
+
+    Network neural_network(layer_counts);
     
     /* For this test, we need to know exactly what the Synapse weights are. */
     neural_network.hidden_layer.at(0).incoming_synapses.at(0).weight = 0.5;

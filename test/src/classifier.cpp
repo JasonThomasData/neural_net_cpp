@@ -5,11 +5,17 @@
 
 TEST_CASE( "classifier - set inputs") {
 
+    std::vector<int> layer_counts;
+
     int input_count = 2;
     int hidden_count = 3;
     int output_count = 1;
 
-    Network neural_network(input_count, hidden_count, output_count);
+    layer_counts.emplace_back(input_count);
+    layer_counts.emplace_back(hidden_count);
+    layer_counts.emplace_back(output_count);
+
+    Network neural_network(layer_counts);
 
     Classifier classifier(neural_network);
 
@@ -31,11 +37,17 @@ TEST_CASE( "classifier - set inputs") {
 
 TEST_CASE( "classifier - set inputs, fail cause the inputs are wrong size.") {
 
+    std::vector<int> layer_counts;
+
     int input_count = 2;
     int hidden_count = 3;
     int output_count = 1;
 
-    Network neural_network(input_count, hidden_count, output_count);
+    layer_counts.emplace_back(input_count);
+    layer_counts.emplace_back(hidden_count);
+    layer_counts.emplace_back(output_count);
+
+    Network neural_network(layer_counts);
 
     Classifier classifier(neural_network);
 
@@ -51,11 +63,17 @@ TEST_CASE( "classifier - set inputs, fail cause the inputs are wrong size.") {
 /* This is a large test, and requires the neurons to be using logistic regression for activation */
 TEST_CASE( "classifier - feed forward") {
 
+    std::vector<int> layer_counts;
+
     int input_count = 2;
     int hidden_count = 2;
     int output_count = 1;
 
-    Network neural_network(input_count, hidden_count, output_count);
+    layer_counts.emplace_back(input_count);
+    layer_counts.emplace_back(hidden_count);
+    layer_counts.emplace_back(output_count);
+
+    Network neural_network(layer_counts);
     
     /* For this test, we need to know exactly what the Synapse weights are. */
     neural_network.hidden_layer.at(0).incoming_synapses.at(0).weight = 0.5;

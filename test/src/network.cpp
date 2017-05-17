@@ -4,11 +4,17 @@
 TEST_CASE( "network - initialise, add neurons to layers ")
 {
 
+    std::vector<int> layer_counts;
+
     int input_count = 4;
     int hidden_count = 7;
     int output_count = 3;
 
-    Network neural_network(input_count, hidden_count, output_count);
+    layer_counts.emplace_back(input_count);
+    layer_counts.emplace_back(hidden_count);
+    layer_counts.emplace_back(output_count);
+
+    Network neural_network(layer_counts);
 
     int actual_result1 = neural_network.input_layer.size();
     int expected_result1 = 4;
@@ -25,10 +31,17 @@ TEST_CASE( "network - initialise, add neurons to layers ")
 
 void helper()
 {
+    std::vector<int> layer_counts;
+
     int input_count = 4;
     int hidden_count = 0;
     int output_count = 3;
-    Network neural_network(input_count, hidden_count, output_count);
+
+    layer_counts.emplace_back(input_count);
+    layer_counts.emplace_back(hidden_count);
+    layer_counts.emplace_back(output_count);
+
+    Network neural_network(layer_counts);
 }
 TEST_CASE( "network - initialise, but throw an error if the layers are wrong ")
 {
@@ -41,12 +54,17 @@ TEST_CASE( "network - initialise, but throw an error if the layers are wrong ")
  */
 TEST_CASE( "network - initialise, connect neurons between layers with synapses")
 {
+    std::vector<int> layer_counts;
 
-    int input_count = 2;
-    int hidden_count = 2;
-    int output_count = 2;
+    int input_count = 4;
+    int hidden_count = 7;
+    int output_count = 3;
 
-    Network neural_network(input_count, hidden_count, output_count);
+    layer_counts.emplace_back(input_count);
+    layer_counts.emplace_back(hidden_count);
+    layer_counts.emplace_back(output_count);
+
+    Network neural_network(layer_counts);
 
     /* Hidden layer */
     neural_network.hidden_layer.at(0).outgoing_synapses.at(0).get_from_neuron_weighted_outgoing_value();

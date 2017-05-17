@@ -20,7 +20,7 @@ TEST_CASE( "trainer - get total_error for network")
     output_layer.emplace_back(output_neuron_1);
     output_layer.emplace_back(output_neuron_2);
 
-    Network network(2, 2, 2); /* Not actually used, but the trainer needs it for init */
+    Network network({2, 2, 2}); /* Not actually used, but the trainer needs it for init */
     Trainer trainer(network, learning_rate);
 
     float actual_result = trainer.calculate_total_error(output_layer);
@@ -33,11 +33,17 @@ TEST_CASE( "trainer - get total_error for network")
 TEST_CASE( "trainer - set target_values")
 {
 
-    int input_count = 1;
-    int hidden_count = 1;
+    std::vector<int> layer_counts;
+
+    int input_count = 2;
+    int hidden_count = 3;
     int output_count = 2;
 
-    Network neural_network(input_count, hidden_count, output_count);
+    layer_counts.emplace_back(input_count);
+    layer_counts.emplace_back(hidden_count);
+    layer_counts.emplace_back(output_count);
+
+    Network neural_network(layer_counts);
 
     double learning_rate = 0.0; /* used in backpropagation */
     Trainer trainer(neural_network, learning_rate);
@@ -61,11 +67,17 @@ TEST_CASE( "trainer - set target_values")
 TEST_CASE( "trainer - set target_values, will fail because length of vectors don't match")
 {
 
-    int input_count = 1;
-    int hidden_count = 1;
-    int output_count = 2;
+    std::vector<int> layer_counts;
 
-    Network neural_network(input_count, hidden_count, output_count);
+    int input_count = 2;
+    int hidden_count = 3;
+    int output_count = 1;
+
+    layer_counts.emplace_back(input_count);
+    layer_counts.emplace_back(hidden_count);
+    layer_counts.emplace_back(output_count);
+
+    Network neural_network(layer_counts);
 
     double learning_rate = 0.0; /* used in backpropagation */
     Trainer trainer(neural_network, learning_rate);
