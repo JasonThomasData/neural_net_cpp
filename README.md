@@ -20,6 +20,7 @@ side effects. Most tests are integration tests.
 
 - [using the program](docs/usage.md)
 - [data file structure](docs/data_files.md)
+- [example](docs/example.md)
 - [issues with the program](docs/issues.md)
 - [reasons for project structure](docs/discussion.md)
 - [optimistic list of things to add](docs/to_add.md)

@@ -4,6 +4,17 @@ two columns. Commas can be used to separate data in columns 8.
 It is easier to split lines by space first in C++, and then with a delimiter. All data files should
 have two columns separated by one space, and a further delimiter if it's needed.
 
+Some terms need explaining:
+
+- structure: in Neurons, the first, hidden and output layers. The first and output layers should
+  have as many Neurons as the training set has training documents, and training labels (each in
+  columns, separated by commas).
+- learning_rate: during backpropagation, the weight of a Synapse, or connection between Neurons, is
+  modified by this variable. Useful for making sure those weights don't change too quickly, and this
+  has good results with some networks.
+- target_total_error: when training an entire epoch (all documents and labels) produces an average
+  total_error for the epoch, and that average error is lower than this, training stops.
+
 ---
 
 `data/training/` - for training a neural network
@@ -36,6 +47,8 @@ Eg - binary converter, with one input and 4 outputs:
     8 1,0,0,0
     9 1,0,0,1
 
+It seems that the network generally performs better when the input and target values are binary
+numbers.
 ---
 
 `data/network/` - for recreating a network after it was trained.

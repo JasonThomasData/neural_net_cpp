@@ -9,7 +9,7 @@ connect Neurons into a file.
 
 You might use it like this:
 
-    ./bin/train --train data/training/XnorGate --dump data/networks/231_XnorGate
+    ./bin/train --data data/training/XnorGate --dump data/networks/231_XnorGate
 
 The --options mean:
 
