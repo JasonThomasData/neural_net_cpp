@@ -1,4 +1,5 @@
 #include "../network/network.h"
+#include "../network/neuron/neuron.h"
 #include "../classifier/classifier.h"
 #include "../trainer/trainer.h"
 #include "../reader/reader.h"
@@ -22,13 +23,16 @@ double get_average_error(std::vector<double> all_total_errors)
 
 void classify_epoch(Network& network, TrainingData& training_data, Classifier& classifier)
 {
-    for(int i=0; i<training_data.data.size(); i++)
+    int training_data_size = training_data.data.size();
+
+    for(int i=0; i<training_data_size; i++)
     {
         std::vector<double> new_inputs = training_data.data.at(i);
         classifier.set_input_values(new_inputs);
         classifier.classify();
 
-        for(int j=0; j<new_inputs.size(); j++)
+        int new_inputs_size = new_inputs.size();
+        for(int j=0; j<new_inputs_size; j++)
         {
             std::cout<< new_inputs.at(j);
             std::cout<< ",";
@@ -36,9 +40,12 @@ void classify_epoch(Network& network, TrainingData& training_data, Classifier& c
 
         std::cout<< " - ";
 
-        for(int k=0; k<network.output_layer.size(); k++)
+        std::vector<Neuron> updated_outputs = network.output_layer;
+
+        int updated_outputs_size = updated_outputs.size();
+        for(int k=0; k<updated_outputs_size; k++)
         {
-            std::cout<< network.output_layer.at(k).outgoing_value;
+            std::cout<< updated_outputs.at(k).outgoing_value;
             std::cout<< ",";
         }
         std::cout<< std::endl;
@@ -48,8 +55,9 @@ void classify_epoch(Network& network, TrainingData& training_data, Classifier& c
 void train_epoch(Network& network, TrainingData& training_data, Classifier& classifier, Trainer& trainer)
 {
     std::vector<double> all_total_errors;
+    int training_data_size = training_data.data.size();
 
-    for(int i=0; i < training_data.data.size(); i++)
+    for(int i=0; i<training_data_size; i++)
     {
         std::vector<double> new_inputs = training_data.data.at(i);
         classifier.set_input_values(new_inputs);
