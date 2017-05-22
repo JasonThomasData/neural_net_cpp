@@ -2,7 +2,7 @@
 #include "../../src/reader/reader.h"
 #include "../../src/reader/parsed_data.h"
 
-TEST_CASE( "reader - integration test - test there's no file")
+TEST_CASE( "reader - unit test - test there's no file")
 {
     Reader reader;
 

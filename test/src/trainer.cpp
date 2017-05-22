@@ -4,7 +4,7 @@
 #include "../../src/network/network.h"
 #include <vector>
 
-TEST_CASE( "trainer - get total_error for network")
+TEST_CASE( "trainer - integration test - get total_error for network")
 {
 
     Neuron output_neuron_1;
@@ -30,7 +30,7 @@ TEST_CASE( "trainer - get total_error for network")
 
 }
 
-TEST_CASE( "trainer - set target_values")
+TEST_CASE( "trainer - integration test - set target_values")
 {
 
     std::vector<int> layer_counts;
@@ -64,7 +64,7 @@ TEST_CASE( "trainer - set target_values")
 
 }
 
-TEST_CASE( "trainer - set target_values, will fail because length of vectors don't match")
+TEST_CASE( "trainer - integration test - set target_values, will fail because length of vectors don't match")
 {
 
     std::vector<int> layer_counts;

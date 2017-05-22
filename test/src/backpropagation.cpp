@@ -7,7 +7,7 @@
 #include <iostream>
 
 
-TEST_CASE( "backpropagation - update one neuron's error")
+TEST_CASE( "backpropagation - integration test - update one neuron's error")
 {
 
     Neuron output_neuron;
@@ -34,7 +34,7 @@ TEST_CASE( "backpropagation - update one neuron's error")
 
 }
 
-TEST_CASE( "backpropagation - output layer update one incoming synapse, learning 1.0")
+TEST_CASE( "backpropagation - integration test - output layer update one incoming synapse, learning 1.0")
 {
 
     Neuron hidden_neuron;
@@ -62,7 +62,7 @@ TEST_CASE( "backpropagation - output layer update one incoming synapse, learning
 
 }
 
-TEST_CASE( "backpropagation - output layer update one incoming synapse, learning 0.15")
+TEST_CASE( "backpropagation - integration test - output layer update one incoming synapse, learning 0.15")
 {
 
     Neuron hidden_neuron;
@@ -90,7 +90,7 @@ TEST_CASE( "backpropagation - output layer update one incoming synapse, learning
 }
 
 
-TEST_CASE( "backpropagation - update two incoming synapse")
+TEST_CASE( "backpropagation - integration test - update two incoming synapses")
 {
 
     Neuron hidden_neuron_1;
@@ -136,7 +136,7 @@ TEST_CASE( "backpropagation - update two incoming synapse")
 }
 
 
-TEST_CASE( "backpropagation - same as before but do forward feed first.")
+TEST_CASE( "backpropagation - integration test - same as before but do forward feed first.")
 {
 
     /* Neural network and classifier borrowed from integration/classifier.cpp */
@@ -204,7 +204,7 @@ TEST_CASE( "backpropagation - same as before but do forward feed first.")
 
 }
 
-TEST_CASE( "backpropagation - test hidden_layer total_errors") 
+TEST_CASE( "backpropagation - integration test - test hidden_layer total_errors")
 {
 
     Neuron from_neuron;
@@ -235,7 +235,7 @@ TEST_CASE( "backpropagation - test hidden_layer total_errors")
 
 /* This sets the weight of the incoming value to the hidden layer, not the synapse between hidden
  * and output. */
-TEST_CASE( "backpropagation - test hidden_layer set synapse")
+TEST_CASE( "backpropagation - integration test - test hidden_layer set synapse")
 {
 
     Neuron input_neuron;

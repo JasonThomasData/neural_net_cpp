@@ -3,7 +3,7 @@
 #include "../../src/network/neuron/neuron.h"
 #include "../../src/classifier/feed_forward.h"
 
-TEST_CASE( "feed_forward - test the sum function works - combine all incoming values")
+TEST_CASE( "feed_forward - integration test - test the sum function works - combine all incoming values")
 {
     /* Both synapses have the same to neuron and it's not used in the function.
      */
@@ -33,7 +33,7 @@ TEST_CASE( "feed_forward - test the sum function works - combine all incoming va
     REQUIRE(Approx(actual_result) == expected_result);
 }
 
-TEST_CASE( "feed_forward - test the logistic/ activation function works.")
+TEST_CASE( "feed_forward - unit test - test the logistic/ activation function works.")
 {
     /* This is logistic regression, check the feed_forward.cpp file */
     /* Also, watch tests that return floats, as returned floats have a max precision of 5 decimal
@@ -67,7 +67,7 @@ TEST_CASE( "feed_forward - test the logistic/ activation function works.")
     REQUIRE(Approx(actual_result_4) == expected_result_4);
 }
 
-TEST_CASE( "feed_forward - activate one Neuron, via one incoming synapse #1 ") {
+TEST_CASE( "feed_forward - integration test - activate one Neuron, via one incoming synapse #1 ") {
     /* For a neuron to activate, the synapses coming in must all have weights, and the neurons those
      * synapses originate from must have an output_value
      */
@@ -91,7 +91,7 @@ TEST_CASE( "feed_forward - activate one Neuron, via one incoming synapse #1 ") {
     REQUIRE(Approx(actual_result) == expected_result);
 }
 
-TEST_CASE( "neuron - activate, via one incoming synapse #2 ") {
+TEST_CASE( "neuron - integration test - activate, via one incoming synapse #2 ") {
     /* For a neuron to activate, the synapses coming in must all have weights, and the neurons those
      * synapses originate from must have an output_value
      */
@@ -115,7 +115,7 @@ TEST_CASE( "neuron - activate, via one incoming synapse #2 ") {
     REQUIRE(Approx(actual_result) == expected_result);
 }
 
-TEST_CASE( "neuron - activate, via several incoming synapses, and only calling update() ") {
+TEST_CASE( "neuron -  integration test - activate, via several incoming synapses, and only calling update() ") {
     /* For a neuron to activate, the synapses coming in must all have weights, and the neurons those
      * synapses originate from must have an output_value
      */

@@ -3,7 +3,7 @@
 #include "../../src/network/network.h"
 #include <vector>
 
-TEST_CASE( "classifier - set inputs") {
+TEST_CASE( "classifier - integration test - set inputs") {
 
     std::vector<int> layer_counts;
 
@@ -35,7 +35,7 @@ TEST_CASE( "classifier - set inputs") {
 
 }
 
-TEST_CASE( "classifier - set inputs, fail cause the inputs are wrong size.") {
+TEST_CASE( "classifier - integration test - set inputs, fail cause the inputs are wrong size.") {
 
     std::vector<int> layer_counts;
 
@@ -61,7 +61,7 @@ TEST_CASE( "classifier - set inputs, fail cause the inputs are wrong size.") {
 }
 
 /* This is a large test, and requires the neurons to be using logistic regression for activation */
-TEST_CASE( "classifier - feed forward") {
+TEST_CASE( "classifier - integration test - feed forward") {
 
     std::vector<int> layer_counts;
 

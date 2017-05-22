@@ -2,7 +2,7 @@
 #include "../../src/network/synapse/synapse.h"
 #include "../../src/network/neuron/neuron.h"
 
-TEST_CASE( "synapse - get from_neuron's weighted output_value #1 ") {
+TEST_CASE( "synapse - integration test - get from_neuron's weighted output_value #1 ") {
 
     /* InputNeuron has a public data member called output_value. This is the first layer. */
     Neuron from_neuron;

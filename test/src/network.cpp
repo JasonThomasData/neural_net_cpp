@@ -1,7 +1,7 @@
 #include "../catch.h"
 #include "../../src/network/network.h"
 
-TEST_CASE( "network - initialise, add neurons to layers ")
+TEST_CASE( "network - unit test - initialise, add neurons to layers ")
 {
 
     std::vector<int> layer_counts;
@@ -43,7 +43,7 @@ void helper()
 
     Network neural_network(layer_counts);
 }
-TEST_CASE( "network - initialise, but throw an error if the layers are wrong ")
+TEST_CASE( "network - unit test - initialise, but throw an error if the layers are wrong ")
 {
     REQUIRE_THROWS( helper() );
 }
@@ -52,7 +52,7 @@ TEST_CASE( "network - initialise, but throw an error if the layers are wrong ")
  * This is not how the neurons are accessed, but, in a layer if the nth neuron's nth
  * incoming/outgoing synapse can call that function, then the neurons are connected. 
  */
-TEST_CASE( "network - initialise, connect neurons between layers with synapses")
+TEST_CASE( "network - unit test - initialise, connect neurons between layers with synapses")
 {
     std::vector<int> layer_counts;
 

@@ -14,7 +14,8 @@ If you're missing permissions, do: `chmod +x bin/*`
 Then do `./bin/tests`
 
 I have been unable to mock objects in C++ so far, so there are no unit tests for functions that have
-side effects. Most tests are integration tests.
+side effects. Most tests are integration tests, and are marked integration tests depending on
+whether other objects (not mocks) are defined in the testcase.
 
 ### Docs
 
