@@ -8,6 +8,8 @@
  * Other than initialisation, this should be thought of as a passive thing that other classes
  * manipulate. */
 
+class Neuron; // neuron/neuron.h
+
 class Network
 {
     private:

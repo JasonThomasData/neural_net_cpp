@@ -2,12 +2,13 @@
 #define Backpropagation_h
 
 #include <vector>
-#include "../network/synapse/synapse.h"
-#include "../network/neuron/neuron.h"
 
 /* This class has all logic to train the network. Set as a private data member inside Trainer().
  * This class will do all the work relating to backpropagation. 
  */
+
+class Neuron;   //  ../network/synapse/synapse.h
+class Synapse;  //  ../network/neuron/neuron.h
 
 class Backpropagation
 {

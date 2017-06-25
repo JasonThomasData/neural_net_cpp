@@ -8,8 +8,8 @@
  * classification, input values are set and Neuron is told to update its values, starting with the
  * input_layer and finishing with the output layer. */
 
-class Network;
-class Neuron;
+class Network;     //  ../network/network.h
+class Neuron;      //  ../network/neuron/neuron.h
 
 class Classifier
 {
