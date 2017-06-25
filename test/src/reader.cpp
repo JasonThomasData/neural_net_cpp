@@ -1,4 +1,4 @@
-#include "../catch.h"
+#include "../../lib/catch.h"
 #include "../../src/reader/reader.h"
 #include "../../src/parser/parsed_data.h"
 

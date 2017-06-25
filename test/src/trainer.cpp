@@ -1,8 +1,8 @@
-#include "../catch.h"
+#include <vector>
+#include "../../lib/catch.h"
 #include "../../src/trainer/trainer.h"
 #include "../../src/network/neuron/neuron.h"
 #include "../../src/network/network.h"
-#include <vector>
 
 TEST_CASE( "trainer - integration test - get total_error for network")
 {

@@ -1,7 +1,7 @@
-#include "../catch.h"
+#include <vector>
+#include "../../lib/catch.h"
 #include "../../src/classifier/classifier.h"
 #include "../../src/network/network.h"
-#include <vector>
 
 TEST_CASE( "classifier - integration test - set inputs") {
 

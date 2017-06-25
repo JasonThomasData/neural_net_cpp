@@ -1,11 +1,10 @@
-#include "../catch.h"
+#include <vector>
+#include <iostream>
+#include "../../lib/catch.h"
 #include "../../src/trainer/backpropagation.h"
 #include "../../src/classifier/classifier.h"
 #include "../../src/network/neuron/neuron.h"
 #include "../../src/network/network.h"
-#include <vector>
-#include <iostream>
-
 
 TEST_CASE( "backpropagation - integration test - update one neuron's error")
 {

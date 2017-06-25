@@ -1,4 +1,4 @@
-#include "../catch.h"
+#include "../../lib/catch.h"
 #include "../../src/network/synapse/synapse.h"
 #include "../../src/network/neuron/neuron.h"
 
