@@ -1,6 +1,6 @@
 #include "../catch.h"
 #include "../../src/reader/reader.h"
-#include "../../src/reader/parsed_data.h"
+#include "../../src/parser/parsed_data.h"
 
 TEST_CASE( "reader - unit test - test there's no file")
 {

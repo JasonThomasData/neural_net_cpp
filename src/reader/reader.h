@@ -2,7 +2,7 @@
 #define Reader_h
 
 #include <fstream>
-#include "parser.h"
+#include "../parser/parser.h"
 
 struct TrainingData;
 

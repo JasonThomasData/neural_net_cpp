@@ -1,5 +1,5 @@
 #include "../catch.h"
-#include "../../src/reader/parser.h"
+#include "../../src/parser/parser.h"
 #include <vector>
 #include <iostream>
 

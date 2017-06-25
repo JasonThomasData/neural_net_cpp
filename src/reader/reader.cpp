@@ -2,7 +2,7 @@
 #include <iostream>
 #include <vector>
 #include <stdexcept>
-#include "parsed_data.h"
+#include "../parser/parsed_data.h"
 #include "reader.h"
 
 Reader::Reader(){}

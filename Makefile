@@ -40,8 +40,8 @@ build/classifier.o: src/classifier/classifier.cpp
 #Reader and writer objects
 build/reader.o: src/reader/reader.cpp
 	g++ -c $(CXXFLAGS) src/reader/reader.cpp -o build/reader.o
-build/parser.o: src/reader/parser.cpp
-	g++ -c $(CXXFLAGS) src/reader/parser.cpp -o build/parser.o
+build/parser.o: src/parser/parser.cpp
+	g++ -c $(CXXFLAGS) src/parser/parser.cpp -o build/parser.o
 
 #Test objects
 build/test_synapse.o: test/src/synapse.cpp
