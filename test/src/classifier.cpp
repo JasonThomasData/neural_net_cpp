@@ -75,13 +75,15 @@ TEST_CASE( "classifier - integration test - feed forward") {
 
     Network neural_network(layer_counts);
     
+    //Note - synapses are shared_ptr objects, and use ->
+
     /* For this test, we need to know exactly what the Synapse weights are. */
-    neural_network.hidden_layer.at(0).incoming_synapses.at(0).set_weight(0.5);
-    neural_network.hidden_layer.at(0).incoming_synapses.at(1).set_weight(0.2);
-    neural_network.hidden_layer.at(1).incoming_synapses.at(0).set_weight(0.6);
-    neural_network.hidden_layer.at(1).incoming_synapses.at(1).set_weight(0.5);
-    neural_network.output_layer.at(0).incoming_synapses.at(0).set_weight(0.7);
-    neural_network.output_layer.at(0).incoming_synapses.at(1).set_weight(0.3);
+    neural_network.hidden_layer.at(0).incoming_synapses.at(0)->set_weight(0.5);
+    neural_network.hidden_layer.at(0).incoming_synapses.at(1)->set_weight(0.2);
+    neural_network.hidden_layer.at(1).incoming_synapses.at(0)->set_weight(0.6);
+    neural_network.hidden_layer.at(1).incoming_synapses.at(1)->set_weight(0.5);
+    neural_network.output_layer.at(0).incoming_synapses.at(0)->set_weight(0.7);
+    neural_network.output_layer.at(0).incoming_synapses.at(1)->set_weight(0.3);
 
     Classifier classifier(neural_network);
 

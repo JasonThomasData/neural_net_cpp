@@ -66,20 +66,22 @@ TEST_CASE( "network - unit test - initialise, connect neurons between layers wit
 
     Network neural_network(layer_counts);
 
+    //Note -all synapses are shared pointers, hence the -> calls.
+
     /* Hidden layer */
-    neural_network.hidden_layer.at(0).outgoing_synapses.at(0).get_from_neuron_weighted_outgoing_value();
-    neural_network.hidden_layer.at(0).incoming_synapses.at(0).get_from_neuron_weighted_outgoing_value();
-    neural_network.hidden_layer.at(0).outgoing_synapses.at(1).get_from_neuron_weighted_outgoing_value();
-    neural_network.hidden_layer.at(0).incoming_synapses.at(1).get_from_neuron_weighted_outgoing_value();
-    neural_network.hidden_layer.at(1).outgoing_synapses.at(0).get_from_neuron_weighted_outgoing_value();
-    neural_network.hidden_layer.at(1).incoming_synapses.at(0).get_from_neuron_weighted_outgoing_value();
-    neural_network.hidden_layer.at(1).outgoing_synapses.at(1).get_from_neuron_weighted_outgoing_value();
-    neural_network.hidden_layer.at(1).incoming_synapses.at(1).get_from_neuron_weighted_outgoing_value();
+    neural_network.hidden_layer.at(0).outgoing_synapses.at(0)->get_from_neuron_weighted_outgoing_value();
+    neural_network.hidden_layer.at(0).incoming_synapses.at(0)->get_from_neuron_weighted_outgoing_value();
+    neural_network.hidden_layer.at(0).outgoing_synapses.at(1)->get_from_neuron_weighted_outgoing_value();
+    neural_network.hidden_layer.at(0).incoming_synapses.at(1)->get_from_neuron_weighted_outgoing_value();
+    neural_network.hidden_layer.at(1).outgoing_synapses.at(0)->get_from_neuron_weighted_outgoing_value();
+    neural_network.hidden_layer.at(1).incoming_synapses.at(0)->get_from_neuron_weighted_outgoing_value();
+    neural_network.hidden_layer.at(1).outgoing_synapses.at(1)->get_from_neuron_weighted_outgoing_value();
+    neural_network.hidden_layer.at(1).incoming_synapses.at(1)->get_from_neuron_weighted_outgoing_value();
 
     /* Output layer */
-    neural_network.output_layer.at(0).incoming_synapses.at(0).get_from_neuron_weighted_outgoing_value();
-    neural_network.output_layer.at(0).incoming_synapses.at(1).get_from_neuron_weighted_outgoing_value();
-    neural_network.output_layer.at(1).incoming_synapses.at(0).get_from_neuron_weighted_outgoing_value();
-    neural_network.output_layer.at(1).incoming_synapses.at(1).get_from_neuron_weighted_outgoing_value();
+    neural_network.output_layer.at(0).incoming_synapses.at(0)->get_from_neuron_weighted_outgoing_value();
+    neural_network.output_layer.at(0).incoming_synapses.at(1)->get_from_neuron_weighted_outgoing_value();
+    neural_network.output_layer.at(1).incoming_synapses.at(0)->get_from_neuron_weighted_outgoing_value();
+    neural_network.output_layer.at(1).incoming_synapses.at(1)->get_from_neuron_weighted_outgoing_value();
 }
 

@@ -14,10 +14,10 @@ TEST_CASE( "writer - integration test - get weights between two layers")
 	layer_counts.emplace_back(output_layer);
 
 	Network network(layer_counts);
-    network.hidden_layer.at(0).incoming_synapses.at(0).set_weight(0.37);
-    network.hidden_layer.at(0).incoming_synapses.at(1).set_weight(0.61);
-    network.hidden_layer.at(1).incoming_synapses.at(0).set_weight(0.23);
-    network.hidden_layer.at(1).incoming_synapses.at(1).set_weight(0.58);
+    network.hidden_layer.at(0).incoming_synapses.at(0)->set_weight(0.37);
+    network.hidden_layer.at(0).incoming_synapses.at(1)->set_weight(0.61);
+    network.hidden_layer.at(1).incoming_synapses.at(0)->set_weight(0.23);
+    network.hidden_layer.at(1).incoming_synapses.at(1)->set_weight(0.58);
 
     Writer writer;
     //writer.dump_network_data(network);
