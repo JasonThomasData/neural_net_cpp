@@ -1,4 +1,4 @@
-#include "../catch.h"
+#include "../../lib/catch.h"
 #include "../../src/network/network.h"
 
 TEST_CASE( "network - unit test - initialise, add neurons to layers ")

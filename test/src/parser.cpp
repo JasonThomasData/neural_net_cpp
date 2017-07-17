@@ -1,7 +1,7 @@
-#include "../catch.h"
-#include "../../src/parser/parser.h"
 #include <vector>
 #include <iostream>
+#include "../../lib/catch.h"
+#include "../../src/parser/parser.h"
 
 TEST_CASE( "parser - unit test - test a string is parsed to a vector")
 {
