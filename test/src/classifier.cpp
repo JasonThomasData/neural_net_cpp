@@ -1,7 +1,7 @@
-#include "../catch.h"
+#include <vector>
+#include "../../lib/catch.h"
 #include "../../src/classifier/classifier.h"
 #include "../../src/network/network.h"
-#include <vector>
 
 TEST_CASE( "classifier - integration test - set inputs") {
 
@@ -76,12 +76,12 @@ TEST_CASE( "classifier - integration test - feed forward") {
     Network neural_network(layer_counts);
     
     /* For this test, we need to know exactly what the Synapse weights are. */
-    neural_network.hidden_layer.at(0).incoming_synapses.at(0).weight = 0.5;
-    neural_network.hidden_layer.at(0).incoming_synapses.at(1).weight = 0.2;
-    neural_network.hidden_layer.at(1).incoming_synapses.at(0).weight = 0.6;
-    neural_network.hidden_layer.at(1).incoming_synapses.at(1).weight = 0.5;
-    neural_network.output_layer.at(0).incoming_synapses.at(0).weight = 0.7;
-    neural_network.output_layer.at(0).incoming_synapses.at(1).weight = 0.3;
+    neural_network.hidden_layer.at(0).incoming_synapses.at(0).set_weight(0.5);
+    neural_network.hidden_layer.at(0).incoming_synapses.at(1).set_weight(0.2);
+    neural_network.hidden_layer.at(1).incoming_synapses.at(0).set_weight(0.6);
+    neural_network.hidden_layer.at(1).incoming_synapses.at(1).set_weight(0.5);
+    neural_network.output_layer.at(0).incoming_synapses.at(0).set_weight(0.7);
+    neural_network.output_layer.at(0).incoming_synapses.at(1).set_weight(0.3);
 
     Classifier classifier(neural_network);
 

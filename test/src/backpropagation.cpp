@@ -1,11 +1,10 @@
-#include "../catch.h"
+#include <vector>
+#include <iostream>
+#include "../../lib/catch.h"
 #include "../../src/trainer/backpropagation.h"
 #include "../../src/classifier/classifier.h"
 #include "../../src/network/neuron/neuron.h"
 #include "../../src/network/network.h"
-#include <vector>
-#include <iostream>
-
 
 TEST_CASE( "backpropagation - integration test - update one neuron's error")
 {
@@ -55,7 +54,7 @@ TEST_CASE( "backpropagation - integration test - output layer update one incomin
     Backpropagation backpropagation(learning_rate);
     backpropagation.output_layer_set_synapse_weight(synapse, neuron_error);
 
-    float actual_result = synapse.weight;
+    float actual_result = synapse.get_weight();
     float expected_result = 0.1 - 0.0027;
 
     REQUIRE(Approx(actual_result) == expected_result);
@@ -82,7 +81,7 @@ TEST_CASE( "backpropagation - integration test - output layer update one incomin
     Backpropagation backpropagation(learning_rate);
     backpropagation.output_layer_set_synapse_weight(synapse, neuron_error);
 
-    float actual_result = synapse.weight;
+    float actual_result = synapse.get_weight();
     float expected_result = 0.099595; /*0.1 - 0.3*0.009*0.15 */
 
     REQUIRE(Approx(actual_result) == expected_result);
@@ -125,11 +124,11 @@ TEST_CASE( "backpropagation - integration test - update two incoming synapses")
     Synapse& synapse_1_in_place = output_neuron.incoming_synapses.at(0);
     Synapse& synapse_2_in_place = output_neuron.incoming_synapses.at(1);
 
-    float actual_result_1 = synapse_1_in_place.weight;
+    float actual_result_1 = synapse_1_in_place.get_weight();
     float expected_result_1 = 0.4336;
     REQUIRE(Approx(actual_result_1) == expected_result_1);
 
-    float actual_result_2 = synapse_2_in_place.weight;
+    float actual_result_2 = synapse_2_in_place.get_weight();
     float expected_result_2 = 0.18720;
     REQUIRE(Approx(actual_result_2) == expected_result_2);
 
@@ -154,12 +153,12 @@ TEST_CASE( "backpropagation - integration test - same as before but do forward f
     Network neural_network(layer_counts);
     
     /* For this test, we need to know exactly what the Synapse weights are. */
-    neural_network.hidden_layer.at(0).incoming_synapses.at(0).weight = 0.5;
-    neural_network.hidden_layer.at(0).incoming_synapses.at(1).weight = 0.2;
-    neural_network.hidden_layer.at(1).incoming_synapses.at(0).weight = 0.6;
-    neural_network.hidden_layer.at(1).incoming_synapses.at(1).weight = 0.5;
-    neural_network.output_layer.at(0).incoming_synapses.at(0).weight = 0.7;
-    neural_network.output_layer.at(0).incoming_synapses.at(1).weight = 0.3;
+    neural_network.hidden_layer.at(0).incoming_synapses.at(0).set_weight(0.5);
+    neural_network.hidden_layer.at(0).incoming_synapses.at(1).set_weight(0.2);
+    neural_network.hidden_layer.at(1).incoming_synapses.at(0).set_weight(0.6);
+    neural_network.hidden_layer.at(1).incoming_synapses.at(1).set_weight(0.5);
+    neural_network.output_layer.at(0).incoming_synapses.at(0).set_weight(0.7);
+    neural_network.output_layer.at(0).incoming_synapses.at(1).set_weight(0.3);
 
     Classifier classifier(neural_network);
 
@@ -194,11 +193,11 @@ TEST_CASE( "backpropagation - integration test - same as before but do forward f
     Synapse& synapse_1_in_place = output_neuron.incoming_synapses.at(0);
     Synapse& synapse_2_in_place = output_neuron.incoming_synapses.at(1);
 
-    float actual_result_1 = synapse_1_in_place.weight;
+    float actual_result_1 = synapse_1_in_place.get_weight();
     float expected_result_1 = 0.74576;
     REQUIRE(Approx(actual_result_1) == expected_result_1);
 
-    float actual_result_2 = synapse_2_in_place.weight;
+    float actual_result_2 = synapse_2_in_place.get_weight();
     float expected_result_2 = 0.35181;
     REQUIRE(Approx(actual_result_2) == expected_result_2);
 
@@ -253,7 +252,7 @@ TEST_CASE( "backpropagation - integration test - test hidden_layer set synapse")
 
     /* 0.53 * 0.2491 * 0.732 * 1.0 = 0.096640836 */
     /* 0.498 - 0.096640836 = 0.401359164 */
-    float actual_result = synapse.weight;
+    float actual_result = synapse.get_weight();
     float expected_result = 0.40136;
     REQUIRE(Approx(actual_result) == expected_result);
 
