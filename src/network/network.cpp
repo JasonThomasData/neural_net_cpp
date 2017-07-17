@@ -1,7 +1,10 @@
-#include "network.h"
 #include <stdexcept>
 #include <vector>
+#include <memory>
+
+#include "network.h"
 #include "synapse/synapse.h"
+#include "synapse/i_synapse.h"
 
 Network::Network(std::vector<int> layer_counts)
 {
@@ -32,6 +35,8 @@ void Network::add_neurons_to_layer(std::vector<Neuron>& layer, int neuron_count)
     }
 }
 
+// With interface, the INeuron already has functions for adding data members, so does ISynapse
+// NOTE ! This function does too much, split this up
 void Network::connect_layers(std::vector<Neuron>& from_layer, std::vector<Neuron>& to_layer)
 {
     srand(time(NULL));
@@ -42,10 +47,10 @@ void Network::connect_layers(std::vector<Neuron>& from_layer, std::vector<Neuron
         {
             float random_sequence = rand() % seed_range;
             float weight = random_sequence / seed_range;
-            Synapse new_synapse(from_neuron, to_neuron, weight);
-            Synapse& added_synapse = to_neuron.add_incoming_synapse(new_synapse);
+            std::shared_ptr<ISynapse> new_synapse = std::make_shared<Synapse>(from_neuron,
+                                                                              to_neuron, weight);
+            std::shared_ptr<ISynapse>& added_synapse = to_neuron.add_incoming_synapse(new_synapse);
             from_neuron.add_outgoing_synapse(added_synapse);
         }
     }
 }
-

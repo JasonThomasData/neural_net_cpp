@@ -1,10 +1,11 @@
-#include "trainer.h"
-#include "../network/network.h"
-#include "../network/neuron/neuron.h"
 #include <cmath>
 #include <vector>
 #include <iostream>
 #include <stdexcept>
+
+#include "trainer.h"
+#include "../network/network.h"
+#include "../network/neuron/neuron.h"
 
 Trainer::Trainer(Network& network_init, double learning_rate_init)
     : network(network_init), backpropagation(learning_rate_init) 
