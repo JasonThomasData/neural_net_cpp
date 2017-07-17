@@ -12,3 +12,22 @@ double Synapse::get_from_neuron_weighted_outgoing_value()
     return weighted_value;
 }
 
+double Synapse::get_weight()
+{
+    return weight;
+}
+
+void Synapse::set_weight(double new_weight)
+{
+    weight = new_weight;
+}
+
+Neuron& Synapse::get_from_neuron()
+{
+    return from_neuron;
+}
+
+Neuron& Synapse::get_to_neuron()
+{
+    return to_neuron;
+}
