@@ -6,8 +6,6 @@
 
 /* This will be defined as a data member in the Classifier */
 
-// With interface, these need to become ISynapse and INeuron
-
 class ISynapse; //  ../network/synapse/i_synapse.h
 class Neuron;  //  ../network/neuron/neuron.h
 

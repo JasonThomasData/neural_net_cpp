@@ -1,6 +1,7 @@
 #include <vector>
 #include <iostream>
 #include <memory>
+
 #include "../../lib/catch.h"
 #include "../../src/trainer/backpropagation.h"
 #include "../../src/classifier/classifier.h"
