@@ -21,10 +21,10 @@ class Neuron
         double outgoing_value;
         double target_value;
         double error_value;
-        std::vector<std::shared_ptr<ISynapse>> incoming_synapses;
-        std::vector<std::shared_ptr<ISynapse>> outgoing_synapses; //Does this need to be <ISynapse&> ?
-        std::shared_ptr<ISynapse>& add_incoming_synapse(std::shared_ptr<ISynapse> new_incoming_synapse);
-        void add_outgoing_synapse(std::shared_ptr<ISynapse>& new_outgoing_synapse);
+        std::vector<std::unique_ptr<ISynapse>> incoming_synapses;
+        std::vector<std::reference_wrapper<ISynapse>> outgoing_synapses;
+        std::reference_wrapper<ISynapse> add_incoming_synapse(std::unique_ptr<ISynapse>& new_incoming_synapse);
+        void add_outgoing_synapse(std::reference_wrapper<ISynapse> new_outgoing_synapse);
 };
 
 #endif
