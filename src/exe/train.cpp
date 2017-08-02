@@ -41,7 +41,7 @@ void classify_epoch(Network& network, TrainingData& training_data, Classifier& c
 
         std::cout<< " - ";
 
-        std::vector<Neuron> updated_outputs = network.output_layer;
+        std::vector<Neuron>& updated_outputs = network.output_layer;
 
         int updated_outputs_size = updated_outputs.size();
         for(int k=0; k<updated_outputs_size; k++)

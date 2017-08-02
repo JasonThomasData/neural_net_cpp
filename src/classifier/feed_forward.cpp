@@ -5,7 +5,7 @@
 
 FeedForward::FeedForward(){}
 
-double FeedForward::calculate_incoming_values(std::vector<std::shared_ptr<ISynapse>>& incoming_synapses)
+double FeedForward::calculate_incoming_values(std::vector<std::unique_ptr<ISynapse>>& incoming_synapses)
 {
     double incoming_values = 0;
     for(auto& synapse: incoming_synapses)
