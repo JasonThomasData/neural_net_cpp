@@ -18,14 +18,14 @@ TEST_CASE( "feed_forward - integration test - test the sum function works - comb
     from_neuron_2.outgoing_value = 0.25;
 
     double weight_1 = 0.5;
-    std::shared_ptr<ISynapse> new_synapse_1 = std::make_shared<Synapse>(from_neuron_1, to_neuron, weight_1);
+    std::unique_ptr<ISynapse> new_synapse_1 = std::make_unique<Synapse>(from_neuron_1, to_neuron, weight_1);
     double weight_2 = 0.8;
-    std::shared_ptr<ISynapse> new_synapse_2 = std::make_shared<Synapse>(from_neuron_2, to_neuron, weight_2);
+    std::unique_ptr<ISynapse> new_synapse_2 = std::make_unique<Synapse>(from_neuron_2, to_neuron, weight_2);
 
     /* Usually, this is a data member of Neuron class */
-    std::vector<std::shared_ptr<ISynapse>> incoming_synapses;
-    incoming_synapses.emplace_back(new_synapse_1);
-    incoming_synapses.emplace_back(new_synapse_2);
+    std::vector<std::unique_ptr<ISynapse>> incoming_synapses;
+    incoming_synapses.emplace_back(std::move(new_synapse_1));
+    incoming_synapses.emplace_back(std::move(new_synapse_2));
 
     FeedForward feed_forward;
 
@@ -80,8 +80,8 @@ TEST_CASE( "feed_forward - integration test - activate one Neuron, via one incom
     Neuron neuron2;
 
     double weight = 0.8;
-    std::shared_ptr<ISynapse> new_synapse = std::make_shared<Synapse>(neuron1, neuron2, weight);
-    neuron2.add_incoming_synapse(new_synapse);
+    std::unique_ptr<ISynapse> new_synapse = std::make_unique<Synapse>(neuron1, neuron2, weight);
+    neuron2.add_incoming_synapse(std::move(new_synapse));
 
     /* Incoming weights are equal to 1.0*0.8 = 0.8 */
     FeedForward feed_forward;
@@ -104,8 +104,8 @@ TEST_CASE( "neuron - integration test - activate, via one incoming synapse #2 ")
     Neuron neuron2;
 
     double weight = 0.5;
-    std::shared_ptr<ISynapse> new_synapse = std::make_shared<Synapse>(neuron1, neuron2, weight);
-    neuron2.add_incoming_synapse(new_synapse);
+    std::unique_ptr<ISynapse> new_synapse = std::make_unique<Synapse>(neuron1, neuron2, weight);
+    neuron2.add_incoming_synapse(std::move(new_synapse));
 
     /* Incoming weights are equal to 0.5*0.8 = 0.4*/
     FeedForward feed_forward;
@@ -134,15 +134,15 @@ TEST_CASE( "neuron -  integration test - activate, via several incoming synapses
     Neuron neuron4;
 
     double weight_1 = 0.75;
-    std::shared_ptr<ISynapse> new_synapse_1 = std::make_shared<Synapse>(neuron1, neuron4, weight_1);
+    std::unique_ptr<ISynapse> new_synapse_1 = std::make_unique<Synapse>(neuron1, neuron4, weight_1);
     double weight_2 = 0.2;
-    std::shared_ptr<ISynapse> new_synapse_2 = std::make_shared<Synapse>(neuron1, neuron4, weight_2);
+    std::unique_ptr<ISynapse> new_synapse_2 = std::make_unique<Synapse>(neuron2, neuron4, weight_2);
     double weight_3 = 0.5;
-    std::shared_ptr<ISynapse> new_synapse_3 = std::make_shared<Synapse>(neuron1, neuron4, weight_3);
+    std::unique_ptr<ISynapse> new_synapse_3 = std::make_unique<Synapse>(neuron3, neuron4, weight_3);
 
-    neuron4.add_incoming_synapse(new_synapse_1);
-    neuron4.add_incoming_synapse(new_synapse_2);
-    neuron4.add_incoming_synapse(new_synapse_3);
+    neuron4.add_incoming_synapse(std::move(new_synapse_1));
+    neuron4.add_incoming_synapse(std::move(new_synapse_2));
+    neuron4.add_incoming_synapse(std::move(new_synapse_3));
 
     FeedForward feed_forward;
     feed_forward.update_neuron(neuron4);

@@ -16,9 +16,11 @@ TEST_CASE( "trainer - integration test - get total_error for network")
 
     double learning_rate = 0.0; /* used in backpropagation */
 
+    // Neurons contain references to unique_ptrs inside, so we need std::move() to avoid calling
+    // copy constructor.
     std::vector<Neuron> output_layer;
-    output_layer.emplace_back(output_neuron_1);
-    output_layer.emplace_back(output_neuron_2);
+    output_layer.emplace_back(std::move(output_neuron_1));
+    output_layer.emplace_back(std::move(output_neuron_2));
 
     Network network({2, 2, 2}); /* Not actually used, but the trainer needs it for init */
     Trainer trainer(network, learning_rate);
