@@ -7,6 +7,7 @@ Classifier::Classifier(Network& network_ref)
     :network(network_ref){}
 
 /* If this doesn't meet the condition of being the same size, we should log the result. */
+
 void Classifier::set_input_values(std::vector<double> new_input_values)
 {
     int input_layer_size = network.input_layer.size();

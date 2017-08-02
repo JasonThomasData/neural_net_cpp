@@ -1,16 +1,16 @@
 #include "feed_forward.h"
-#include "../network/synapse/synapse.h"
+#include "../network/synapse/i_synapse.h"
 #include "../network/neuron/neuron.h"
 #include <cmath>
 
 FeedForward::FeedForward(){}
 
-double FeedForward::calculate_incoming_values(std::vector<Synapse>& incoming_synapses)
+double FeedForward::calculate_incoming_values(std::vector<std::unique_ptr<ISynapse>>& incoming_synapses)
 {
     double incoming_values = 0;
     for(auto& synapse: incoming_synapses)
     {
-        incoming_values += synapse.get_from_neuron_weighted_outgoing_value();
+        incoming_values += synapse->get_from_neuron_weighted_outgoing_value();
     }
     return incoming_values;
 }

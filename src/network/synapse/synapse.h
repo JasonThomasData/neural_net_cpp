@@ -10,16 +10,23 @@
  * be available to the network to modify.
  */
 
+#include "i_synapse.h"
+
 class Neuron;
 
-class Synapse
+class Synapse: public ISynapse
 {
-    public:
+    private:
         Neuron& from_neuron;
         Neuron& to_neuron;
-        Synapse(Neuron& from_neuron, Neuron& to_neuron, double weight);
         double weight;
-        double get_from_neuron_weighted_outgoing_value();
+    public:
+        Synapse(Neuron& from_neuron, Neuron& to_neuron, double weight);
+        double get_from_neuron_weighted_outgoing_value() override;
+        double get_weight() override;
+        void set_weight(double new_weight) override;
+        Neuron& get_from_neuron() override;
+        Neuron& get_to_neuron() override;
 };
 
 #endif

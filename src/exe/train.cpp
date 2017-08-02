@@ -3,7 +3,7 @@
 #include "../classifier/classifier.h"
 #include "../trainer/trainer.h"
 #include "../reader/reader.h"
-#include "../reader/parsed_data.h"
+#include "../parser/parsed_data.h"
 #include <vector>
 #include <iostream>
 #include <sstream> //For char conversion
@@ -21,6 +21,7 @@ double get_average_error(std::vector<double> all_total_errors)
     return average;
 }
 
+// Is this really classify_ ? If not then rename it.
 void classify_epoch(Network& network, TrainingData& training_data, Classifier& classifier)
 {
     int training_data_size = training_data.data.size();
@@ -40,7 +41,7 @@ void classify_epoch(Network& network, TrainingData& training_data, Classifier& c
 
         std::cout<< " - ";
 
-        std::vector<Neuron> updated_outputs = network.output_layer;
+        std::vector<Neuron>& updated_outputs = network.output_layer;
 
         int updated_outputs_size = updated_outputs.size();
         for(int k=0; k<updated_outputs_size; k++)
@@ -52,6 +53,7 @@ void classify_epoch(Network& network, TrainingData& training_data, Classifier& c
     }
 }
 
+// Rename to something that makes responsibility more obvious... is this really train_ ?
 void train_epoch(Network& network, TrainingData& training_data, Classifier& classifier, Trainer& trainer)
 {
     std::vector<double> all_total_errors;

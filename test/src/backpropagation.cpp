@@ -1,9 +1,13 @@
 #include <vector>
 #include <iostream>
+#include <memory>
+
 #include "../../lib/catch.h"
 #include "../../src/trainer/backpropagation.h"
 #include "../../src/classifier/classifier.h"
 #include "../../src/network/neuron/neuron.h"
+#include "../../src/network/synapse/synapse.h"
+#include "../../src/network/synapse/i_synapse.h"
 #include "../../src/network/network.h"
 
 TEST_CASE( "backpropagation - integration test - update one neuron's error")
@@ -43,7 +47,7 @@ TEST_CASE( "backpropagation - integration test - output layer update one incomin
     double neuron_error = 0.009;
 
     double weight = 0.1;
-    Synapse synapse(hidden_neuron, output_neuron, weight);
+    std::unique_ptr<ISynapse> synapse = std::make_unique<Synapse>(hidden_neuron, output_neuron, weight);
 
     /* For this test, the output neuron would have an output_value of 0.1 and a target of 0.0. So
      * therefore, it has a neuron_error of 0.009. The test won't actually use the output_neuron, but
@@ -54,7 +58,7 @@ TEST_CASE( "backpropagation - integration test - output layer update one incomin
     Backpropagation backpropagation(learning_rate);
     backpropagation.output_layer_set_synapse_weight(synapse, neuron_error);
 
-    float actual_result = synapse.weight;
+    float actual_result = synapse->get_weight();
     float expected_result = 0.1 - 0.0027;
 
     REQUIRE(Approx(actual_result) == expected_result);
@@ -71,7 +75,7 @@ TEST_CASE( "backpropagation - integration test - output layer update one incomin
     double neuron_error = 0.009;
 
     double weight = 0.1;
-    Synapse synapse(hidden_neuron, output_neuron, weight);
+    std::unique_ptr<ISynapse> synapse = std::make_unique<Synapse>(hidden_neuron, output_neuron, weight);
 
     /* For this test, the output neuron would have an output_value of 0.1 and a target of 0.0. So
      * therefore, it has a neuron_error of 0.009. The test won't actually use the output_neuron, but
@@ -81,7 +85,7 @@ TEST_CASE( "backpropagation - integration test - output layer update one incomin
     Backpropagation backpropagation(learning_rate);
     backpropagation.output_layer_set_synapse_weight(synapse, neuron_error);
 
-    float actual_result = synapse.weight;
+    float actual_result = synapse->get_weight();
     float expected_result = 0.099595; /*0.1 - 0.3*0.009*0.15 */
 
     REQUIRE(Approx(actual_result) == expected_result);
@@ -101,13 +105,13 @@ TEST_CASE( "backpropagation - integration test - update two incoming synapses")
     output_neuron.target_value = 1.0;
 
     double weight_1 = 0.4;
-    Synapse synapse_1(hidden_neuron_1, output_neuron, weight_1);
+    std::unique_ptr<ISynapse> synapse_1 = std::make_unique<Synapse>(hidden_neuron_1, output_neuron, weight_1);
     double weight_2 = 0.12;
-    Synapse synapse_2(hidden_neuron_2, output_neuron, weight_2);
+    std::unique_ptr<ISynapse> synapse_2 = std::make_unique<Synapse>(hidden_neuron_2, output_neuron, weight_2);
 
     /* The synapses are added to the Neuron's vector and returned as a reference */
-    output_neuron.add_incoming_synapse(synapse_1);
-    output_neuron.add_incoming_synapse(synapse_2);
+    std::reference_wrapper<ISynapse> synapse_1_in_place = output_neuron.add_incoming_synapse(std::move(synapse_1));
+    std::reference_wrapper<ISynapse> synapse_2_in_place = output_neuron.add_incoming_synapse(std::move(synapse_2));
 
     /* The incoming values are 0.3*0.4 + 0.6*0.12 = 0.192 
      * The sigmoid function will output 0.54785, since logistc regression = 1/(1+2.71828^-0.192) */ 
@@ -121,14 +125,11 @@ TEST_CASE( "backpropagation - integration test - update two incoming synapses")
     Backpropagation backpropagation(learning_rate);
     backpropagation.output_layer_neuron(output_neuron);
 
-    Synapse& synapse_1_in_place = output_neuron.incoming_synapses.at(0);
-    Synapse& synapse_2_in_place = output_neuron.incoming_synapses.at(1);
-
-    float actual_result_1 = synapse_1_in_place.weight;
+    float actual_result_1 = synapse_1_in_place.get().get_weight();
     float expected_result_1 = 0.4336;
     REQUIRE(Approx(actual_result_1) == expected_result_1);
 
-    float actual_result_2 = synapse_2_in_place.weight;
+    float actual_result_2 = synapse_2_in_place.get().get_weight();
     float expected_result_2 = 0.18720;
     REQUIRE(Approx(actual_result_2) == expected_result_2);
 
@@ -153,12 +154,12 @@ TEST_CASE( "backpropagation - integration test - same as before but do forward f
     Network neural_network(layer_counts);
     
     /* For this test, we need to know exactly what the Synapse weights are. */
-    neural_network.hidden_layer.at(0).incoming_synapses.at(0).weight = 0.5;
-    neural_network.hidden_layer.at(0).incoming_synapses.at(1).weight = 0.2;
-    neural_network.hidden_layer.at(1).incoming_synapses.at(0).weight = 0.6;
-    neural_network.hidden_layer.at(1).incoming_synapses.at(1).weight = 0.5;
-    neural_network.output_layer.at(0).incoming_synapses.at(0).weight = 0.7;
-    neural_network.output_layer.at(0).incoming_synapses.at(1).weight = 0.3;
+    neural_network.hidden_layer.at(0).incoming_synapses.at(0)->set_weight(0.5);
+    neural_network.hidden_layer.at(0).incoming_synapses.at(1)->set_weight(0.2);
+    neural_network.hidden_layer.at(1).incoming_synapses.at(0)->set_weight(0.6);
+    neural_network.hidden_layer.at(1).incoming_synapses.at(1)->set_weight(0.5);
+    neural_network.output_layer.at(0).incoming_synapses.at(0)->set_weight(0.7);
+    neural_network.output_layer.at(0).incoming_synapses.at(1)->set_weight(0.3);
 
     Classifier classifier(neural_network);
 
@@ -190,14 +191,14 @@ TEST_CASE( "backpropagation - integration test - same as before but do forward f
      * 0.622459 * −0.083228772
      */
 
-    Synapse& synapse_1_in_place = output_neuron.incoming_synapses.at(0);
-    Synapse& synapse_2_in_place = output_neuron.incoming_synapses.at(1);
+    std::unique_ptr<ISynapse>& synapse_1_in_place = output_neuron.incoming_synapses.at(0);
+    std::unique_ptr<ISynapse>& synapse_2_in_place = output_neuron.incoming_synapses.at(1);
 
-    float actual_result_1 = synapse_1_in_place.weight;
+    float actual_result_1 = synapse_1_in_place->get_weight();
     float expected_result_1 = 0.74576;
     REQUIRE(Approx(actual_result_1) == expected_result_1);
 
-    float actual_result_2 = synapse_2_in_place.weight;
+    float actual_result_2 = synapse_2_in_place->get_weight();
     float expected_result_2 = 0.35181;
     REQUIRE(Approx(actual_result_2) == expected_result_2);
 
@@ -213,18 +214,18 @@ TEST_CASE( "backpropagation - integration test - test hidden_layer total_errors"
     to_neuron_2.error_value = 0.52;
 
     double weight_1 = 0.31;
-    Synapse synapse_1(from_neuron, to_neuron_1, weight_1);
+    std::unique_ptr<ISynapse> synapse_1 = std::make_unique<Synapse>(from_neuron, to_neuron_1, weight_1);
     double weight_2 = 0.67;
-    Synapse synapse_2(from_neuron, to_neuron_2, weight_2);
+    std::unique_ptr<ISynapse> synapse_2 = std::make_unique<Synapse>(from_neuron, to_neuron_2, weight_2);
 
-    Synapse& synapse_1_ref = to_neuron_1.add_incoming_synapse(synapse_1);
+    std::reference_wrapper<ISynapse> synapse_1_ref = to_neuron_1.add_incoming_synapse(std::move(synapse_1));
     from_neuron.add_outgoing_synapse(synapse_1_ref);
-    Synapse& synapse_2_ref = to_neuron_2.add_incoming_synapse(synapse_2);
+    std::reference_wrapper<ISynapse> synapse_2_ref = to_neuron_2.add_incoming_synapse(std::move(synapse_2));
     from_neuron.add_outgoing_synapse(synapse_2_ref);
-    
+
     float learning_rate = 1.0;
     Backpropagation backpropagation(learning_rate);
-    
+
     /* Result will be 0.68*0.31 + 0.52*0.67 = 0.5592*/
     float actual_result = backpropagation.hidden_layer_get_total_neuron_errors(from_neuron.outgoing_synapses);
     float expected_result = 0.5592;
@@ -243,7 +244,8 @@ TEST_CASE( "backpropagation - integration test - test hidden_layer set synapse")
     double total_neuron_errors = 0.732;
 
     double weight = 0.498;
-    Synapse synapse(input_neuron, hidden_neuron, weight);
+
+    std::unique_ptr<ISynapse> synapse = std::make_unique<Synapse>(input_neuron, hidden_neuron, weight);
 
     float learning_rate = 1.0;
     Backpropagation backpropagation(learning_rate);
@@ -252,7 +254,7 @@ TEST_CASE( "backpropagation - integration test - test hidden_layer set synapse")
 
     /* 0.53 * 0.2491 * 0.732 * 1.0 = 0.096640836 */
     /* 0.498 - 0.096640836 = 0.401359164 */
-    float actual_result = synapse.weight;
+    float actual_result = synapse->get_weight();
     float expected_result = 0.40136;
     REQUIRE(Approx(actual_result) == expected_result);
 
