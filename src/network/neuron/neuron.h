@@ -6,13 +6,6 @@
 
 #include "../synapse/i_synapse.h"
 
-//class ISynapse;
-
-/* The neuron is responsible for owning the Soma, and has its own_output to send to other neurons
- * via Synapses (in biology, via an Axon and its Terminals). Its combined_incoming_values can be
- * retrieved for backpropagation.
- */
-
 class Neuron
 {
     public:

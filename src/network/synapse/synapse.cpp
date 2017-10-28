@@ -3,8 +3,8 @@
 #include <iostream>
 
 
-Synapse::Synapse(Neuron& from_neuron, Neuron& to_neuron, double weight)
-    : from_neuron(from_neuron), to_neuron(to_neuron), weight(weight){}
+Synapse::Synapse(Neuron& from_neuron, Neuron& to_neuron)
+    : from_neuron(from_neuron), to_neuron(to_neuron){}
 
 double Synapse::get_from_neuron_weighted_outgoing_value()
 {
