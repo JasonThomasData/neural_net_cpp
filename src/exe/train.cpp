@@ -1,6 +1,6 @@
 #include "../network/network.h"
 #include "../network_builder/network_builder.h"
-#include "../network/neuron/neuron.h"
+#include "../neuron/neuron.h"
 #include "../classifier/classifier.h"
 #include "../trainer/trainer.h"
 #include "../reader/reader.h"

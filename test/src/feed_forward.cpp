@@ -1,7 +1,7 @@
 #include "../../lib/catch.h"
-#include "../../src/network/synapse/synapse.h"
-#include "../../src/network/synapse/i_synapse.h"
-#include "../../src/network/neuron/neuron.h"
+#include "../../src/synapse/synapse.h"
+#include "../../src/synapse/i_synapse.h"
+#include "../../src/neuron/neuron.h"
 #include "../../src/classifier/feed_forward.h"
 #include <memory>
 

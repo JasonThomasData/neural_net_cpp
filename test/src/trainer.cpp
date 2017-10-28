@@ -1,7 +1,7 @@
 #include <vector>
 #include "../../lib/catch.h"
 #include "../../src/trainer/trainer.h"
-#include "../../src/network/neuron/neuron.h"
+#include "../../src/neuron/neuron.h"
 #include "../../src/network/network.h"
 #include "../../src/network_builder/network_builder.h"
 

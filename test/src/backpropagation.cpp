@@ -5,9 +5,9 @@
 #include "../../lib/catch.h"
 #include "../../src/trainer/backpropagation.h"
 #include "../../src/classifier/classifier.h"
-#include "../../src/network/neuron/neuron.h"
-#include "../../src/network/synapse/synapse.h"
-#include "../../src/network/synapse/i_synapse.h"
+#include "../../src/neuron/neuron.h"
+#include "../../src/synapse/synapse.h"
+#include "../../src/synapse/i_synapse.h"
 #include "../../src/network/network.h"
 #include "../../src/network_builder/network_builder.h"
 

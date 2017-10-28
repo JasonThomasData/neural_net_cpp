@@ -4,9 +4,9 @@
 #include <functional>
 
 #include "../network/network.h"
-#include "../network/neuron/neuron.h"
-#include "../network/synapse/synapse.h"
-#include "../network/synapse/i_synapse.h"
+#include "../neuron/neuron.h"
+#include "../synapse/synapse.h"
+#include "../synapse/i_synapse.h"
 #include "network_builder.h"
 
 NetworkBuilder::NetworkBuilder(){}

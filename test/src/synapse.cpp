@@ -1,6 +1,6 @@
 #include "../../lib/catch.h"
-#include "../../src/network/synapse/synapse.h"
-#include "../../src/network/neuron/neuron.h"
+#include "../../src/synapse/synapse.h"
+#include "../../src/neuron/neuron.h"
 
 TEST_CASE( "synapse - integration test - get from_neuron's weighted output_value #1 ") {
 

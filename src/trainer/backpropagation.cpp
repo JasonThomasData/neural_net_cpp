@@ -3,8 +3,8 @@
 #include <functional>
 
 #include "backpropagation.h"
-#include "../network/neuron/neuron.h"
-#include "../network/synapse/i_synapse.h"
+#include "../neuron/neuron.h"
+#include "../synapse/i_synapse.h"
 
 Backpropagation::Backpropagation(double learning_rate_init)
     : learning_rate(learning_rate_init){}

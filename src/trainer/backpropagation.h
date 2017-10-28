@@ -9,8 +9,8 @@
  * This class will do all the work relating to backpropagation. 
  */
 
-class Neuron;      //  ../network/neuron/neuron.h 
-class ISynapse;    //  ../network/synapse/i_synapse.h
+class Neuron;      //  ../neuron/neuron.h 
+class ISynapse;    //  ../synapse/i_synapse.h
 
 class Backpropagation
 {

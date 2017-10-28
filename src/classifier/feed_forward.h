@@ -6,8 +6,8 @@
 
 /* This will be defined as a data member in the Classifier */
 
-class ISynapse; //  ../network/synapse/i_synapse.h
-class Neuron;  //  ../network/neuron/neuron.h
+class ISynapse; //  ../synapse/i_synapse.h
+class Neuron;  //  ../neuron/neuron.h
 
 class FeedForward
 {

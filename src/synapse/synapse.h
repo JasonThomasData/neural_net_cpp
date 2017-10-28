@@ -9,7 +9,7 @@
 
 #include "i_synapse.h"
 
-class Neuron;
+class Neuron;     // ../neuron/neuron.h
 
 class Synapse: public ISynapse
 {

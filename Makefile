@@ -14,14 +14,10 @@ obj_tests = build/test_synapse.o build/test_network.o build/test_classifier.o \
 obj_main_files = build/train_main.o build/classify_main.o build/test_main.o
 
 #Network objects
-build/synapse.o: src/network/synapse/synapse.cpp
-	g++ -c $(CXXFLAGS) src/network/synapse/synapse.cpp -o build/synapse.o
-build/soma.o: src/network/soma/soma.cpp
-	g++ -c $(CXXFLAGS) src/network/soma/soma.cpp -o build/soma.o
-build/input.o: src/network/neuron/input.cpp
-	g++ -c $(CXXFLAGS) src/network/neuron/input.cpp -o build/input.o
-build/neuron.o: src/network/neuron/neuron.cpp
-	g++ -c $(CXXFLAGS) src/network/neuron/neuron.cpp -o build/neuron.o
+build/synapse.o: src/synapse/synapse.cpp
+	g++ -c $(CXXFLAGS) src/synapse/synapse.cpp -o build/synapse.o
+build/neuron.o: src/neuron/neuron.cpp
+	g++ -c $(CXXFLAGS) src/neuron/neuron.cpp -o build/neuron.o
 build/network.o: src/network/network.cpp
 	g++ -c $(CXXFLAGS) src/network/network.cpp -o build/network.o
 build/network_builder.o: src/network_builder/network_builder.cpp

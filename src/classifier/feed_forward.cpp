@@ -1,6 +1,6 @@
 #include "feed_forward.h"
-#include "../network/synapse/i_synapse.h"
-#include "../network/neuron/neuron.h"
+#include "../synapse/i_synapse.h"
+#include "../neuron/neuron.h"
 #include <cmath>
 
 FeedForward::FeedForward(){}

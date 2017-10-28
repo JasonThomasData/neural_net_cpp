@@ -1,6 +1,6 @@
 #include "classifier.h"
 #include "../network/network.h"
-#include "../network/neuron/neuron.h"
+#include "../neuron/neuron.h"
 #include <stdexcept>
 
 Classifier::Classifier(Network& network_ref)

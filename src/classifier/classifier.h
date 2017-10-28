@@ -9,7 +9,7 @@
  * input_layer and finishing with the output layer. */
 
 class Network;     //  ../network/network.h
-class Neuron;      //  ../network/neuron/neuron.h
+class Neuron;      //  ../neuron/neuron.h
 
 class Classifier
 {

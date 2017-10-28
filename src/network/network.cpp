@@ -4,8 +4,8 @@
 #include <functional>
 
 #include "network.h"
-#include "synapse/synapse.h"
-#include "synapse/i_synapse.h"
+#include "../synapse/synapse.h"
+#include "../synapse/i_synapse.h"
 
 Network::Network(std::vector<Neuron> input_layer, std::vector<Neuron> hidden_layer, std::vector<Neuron> output_layer)
     :input_layer(std::move(input_layer)),

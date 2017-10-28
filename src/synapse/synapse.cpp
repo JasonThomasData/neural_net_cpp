@@ -1,7 +1,5 @@
 #include "synapse.h"
 #include "../neuron/neuron.h"
-#include <iostream>
-
 
 Synapse::Synapse(Neuron& from_neuron, Neuron& to_neuron)
     : from_neuron(from_neuron), to_neuron(to_neuron){}
