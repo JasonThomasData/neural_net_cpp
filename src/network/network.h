@@ -12,16 +12,14 @@ class Neuron; // neuron/neuron.h
 
 class Network
 {
-    private:
-        void connect_layers(std::vector<Neuron>& from_layer, std::vector<Neuron>& to_layer);
-        void add_neurons_to_layer(std::vector<Neuron>&, int neuron_count);
-
     public:
+        Network(std::vector<Neuron> input_layer,
+                std::vector<Neuron> hidden_layer,
+                std::vector<Neuron> output_layer);
         float epoch_average_total_error;
         std::vector<Neuron> input_layer;
         std::vector<Neuron> hidden_layer;
         std::vector<Neuron> output_layer;
-        Network(std::vector<int> layer_counts);
 };
 
 #endif

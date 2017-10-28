@@ -1,4 +1,5 @@
 #include "../network/network.h"
+#include "../network_builder/network_builder.h"
 #include "../network/neuron/neuron.h"
 #include "../classifier/classifier.h"
 #include "../trainer/trainer.h"
@@ -89,11 +90,11 @@ int main(int argc, char** argv)
         file_name = std::string(argv[1]);
     } else
     {
-        std::string file_name = "data/training/scatter_plot";
+        file_name = "data/training/scatter_plot";
     }
     Reader reader;
     TrainingData training_data = reader.read_training_data(file_name);
-    Network network(training_data.structure);
+    Network network = NetworkBuilder::build_network(training_data.structure);
     Classifier classifier(network);
     Trainer trainer(network, training_data.learning_rate);
 
