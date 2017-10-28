@@ -4,7 +4,7 @@ CXXFLAGS = -std=c++14 -Wall
 
 objects = $(obj_network) $(obj_trainer) $(obj_classifier) $(obj_read_write) $(obj_tests) $(obj_main_files)
 
-obj_network = build/synapse.o build/neuron.o build/network.o
+obj_network = build/synapse.o build/neuron.o build/network.o build/network_builder.o
 obj_trainer = build/trainer.o build/backpropagation.o
 obj_classifier = build/feed_forward.o build/classifier.o
 obj_read_write = build/reader.o build/parser.o
@@ -24,6 +24,8 @@ build/neuron.o: src/network/neuron/neuron.cpp
 	g++ -c $(CXXFLAGS) src/network/neuron/neuron.cpp -o build/neuron.o
 build/network.o: src/network/network.cpp
 	g++ -c $(CXXFLAGS) src/network/network.cpp -o build/network.o
+build/network_builder.o: src/network_builder/network_builder.cpp
+	g++ -c $(CXXFLAGS) src/network_builder/network_builder.cpp -o build/network_builder.o
 
 #Trainer objects
 build/backpropagation.o: src/trainer/backpropagation.cpp
