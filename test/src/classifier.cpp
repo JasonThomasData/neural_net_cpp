@@ -2,26 +2,17 @@
 #include "../../lib/catch.h"
 #include "../../src/classifier/classifier.h"
 #include "../../src/network/network.h"
+#include "../../src/network_builder/network_builder.h"
 
 TEST_CASE( "classifier - integration test - set inputs") {
 
-    std::vector<int> layer_counts;
+    std::vector<int> layer_counts {2, 3, 1};
 
-    int input_count = 2;
-    int hidden_count = 3;
-    int output_count = 1;
-
-    layer_counts.emplace_back(input_count);
-    layer_counts.emplace_back(hidden_count);
-    layer_counts.emplace_back(output_count);
-
-    Network neural_network(layer_counts);
+    Network neural_network = NetworkBuilder::build_network(layer_counts);
 
     Classifier classifier(neural_network);
 
-    std::vector<double> update_values;
-    update_values.emplace_back(0);
-    update_values.emplace_back(1);
+    std::vector<double> update_values {0, 1};
 
     classifier.set_input_values(update_values);
 
@@ -37,24 +28,13 @@ TEST_CASE( "classifier - integration test - set inputs") {
 
 TEST_CASE( "classifier - integration test - set inputs, fail cause the inputs are wrong size.") {
 
-    std::vector<int> layer_counts;
+    std::vector<int> layer_counts {2, 3, 1};
 
-    int input_count = 2;
-    int hidden_count = 3;
-    int output_count = 1;
-
-    layer_counts.emplace_back(input_count);
-    layer_counts.emplace_back(hidden_count);
-    layer_counts.emplace_back(output_count);
-
-    Network neural_network(layer_counts);
+    Network neural_network = NetworkBuilder::build_network(layer_counts);
 
     Classifier classifier(neural_network);
 
-    std::vector<double> update_values;
-    update_values.emplace_back(0);
-    update_values.emplace_back(1.5);
-    update_values.emplace_back(1);
+    std::vector<double> update_values {0, 1.5, 1};
 
     REQUIRE_THROWS( classifier.set_input_values(update_values) );
 
@@ -63,18 +43,10 @@ TEST_CASE( "classifier - integration test - set inputs, fail cause the inputs ar
 /* This is a large test, and requires the neurons to be using logistic regression for activation */
 TEST_CASE( "classifier - integration test - feed forward") {
 
-    std::vector<int> layer_counts;
+    std::vector<int> layer_counts {2, 2, 1};
 
-    int input_count = 2;
-    int hidden_count = 2;
-    int output_count = 1;
+    Network neural_network = NetworkBuilder::build_network(layer_counts);
 
-    layer_counts.emplace_back(input_count);
-    layer_counts.emplace_back(hidden_count);
-    layer_counts.emplace_back(output_count);
-
-    Network neural_network(layer_counts);
-    
     //Note - synapses are shared_ptr objects, and use ->
 
     /* For this test, we need to know exactly what the Synapse weights are. */
@@ -88,9 +60,7 @@ TEST_CASE( "classifier - integration test - feed forward") {
     Classifier classifier(neural_network);
 
     /* This is to make sure the initial inputs have outgoing_values */
-    std::vector<double> update_values;
-    update_values.emplace_back(0);
-    update_values.emplace_back(1);
+    std::vector<double> update_values {0, 1};
 
     classifier.set_input_values(update_values);
 

@@ -1,20 +1,13 @@
 #include "../../lib/catch.h"
 #include "../../src/network/network.h"
+#include "../../src/network_builder/network_builder.h"
 
 TEST_CASE( "network - unit test - initialise, add neurons to layers ")
 {
 
-    std::vector<int> layer_counts;
+    std::vector<int> layer_counts {4, 7, 3};
 
-    int input_count = 4;
-    int hidden_count = 7;
-    int output_count = 3;
-
-    layer_counts.emplace_back(input_count);
-    layer_counts.emplace_back(hidden_count);
-    layer_counts.emplace_back(output_count);
-
-    Network neural_network(layer_counts);
+    Network neural_network = NetworkBuilder::build_network(layer_counts);
 
     int actual_result1 = neural_network.input_layer.size();
     int expected_result1 = 4;
@@ -31,17 +24,9 @@ TEST_CASE( "network - unit test - initialise, add neurons to layers ")
 
 void helper()
 {
-    std::vector<int> layer_counts;
+    std::vector<int> layer_counts {4, 0, 3};
 
-    int input_count = 4;
-    int hidden_count = 0;
-    int output_count = 3;
-
-    layer_counts.emplace_back(input_count);
-    layer_counts.emplace_back(hidden_count);
-    layer_counts.emplace_back(output_count);
-
-    Network neural_network(layer_counts);
+    Network neural_network = NetworkBuilder::build_network(layer_counts);
 }
 TEST_CASE( "network - unit test - initialise, but throw an error if the layers are wrong ")
 {
@@ -54,17 +39,9 @@ TEST_CASE( "network - unit test - initialise, but throw an error if the layers a
  */
 TEST_CASE( "network - unit test - initialise, connect neurons between layers with synapses")
 {
-    std::vector<int> layer_counts;
+    std::vector<int> layer_counts {4, 7, 3};
 
-    int input_count = 4;
-    int hidden_count = 7;
-    int output_count = 3;
-
-    layer_counts.emplace_back(input_count);
-    layer_counts.emplace_back(hidden_count);
-    layer_counts.emplace_back(output_count);
-
-    Network neural_network(layer_counts);
+    Network neural_network = NetworkBuilder::build_network(layer_counts);
 
     //Note -all outgoing_synapses are reference_wrappers, hence the .get() calls.
     //Note -all incoming_synapses are unique_ptrs, hence the -> calls.

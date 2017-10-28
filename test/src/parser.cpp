@@ -22,7 +22,7 @@ TEST_CASE( "parser - unit test - test a string is parsed to a vector")
 TEST_CASE( "parser - unit test - vector of strings is parsed to a vector of ints")
 {
     Parser parser;
-    std::vector<std::string> vector_to_parse = {"4","10","4"};
+    std::vector<std::string> vector_to_parse {"4","10","4"};
 
     std::vector<int> parsed_vector = parser.string_vector_int_vector(vector_to_parse);
 
@@ -38,7 +38,7 @@ TEST_CASE( "parser - unit test - vector of strings is parsed to a vector of ints
 TEST_CASE( "parser - unit test - vector of strings is parsed to a vector of doubles")
 {
     Parser parser;
-    std::vector<std::string> vector_to_parse = {"3","2","2","2"};
+    std::vector<std::string> vector_to_parse {"3","2","2","2"};
 
     std::vector<double> parsed_vector = parser.string_vector_double_vector(vector_to_parse);
 

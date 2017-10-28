@@ -3,6 +3,7 @@
 #include "../../src/trainer/trainer.h"
 #include "../../src/network/neuron/neuron.h"
 #include "../../src/network/network.h"
+#include "../../src/network_builder/network_builder.h"
 
 TEST_CASE( "trainer - integration test - get total_error for network")
 {
@@ -22,7 +23,9 @@ TEST_CASE( "trainer - integration test - get total_error for network")
     output_layer.emplace_back(std::move(output_neuron_1));
     output_layer.emplace_back(std::move(output_neuron_2));
 
-    Network network({2, 2, 2}); /* Not actually used, but the trainer needs it for init */
+    std::vector<int> layer_counts {2, 2, 2};
+    Network network = NetworkBuilder::build_network(layer_counts); /* Not actually used, but the trainer needs it for init */
+
     Trainer trainer(network, learning_rate);
 
     float actual_result = trainer.calculate_total_error(output_layer);
@@ -35,24 +38,14 @@ TEST_CASE( "trainer - integration test - get total_error for network")
 TEST_CASE( "trainer - integration test - set target_values")
 {
 
-    std::vector<int> layer_counts;
+    std::vector<int> layer_counts {2, 3, 2};
 
-    int input_count = 2;
-    int hidden_count = 3;
-    int output_count = 2;
-
-    layer_counts.emplace_back(input_count);
-    layer_counts.emplace_back(hidden_count);
-    layer_counts.emplace_back(output_count);
-
-    Network neural_network(layer_counts);
+    Network neural_network = NetworkBuilder::build_network(layer_counts);
 
     double learning_rate = 0.0; /* used in backpropagation */
     Trainer trainer(neural_network, learning_rate);
 
-    std::vector<double> update_values;
-    update_values.emplace_back(0.3);
-    update_values.emplace_back(0.7);
+    std::vector<double> update_values {0.3, 0.7};
 
     trainer.set_target_values(update_values);
 
@@ -69,25 +62,14 @@ TEST_CASE( "trainer - integration test - set target_values")
 TEST_CASE( "trainer - integration test - set target_values, will fail because length of vectors don't match")
 {
 
-    std::vector<int> layer_counts;
+    std::vector<int> layer_counts {2, 3, 1};
 
-    int input_count = 2;
-    int hidden_count = 3;
-    int output_count = 1;
-
-    layer_counts.emplace_back(input_count);
-    layer_counts.emplace_back(hidden_count);
-    layer_counts.emplace_back(output_count);
-
-    Network neural_network(layer_counts);
+    Network neural_network = NetworkBuilder::build_network(layer_counts);
 
     double learning_rate = 0.0; /* used in backpropagation */
     Trainer trainer(neural_network, learning_rate);
 
-    std::vector<double> update_values;
-    update_values.emplace_back(0.0);
-    update_values.emplace_back(1.0);
-    update_values.emplace_back(0.0);
+    std::vector<double> update_values {0.0, 0.1, 0.0};
 
     REQUIRE_THROWS( trainer.set_target_values(update_values) );
 

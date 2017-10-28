@@ -10,8 +10,9 @@ TEST_CASE( "synapse - integration test - get from_neuron's weighted output_value
 
     Neuron to_neuron;
 
+    Synapse new_synapse(from_neuron, to_neuron);
     double weight = 1.5;
-    Synapse new_synapse(from_neuron, to_neuron, weight);
+    new_synapse.set_weight(weight);
 
     float expected_result = 0.75;
     float actual_result = new_synapse.get_from_neuron_weighted_outgoing_value();

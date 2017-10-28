@@ -9,6 +9,7 @@
 #include "../../src/network/synapse/synapse.h"
 #include "../../src/network/synapse/i_synapse.h"
 #include "../../src/network/network.h"
+#include "../../src/network_builder/network_builder.h"
 
 TEST_CASE( "backpropagation - integration test - update one neuron's error")
 {
@@ -46,8 +47,9 @@ TEST_CASE( "backpropagation - integration test - output layer update one incomin
     Neuron output_neuron;
     double neuron_error = 0.009;
 
+    std::unique_ptr<ISynapse> synapse = std::make_unique<Synapse>(hidden_neuron, output_neuron);
     double weight = 0.1;
-    std::unique_ptr<ISynapse> synapse = std::make_unique<Synapse>(hidden_neuron, output_neuron, weight);
+    synapse->set_weight(weight);
 
     /* For this test, the output neuron would have an output_value of 0.1 and a target of 0.0. So
      * therefore, it has a neuron_error of 0.009. The test won't actually use the output_neuron, but
@@ -74,8 +76,9 @@ TEST_CASE( "backpropagation - integration test - output layer update one incomin
     Neuron output_neuron;
     double neuron_error = 0.009;
 
+    std::unique_ptr<ISynapse> synapse = std::make_unique<Synapse>(hidden_neuron, output_neuron);
     double weight = 0.1;
-    std::unique_ptr<ISynapse> synapse = std::make_unique<Synapse>(hidden_neuron, output_neuron, weight);
+    synapse->set_weight(weight);
 
     /* For this test, the output neuron would have an output_value of 0.1 and a target of 0.0. So
      * therefore, it has a neuron_error of 0.009. The test won't actually use the output_neuron, but
@@ -104,10 +107,12 @@ TEST_CASE( "backpropagation - integration test - update two incoming synapses")
     Neuron output_neuron;
     output_neuron.target_value = 1.0;
 
+    std::unique_ptr<ISynapse> synapse_1 = std::make_unique<Synapse>(hidden_neuron_1, output_neuron);
     double weight_1 = 0.4;
-    std::unique_ptr<ISynapse> synapse_1 = std::make_unique<Synapse>(hidden_neuron_1, output_neuron, weight_1);
+    synapse_1->set_weight(weight_1);
+    std::unique_ptr<ISynapse> synapse_2 = std::make_unique<Synapse>(hidden_neuron_2, output_neuron);
     double weight_2 = 0.12;
-    std::unique_ptr<ISynapse> synapse_2 = std::make_unique<Synapse>(hidden_neuron_2, output_neuron, weight_2);
+    synapse_2->set_weight(weight_2);
 
     /* The synapses are added to the Neuron's vector and returned as a reference */
     std::reference_wrapper<ISynapse> synapse_1_in_place = output_neuron.add_incoming_synapse(std::move(synapse_1));
@@ -141,17 +146,9 @@ TEST_CASE( "backpropagation - integration test - same as before but do forward f
 
     /* Neural network and classifier borrowed from integration/classifier.cpp */
 
-    std::vector<int> layer_counts;
+    std::vector<int> layer_counts {2, 2, 1};
 
-    int input_count = 2;
-    int hidden_count = 2;
-    int output_count = 1;
-
-    layer_counts.emplace_back(input_count);
-    layer_counts.emplace_back(hidden_count);
-    layer_counts.emplace_back(output_count);
-
-    Network neural_network(layer_counts);
+    Network neural_network = NetworkBuilder::build_network(layer_counts);
     
     /* For this test, we need to know exactly what the Synapse weights are. */
     neural_network.hidden_layer.at(0).incoming_synapses.at(0)->set_weight(0.5);
@@ -164,9 +161,8 @@ TEST_CASE( "backpropagation - integration test - same as before but do forward f
     Classifier classifier(neural_network);
 
     /* This is to make sure the initial inputs have outgoing_values */
-    std::vector<double> update_values;
-    update_values.emplace_back(0);
-    update_values.emplace_back(1);
+    std::vector<double> update_values {0, 1};
+
     classifier.set_input_values(update_values);
 
     classifier.classify();
@@ -213,10 +209,12 @@ TEST_CASE( "backpropagation - integration test - test hidden_layer total_errors"
     Neuron to_neuron_2;
     to_neuron_2.error_value = 0.52;
 
+    std::unique_ptr<ISynapse> synapse_1 = std::make_unique<Synapse>(from_neuron, to_neuron_1);
     double weight_1 = 0.31;
-    std::unique_ptr<ISynapse> synapse_1 = std::make_unique<Synapse>(from_neuron, to_neuron_1, weight_1);
+    synapse_1->set_weight(weight_1);
+    std::unique_ptr<ISynapse> synapse_2 = std::make_unique<Synapse>(from_neuron, to_neuron_2);
     double weight_2 = 0.67;
-    std::unique_ptr<ISynapse> synapse_2 = std::make_unique<Synapse>(from_neuron, to_neuron_2, weight_2);
+    synapse_2->set_weight(weight_2);
 
     std::reference_wrapper<ISynapse> synapse_1_ref = to_neuron_1.add_incoming_synapse(std::move(synapse_1));
     from_neuron.add_outgoing_synapse(synapse_1_ref);
@@ -243,9 +241,9 @@ TEST_CASE( "backpropagation - integration test - test hidden_layer set synapse")
     Neuron hidden_neuron;
     double total_neuron_errors = 0.732;
 
+    std::unique_ptr<ISynapse> synapse = std::make_unique<Synapse>(input_neuron, hidden_neuron);
     double weight = 0.498;
-
-    std::unique_ptr<ISynapse> synapse = std::make_unique<Synapse>(input_neuron, hidden_neuron, weight);
+    synapse->set_weight(weight);
 
     float learning_rate = 1.0;
     Backpropagation backpropagation(learning_rate);
