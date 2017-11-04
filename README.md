@@ -1,4 +1,19 @@
-This project implements a neural network in c++, which is useful for some types of classification.
+This project implements a vanilla neural network in c++, which is useful for some types of classification.
+By vanilla, I mean not deep or complicated. There's one activation function.
+
+I'm looking back on this project now, six months after it began, and regretting my decisions. I could
+restructure this but I don't have the time. It's not all bad as a first c++ project. Lesson learned:
+Dependency Injection is important and it's better to get it right the first time rather than fixing
+it later.
+
+### Docs
+
+- [using the program](docs/usage.md)
+- [data file structure](docs/data_files.md)
+- [example](docs/example.md)
+- [issues with the program](docs/issues.md)
+- [reasons for project structure](docs/discussion.md)
+- [optimistic list of things to add](docs/to_add.md)
 
 ### Compile
 
@@ -11,18 +26,4 @@ Mac. Make a pull request if that's what you want.
 
 If you're missing permissions, do: `chmod +x bin/*`
 
-Then do `./bin/tests`
-
-I have been unable to mock objects in C++ so far, so there are no unit tests for functions that have
-side effects. Most tests are integration tests, and are marked integration tests depending on
-whether other objects (not mocks) are defined in the testcase.
-
-### Docs
-
-- [using the program](docs/usage.md)
-- [data file structure](docs/data_files.md)
-- [example](docs/example.md)
-- [issues with the program](docs/issues.md)
-- [reasons for project structure](docs/discussion.md)
-- [optimistic list of things to add](docs/to_add.md)
-
+Then do `./bin/tests`. Most of these tests are integration tests.
