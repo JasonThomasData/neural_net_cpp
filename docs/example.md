@@ -1,6 +1,6 @@
 With the `./bin/train` program, you can point it at a training dataset, like this:
 
-    ./bin/train --data data/training/scatter_plot
+    ./bin/train data/training/scatter_plot.json
 
 The training data referenced above contains elements to make the neural network, set its training
 parameters and then has an unspecified number of data for training. Those documents are training
