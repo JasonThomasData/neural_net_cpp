@@ -33,11 +33,11 @@ TEST_CASE( "JsonParser - unit test - structure from json")
     double expected_target_total_error = 0.05;
     REQUIRE(actual_target_total_error == expected_target_total_error);
 
-    std::vector<double> actual_data = training_data.input_values.at(0);
+    std::vector<double> actual_data = training_data.training_set.at(0).input_values;
     std::vector<double> expected_data = {0.0, 0.0};
     REQUIRE(actual_data == expected_data);
 
-    std::vector<double> actual_targets = training_data.target_values.at(0);
+    std::vector<double> actual_targets = training_data.training_set.at(0).target_values;
     std::vector<double> expected_targets = {1.0};
     REQUIRE(actual_targets == expected_targets);
 }

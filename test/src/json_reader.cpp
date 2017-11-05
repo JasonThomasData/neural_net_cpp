@@ -43,11 +43,11 @@ TEST_CASE( "reader - integration test - test the dummy file is loaded")
     double expected_target_total_error = 0.0005;
     REQUIRE(actual_target_total_error == expected_target_total_error);
 
-    std::vector<double> actual_data = test_training_data.input_values.at(2);
+    std::vector<double> actual_data = test_training_data.training_set.at(2).input_values;
     std::vector<double> expected_data = {1.0, 0.0};
     REQUIRE(actual_data == expected_data);
 
-    std::vector<double> actual_targets = test_training_data.target_values.at(3);
+    std::vector<double> actual_targets = test_training_data.training_set.at(3).target_values;
     std::vector<double> expected_targets = {0.0};
     REQUIRE(actual_targets == expected_targets);
 }

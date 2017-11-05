@@ -25,11 +25,11 @@ double get_average_error(std::vector<double> all_total_errors)
 // Is this really classify_ ? If not then rename it.
 void classify_epoch(Network& network, TrainingData& training_data, Classifier& classifier)
 {
-    int inputs_values_number = training_data.input_values.size();
+    std::vector<TrainingDocument> training_set = training_data.training_set;
 
-    for(int i=0; i<inputs_values_number; i++)
+    for(TrainingDocument training_document: training_set)
     {
-        std::vector<double> new_inputs = training_data.input_values.at(i);
+        std::vector<double> new_inputs = training_document.input_values;
         classifier.set_input_values(new_inputs);
         classifier.classify();
 
@@ -58,16 +58,16 @@ void classify_epoch(Network& network, TrainingData& training_data, Classifier& c
 void train_epoch(Network& network, TrainingData& training_data, Classifier& classifier, Trainer& trainer)
 {
     std::vector<double> all_total_errors;
-    int inputs_values_number = training_data.input_values.size();
+    std::vector<TrainingDocument> training_set = training_data.training_set;
 
-    for(int i=0; i<inputs_values_number; i++)
+    for(TrainingDocument training_document: training_set)
     {
 
-        std::vector<double> new_inputs = training_data.input_values.at(i);
+        std::vector<double> new_inputs = training_document.input_values;
         classifier.set_input_values(new_inputs);
         classifier.classify();
 
-        std::vector<double> new_targets = training_data.target_values.at(i);
+        std::vector<double> new_targets = training_document.target_values;
         trainer.set_target_values(new_targets);
         trainer.train();
  

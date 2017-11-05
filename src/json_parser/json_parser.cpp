@@ -62,10 +62,12 @@ void JsonParser::training_set_from_json(TrainingData& training_data, nlohmann::j
 {
     for(auto training_example: json_data["training_set"])
     {
+        TrainingDocument training_document;
+
         try
         {
-            std::vector<double> input_values = training_example["input_values"];
-            training_data.input_values.emplace_back(input_values);
+            std::vector<double> parsed_input_values = training_example["input_values"];
+            training_document.input_values = parsed_input_values; 
         }
         catch (const std::exception& exception)
         {
@@ -76,8 +78,8 @@ void JsonParser::training_set_from_json(TrainingData& training_data, nlohmann::j
 
         try
         {
-            std::vector<double> target_values = training_example["target_values"];
-            training_data.target_values.emplace_back(target_values);
+            std::vector<double> parsed_target_values = training_example["target_values"];
+            training_document.target_values = parsed_target_values; 
         }
         catch (const std::exception& exception)
         {
@@ -85,5 +87,7 @@ void JsonParser::training_set_from_json(TrainingData& training_data, nlohmann::j
             std::cout<< exception.what()<< std::endl;
             throw exception;
         }
+
+        training_data.training_set.emplace_back(training_document);
     }
 }
