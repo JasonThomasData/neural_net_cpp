@@ -1,7 +1,7 @@
-structure 2,25,1
+structure 2,20,1
 learning_rate 0.2
-target_total_error 0.01
+target_total_error 0.1
 0,0 0
 0,1 0
 1,0 0
-1,1 1 
+1,1 1

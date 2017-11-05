@@ -1,6 +1,6 @@
-structure 8,20,3
-learning_rate 0.25
-target_total_error 0.04
+structure 8,40,3
+learning_rate 0.1
+target_total_error 0.01
 0,0,0,1,0,0,0,1 0,0,1
 0,0,0,1,0,0,1,1 0,0,1
 0,0,0,1,0,1,0,0 0,0,1
