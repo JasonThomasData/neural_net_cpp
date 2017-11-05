@@ -1,5 +1,7 @@
 #include <fstream>
 #include <iostream>
+#include <string>
+
 #include "../../lib/json.hpp" 
 #include "../data_converter/data_converter.h" 
 

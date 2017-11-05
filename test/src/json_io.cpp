@@ -1,10 +1,10 @@
 #include "../../lib/catch.h"
-#include "../../src/json_reader/json_reader.h"
+#include "../../src/json_io/json_io.h"
 #include "../../src/json_parser/parsed_data.h"
 
 TEST_CASE( "JsonReader - unit test - test there's no file")
 {
-    JsonReader reader;
+    JsonIO reader;
 
     std::string file_name = "totally not a real file";
 
@@ -25,7 +25,7 @@ TEST_CASE( "JsonReader - unit test - test there's no file")
 
 TEST_CASE( "reader - integration test - test the dummy file is loaded")
 {
-    JsonReader reader;
+    JsonIO reader;
 
     std::string file_name = "test/training_data.json";
 

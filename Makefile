@@ -7,10 +7,10 @@ objects = $(obj_network) $(obj_trainer) $(obj_classifier) $(obj_read_write) $(ob
 obj_network = build/synapse.o build/neuron.o build/network.o build/network_builder.o
 obj_trainer = build/trainer.o build/backpropagation.o
 obj_classifier = build/feed_forward.o build/classifier.o
-obj_read_write = build/json_reader.o build/json_parser.o build/simple_parser.o build/data_converter.o
+obj_read_write = build/json_io.o build/json_parser.o build/simple_parser.o build/data_converter.o
 obj_tests = build/test_synapse.o build/test_network.o build/test_classifier.o \
 	build/test_feed_forward.o build/test_trainer.o build/test_backpropagation.o \
-	build/test_simple_parser.o build/test_json_reader.o build/test_json_parser.o
+	build/test_simple_parser.o build/test_json_io.o build/test_json_parser.o
 obj_main_files = build/train_main.o build/classify_main.o build/test_main.o build/convert_main.o
 
 #Network objects
@@ -36,8 +36,8 @@ build/classifier.o: src/classifier/classifier.cpp
 	g++ -c $(CXXFLAGS) src/classifier/classifier.cpp -o build/classifier.o
 
 #Reader and writer objects
-build/json_reader.o: src/json_reader/json_reader.cpp
-	g++ -c $(CXXFLAGS) src/json_reader/json_reader.cpp -o build/json_reader.o
+build/json_io.o: src/json_io/json_io.cpp
+	g++ -c $(CXXFLAGS) src/json_io/json_io.cpp -o build/json_io.o
 build/json_parser.o: src/json_parser/json_parser.cpp
 	g++ -c $(CXXFLAGS) src/json_parser/json_parser.cpp -o build/json_parser.o
 build/simple_parser.o: src/simple_parser/simple_parser.cpp
@@ -60,8 +60,8 @@ build/test_backpropagation.o: test/src/backpropagation.cpp
 	g++ -c $(CXXFLAGS) test/src/backpropagation.cpp -o build/test_backpropagation.o
 build/test_simple_parser.o: test/src/simple_parser.cpp
 	g++ -c $(CXXFLAGS) test/src/simple_parser.cpp -o build/test_simple_parser.o
-build/test_json_reader.o: test/src/json_reader.cpp
-	g++ -c $(CXXFLAGS) test/src/json_reader.cpp -o build/test_json_reader.o
+build/test_json_io.o: test/src/json_io.cpp
+	g++ -c $(CXXFLAGS) test/src/json_io.cpp -o build/test_json_io.o
 build/test_json_parser.o: test/src/json_parser.cpp
 	g++ -c $(CXXFLAGS) test/src/json_parser.cpp -o build/test_json_parser.o
 

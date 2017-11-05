@@ -2,14 +2,26 @@
 #include <iostream>
 #include <vector>
 #include <stdexcept>
+
 #include "../../lib/json.hpp"
-#include "json_reader.h"
+
+#include "json_io.h"
 #include "../json_parser/parsed_data.h"
 #include "../json_parser/json_parser.h"
+#include "../network/network.h"
 
-JsonReader::JsonReader(){}
+JsonIO::JsonIO(){}
 
-nlohmann::json JsonReader::read_file(std::string file_name)
+TrainingData JsonIO::read_training_data(std::string file_name)
+{
+    nlohmann::json json_data = read_file(file_name);
+    TrainingData training_data = JsonParser::parse_training_data_from_json(json_data);
+    return training_data;
+}
+
+void JsonIO::save_network_data(std::string file_name, Network network) {}
+
+nlohmann::json JsonIO::read_file(std::string file_name)
 {
     try
     {
@@ -22,13 +34,8 @@ nlohmann::json JsonReader::read_file(std::string file_name)
     {
         std::cout<< "check file exists + file format"<< std::endl;
         std::cout<< exception.what()<< std::endl;
-        throw exception; 
+        throw exception;
     }
 }
 
-TrainingData JsonReader::read_training_data(std::string file_name)
-{
-    nlohmann::json json_data = read_file(file_name);
-    TrainingData training_data = JsonParser::parse_training_data_from_json(json_data);
-    return training_data;
-}
+void JsonIO::save_file(std::string file_name, nlohmann::json json_data) {}

@@ -3,7 +3,7 @@
 #include "../neuron/neuron.h"
 #include "../classifier/classifier.h"
 #include "../trainer/trainer.h"
-#include "../json_reader/json_reader.h"
+#include "../json_io/json_io.h"
 #include "../json_parser/parsed_data.h"
 #include <vector>
 #include <iostream>
@@ -93,8 +93,8 @@ int main(int argc, char** argv)
     {
         file_name = "data/training/scatter_plot";
     }
-    JsonReader json_reader;
-    TrainingData training_data = json_reader.read_training_data(file_name);
+    JsonIO json_io;
+    TrainingData training_data = json_io.read_training_data(file_name);
     Network network = NetworkBuilder::build_network(training_data.structure);
     Classifier classifier(network);
     Trainer trainer(network, training_data.learning_rate);

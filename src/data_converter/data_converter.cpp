@@ -7,7 +7,7 @@
 #include "../simple_parser/simple_parser.h"
 #include "data_converter.h"
 
-std::ifstream DataConverter::read_file(std::string& file_name)
+std::ifstream DataConverter::read_file(std::string file_name)
 {
     std::ifstream in_file;
     in_file.open(file_name);
@@ -57,7 +57,7 @@ nlohmann::json DataConverter::convert_to_json(std::ifstream& original_data)
     return json_data;
 }
 
-void DataConverter::save_data(std::string& out_path, nlohmann::json& out_data)
+void DataConverter::save_data(std::string out_path, nlohmann::json out_data)
 {
     std::ofstream out_file(out_path);
     out_file << std::setw(0) << out_data << std::endl;
