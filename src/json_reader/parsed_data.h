@@ -11,8 +11,8 @@ struct TrainingData
     double learning_rate;
     double target_total_error;
     std::vector<int> structure;
-    std::vector<std::vector<double> > data;
-    std::vector<std::vector<double> > targets;
+    std::vector< std::vector<double> > input_values;
+    std::vector< std::vector<double> > target_values;
 };
 
 #endif

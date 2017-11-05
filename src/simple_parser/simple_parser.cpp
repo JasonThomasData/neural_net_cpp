@@ -2,11 +2,9 @@
 #include <sstream>
 #include <vector>
 #include <stdexcept>
-#include "parser.h"
+#include "simple_parser.h"
 
-Parser::Parser(){};
-
-int Parser::to_int(std::string to_convert)
+int SimpleParser::to_int(std::string to_convert)
 {
     try
     {
@@ -19,7 +17,7 @@ int Parser::to_int(std::string to_convert)
     }
 }
 /*These look very similar, as are the functions below. Is there a way to combine them?*/
-double Parser::to_double(std::string to_convert)
+double SimpleParser::to_double(std::string to_convert)
 {
     try
     {
@@ -32,7 +30,7 @@ double Parser::to_double(std::string to_convert)
     }
 }
 
-std::vector<std::string> Parser::string_vector(std::string number_string)
+std::vector<std::string> SimpleParser::string_vector(std::string number_string)
 {
     std::istringstream iss(number_string);
     std::string to_add;
@@ -46,7 +44,7 @@ std::vector<std::string> Parser::string_vector(std::string number_string)
     return string_list;
 }
 
-std::vector<int> Parser::string_vector_int_vector(std::vector<std::string> string_list)
+std::vector<int> SimpleParser::string_vector_int_vector(std::vector<std::string> string_list)
 {
     std::vector<int> int_list;
 
@@ -58,7 +56,7 @@ std::vector<int> Parser::string_vector_int_vector(std::vector<std::string> strin
     return int_list;
 }
 /*Same as above*/
-std::vector<double> Parser::string_vector_double_vector(std::vector<std::string> string_list)
+std::vector<double> SimpleParser::string_vector_double_vector(std::vector<std::string> string_list)
 {
     std::vector<double> double_list;
 
