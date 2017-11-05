@@ -1,10 +1,10 @@
 #include "../../lib/catch.h"
-#include "../../src/reader/reader.h"
-#include "../../src/parser/parsed_data.h"
+#include "../../src/json_reader/json_reader.h"
+#include "../../src/json_reader/parsed_data.h"
 
-TEST_CASE( "reader - unit test - test there's no file")
+TEST_CASE( "JsonReader - unit test - test there's no file")
 {
-    Reader reader;
+    JsonReader reader;
 
     std::string file_name = "totally not a real file";
 
@@ -24,12 +24,12 @@ TEST_CASE( "reader - unit test - test there's no file")
  */
 TEST_CASE( "reader - integration test - test the dummy file is loaded")
 {
-    Reader reader;
+    JsonReader reader;
 
-    std::string file_name = "test/training_data";
+    std::string file_name = "test/training_data.json";
 
     TrainingData test_training_data = reader.read_training_data(file_name);
-    
+
     std::vector<int> actual_structure = test_training_data.structure;
     std::vector<int> expected_structure = {2,3,1};
     REQUIRE(actual_structure == expected_structure); 
@@ -42,11 +42,11 @@ TEST_CASE( "reader - integration test - test the dummy file is loaded")
     double expected_target_total_error = 0.0005;
     REQUIRE(actual_target_total_error == expected_target_total_error);
 
-    std::vector<double> actual_data = test_training_data.data.at(2);
+    std::vector<double> actual_data = test_training_data.input_values.at(2);
     std::vector<double> expected_data = {1.0, 0.0};
     REQUIRE(actual_data == expected_data);
 
-    std::vector<double> actual_targets = test_training_data.targets.at(3);
+    std::vector<double> actual_targets = test_training_data.target_values.at(3);
     std::vector<double> expected_targets = {0.0};
     REQUIRE(actual_targets == expected_targets);
 }

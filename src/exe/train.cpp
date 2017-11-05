@@ -3,8 +3,8 @@
 #include "../neuron/neuron.h"
 #include "../classifier/classifier.h"
 #include "../trainer/trainer.h"
-#include "../reader/reader.h"
-#include "../parser/parsed_data.h"
+#include "../json_reader/json_reader.h"
+#include "../json_reader/parsed_data.h"
 #include <vector>
 #include <iostream>
 #include <sstream> //For char conversion
@@ -25,11 +25,11 @@ double get_average_error(std::vector<double> all_total_errors)
 // Is this really classify_ ? If not then rename it.
 void classify_epoch(Network& network, TrainingData& training_data, Classifier& classifier)
 {
-    int training_data_size = training_data.data.size();
+    int inputs_values_number = training_data.input_values.size();
 
-    for(int i=0; i<training_data_size; i++)
+    for(int i=0; i<inputs_values_number; i++)
     {
-        std::vector<double> new_inputs = training_data.data.at(i);
+        std::vector<double> new_inputs = training_data.input_values.at(i);
         classifier.set_input_values(new_inputs);
         classifier.classify();
 
@@ -58,15 +58,16 @@ void classify_epoch(Network& network, TrainingData& training_data, Classifier& c
 void train_epoch(Network& network, TrainingData& training_data, Classifier& classifier, Trainer& trainer)
 {
     std::vector<double> all_total_errors;
-    int training_data_size = training_data.data.size();
+    int inputs_values_number = training_data.input_values.size();
 
-    for(int i=0; i<training_data_size; i++)
+    for(int i=0; i<inputs_values_number; i++)
     {
-        std::vector<double> new_inputs = training_data.data.at(i);
+
+        std::vector<double> new_inputs = training_data.input_values.at(i);
         classifier.set_input_values(new_inputs);
         classifier.classify();
 
-        std::vector<double> new_targets = training_data.targets.at(i);
+        std::vector<double> new_targets = training_data.target_values.at(i);
         trainer.set_target_values(new_targets);
         trainer.train();
  
@@ -92,8 +93,8 @@ int main(int argc, char** argv)
     {
         file_name = "data/training/scatter_plot";
     }
-    Reader reader;
-    TrainingData training_data = reader.read_training_data(file_name);
+    JsonReader json_reader;
+    TrainingData training_data = json_reader.read_training_data(file_name);
     Network network = NetworkBuilder::build_network(training_data.structure);
     Classifier classifier(network);
     Trainer trainer(network, training_data.learning_rate);
@@ -106,6 +107,8 @@ int main(int argc, char** argv)
         train_epoch(network, training_data, classifier, trainer);
     }
 
+    std::cout<< trainer.epoch<<", "<< network.epoch_average_total_error<< std::endl;
     classify_epoch(network, training_data, classifier);
+
     return 0;
 }
