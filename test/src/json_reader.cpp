@@ -1,6 +1,6 @@
 #include "../../lib/catch.h"
 #include "../../src/json_reader/json_reader.h"
-#include "../../src/json_reader/parsed_data.h"
+#include "../../src/json_parser/parsed_data.h"
 
 TEST_CASE( "JsonReader - unit test - test there's no file")
 {
@@ -22,6 +22,7 @@ TEST_CASE( "JsonReader - unit test - test there's no file")
  *   1,0 1
  *   1,1 0
  */
+
 TEST_CASE( "reader - integration test - test the dummy file is loaded")
 {
     JsonReader reader;

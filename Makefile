@@ -10,7 +10,7 @@ obj_classifier = build/feed_forward.o build/classifier.o
 obj_read_write = build/json_reader.o build/json_parser.o build/simple_parser.o build/data_converter.o
 obj_tests = build/test_synapse.o build/test_network.o build/test_classifier.o \
 	build/test_feed_forward.o build/test_trainer.o build/test_backpropagation.o \
-	build/test_simple_parser.o build/test_json_reader.o
+	build/test_simple_parser.o build/test_json_reader.o build/test_json_parser.o
 obj_main_files = build/train_main.o build/classify_main.o build/test_main.o build/convert_main.o
 
 #Network objects
@@ -62,6 +62,8 @@ build/test_simple_parser.o: test/src/simple_parser.cpp
 	g++ -c $(CXXFLAGS) test/src/simple_parser.cpp -o build/test_simple_parser.o
 build/test_json_reader.o: test/src/json_reader.cpp
 	g++ -c $(CXXFLAGS) test/src/json_reader.cpp -o build/test_json_reader.o
+build/test_json_parser.o: test/src/json_parser.cpp
+	g++ -c $(CXXFLAGS) test/src/json_parser.cpp -o build/test_json_parser.o
 
 #Main file objects. Each has a main function
 build/train_main.o: src/exe/train.cpp

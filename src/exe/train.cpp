@@ -4,7 +4,7 @@
 #include "../classifier/classifier.h"
 #include "../trainer/trainer.h"
 #include "../json_reader/json_reader.h"
-#include "../json_reader/parsed_data.h"
+#include "../json_parser/parsed_data.h"
 #include <vector>
 #include <iostream>
 #include <sstream> //For char conversion
