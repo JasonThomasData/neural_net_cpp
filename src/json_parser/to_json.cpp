@@ -3,8 +3,6 @@
 #include "../network/network.h"
 #include "to_json.h"
 
-ToJson::ToJson(){}
-
 void ToJson::structure(Network& network, nlohmann::json& json_data)
 {
     int input_neuron_count = network.input_layer.size();

@@ -12,9 +12,8 @@
 
 TrainingData JsonIO::read_training_data(std::string file_name)
 {
-    JsonParser json_parser;
     nlohmann::json json_data = read_file(file_name);
-    TrainingData training_data = json_parser.parse_training_data_from_json(json_data);
+    TrainingData training_data = JsonParser::parse_training_data_from_json(json_data);
     return training_data;
 }
 
@@ -22,8 +21,7 @@ void JsonIO::save_network_data(std::string file_name, Network& network)
 {
     file_name = "data/network/result.json";
 
-    JsonParser json_parser;
-    nlohmann::json json_data = json_parser.parse_network_data_to_json(network);
+    nlohmann::json json_data = JsonParser::parse_network_data_to_json(network);
     save_json_data(file_name, json_data);
 }
 

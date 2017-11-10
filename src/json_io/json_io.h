@@ -1,20 +1,12 @@
-#ifndef JsonIO_h
-#define JsonIO_h
-
 #include "../../lib/json.hpp"
 
-struct TrainingData;
-class Network;
+#include "../json_parser/parsed_data.h"
+#include "../network/network.h"
 
-class JsonIO
+namespace JsonIO
 {
-    private:
-        JsonIO();
-        static nlohmann::json read_file(std::string file_name);
-    public:
-        static TrainingData read_training_data(std::string file_name);
-        static void save_network_data(std::string file_name, Network& network);
-        static void save_json_data(std::string file_name, nlohmann::json json_data);
+    nlohmann::json read_file(std::string file_name);
+    TrainingData read_training_data(std::string file_name);
+    void save_network_data(std::string file_name, Network& network);
+    void save_json_data(std::string file_name, nlohmann::json json_data);
 };
-
-#endif

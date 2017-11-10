@@ -21,7 +21,6 @@ std::ifstream DataConverter::read_file(std::string file_name)
 
 nlohmann::json DataConverter::convert_to_json(std::ifstream& original_data)
 {
-
     nlohmann::json json_data;
 
     json_data["training_set"] = {};
@@ -48,17 +47,12 @@ nlohmann::json DataConverter::convert_to_json(std::ifstream& original_data)
             std::vector<std::string> target_string_list = SimpleParser::string_vector(col_2);
             std::vector<double> parsed_target_values = SimpleParser::string_vector_double_vector(target_string_list);
 
-            nlohmann::json training_value_target_pair = nlohmann::json::object({ {"input_values", parsed_input_values },
-                                                                                 {"target_values", parsed_target_values } });
-            json_data["training_set"].emplace_back(training_value_target_pair);
+            nlohmann::json training_document = nlohmann::json::object({ {"input_values", parsed_input_values },
+                                                                        {"target_values", parsed_target_values } });
+            json_data["training_set"].emplace_back(training_document);
         }
     }
 
     return json_data;
 }
 
-void DataConverter::save_data(std::string out_path, nlohmann::json out_data)
-{
-    std::ofstream out_file(out_path);
-    out_file << std::setw(0) << out_data << std::endl;
-}

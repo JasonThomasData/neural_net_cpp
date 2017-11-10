@@ -3,8 +3,6 @@
 #include "parsed_data.h"
 #include "from_json.h"
 
-FromJson::FromJson(){}
-
 void FromJson::structure(TrainingData& training_data, nlohmann::json json_data)
 {
     try
