@@ -7,10 +7,12 @@ objects = $(obj_network) $(obj_trainer) $(obj_classifier) $(obj_read_write) $(ob
 obj_network = build/synapse.o build/neuron.o build/network.o build/network_builder.o
 obj_trainer = build/trainer.o build/backpropagation.o
 obj_classifier = build/feed_forward.o build/classifier.o
-obj_read_write = build/json_io.o build/json_parser.o build/simple_parser.o build/data_converter.o
-obj_tests = build/test_synapse.o build/test_network.o build/test_classifier.o \
+obj_read_write = build/json_io.o build/json_parser.o build/from_json.o build/to_json.o \
+	build/simple_parser.o build/data_converter.o
+obj_tests = build/test_synapse.o build/test_network_builder.o build/test_classifier.o \
 	build/test_feed_forward.o build/test_trainer.o build/test_backpropagation.o \
-	build/test_simple_parser.o build/test_json_io.o build/test_json_parser.o
+	build/test_simple_parser.o build/test_json_io.o build/test_json_parser.o \
+	build/test_from_json.o build/test_to_json.o
 obj_main_files = build/train_main.o build/classify_main.o build/test_main.o build/convert_main.o
 
 #Network objects
@@ -35,11 +37,15 @@ build/feed_forward.o: src/classifier/feed_forward.cpp
 build/classifier.o: src/classifier/classifier.cpp
 	g++ -c $(CXXFLAGS) src/classifier/classifier.cpp -o build/classifier.o
 
-#Reader and writer objects
+#File read, parse and write objects
 build/json_io.o: src/json_io/json_io.cpp
 	g++ -c $(CXXFLAGS) src/json_io/json_io.cpp -o build/json_io.o
 build/json_parser.o: src/json_parser/json_parser.cpp
 	g++ -c $(CXXFLAGS) src/json_parser/json_parser.cpp -o build/json_parser.o
+build/from_json.o: src/json_parser/from_json.cpp
+	g++ -c $(CXXFLAGS) src/json_parser/from_json.cpp -o build/from_json.o
+build/to_json.o: src/json_parser/to_json.cpp
+	g++ -c $(CXXFLAGS) src/json_parser/to_json.cpp -o build/to_json.o
 build/simple_parser.o: src/simple_parser/simple_parser.cpp
 	g++ -c $(CXXFLAGS) src/simple_parser/simple_parser.cpp -o build/simple_parser.o
 build/data_converter.o: src/data_converter/data_converter.cpp
@@ -48,8 +54,8 @@ build/data_converter.o: src/data_converter/data_converter.cpp
 #Test objects
 build/test_synapse.o: test/src/synapse.cpp
 	g++ -c $(CXXFLAGS) test/src/synapse.cpp -o build/test_synapse.o
-build/test_network.o: test/src/network.cpp
-	g++ -c $(CXXFLAGS) test/src/network.cpp -o build/test_network.o
+build/test_network_builder.o: test/src/network_builder.cpp
+	g++ -c $(CXXFLAGS) test/src/network_builder.cpp -o build/test_network_builder.o
 build/test_feed_forward.o: test/src/feed_forward.cpp
 	g++ -c $(CXXFLAGS) test/src/feed_forward.cpp -o build/test_feed_forward.o
 build/test_classifier.o: test/src/classifier.cpp
@@ -64,6 +70,10 @@ build/test_json_io.o: test/src/json_io.cpp
 	g++ -c $(CXXFLAGS) test/src/json_io.cpp -o build/test_json_io.o
 build/test_json_parser.o: test/src/json_parser.cpp
 	g++ -c $(CXXFLAGS) test/src/json_parser.cpp -o build/test_json_parser.o
+build/test_from_json.o: test/src/from_json.cpp
+	g++ -c $(CXXFLAGS) test/src/from_json.cpp -o build/test_from_json.o
+build/test_to_json.o: test/src/to_json.cpp
+	g++ -c $(CXXFLAGS) test/src/to_json.cpp -o build/test_to_json.o
 
 #Main file objects. Each has a main function
 build/train_main.o: src/exe/train.cpp
