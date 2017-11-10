@@ -1,4 +1,5 @@
 #include "classifier.h"
+#include "feed_forward.h"
 #include "../network/network.h"
 #include "../neuron/neuron.h"
 #include <stdexcept>
@@ -28,6 +29,6 @@ void Classifier::set_input_values(std::vector<double> new_input_values)
 
 void Classifier::classify()
 {
-    feed_forward.update_layer(network.hidden_layer);
-    feed_forward.update_layer(network.output_layer);
+    FeedForward::update_layer(network.hidden_layer);
+    FeedForward::update_layer(network.output_layer);
 }

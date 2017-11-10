@@ -29,11 +29,9 @@ TEST_CASE( "feed_forward - integration test - test the sum function works - comb
     incoming_synapses.emplace_back(std::move(new_synapse_1));
     incoming_synapses.emplace_back(std::move(new_synapse_2));
 
-    FeedForward feed_forward;
-
     /* Result = 0.7*0.5 + 0.25*0.8 = 0.55 */
     float expected_result = 0.55;
-    float actual_result = feed_forward.calculate_incoming_values(incoming_synapses);
+    float actual_result = FeedForward::calculate_incoming_values(incoming_synapses);
     REQUIRE(Approx(actual_result) == expected_result);
 }
 
@@ -44,20 +42,20 @@ TEST_CASE( "feed_forward - unit test - test the logistic/ activation function wo
      * places.
      */
 
-    FeedForward feed_forward;
+    //FeedForward feed_forward;
 
     float test_value_1 = 0.0;
-    float actual_result_1 = feed_forward.activate(test_value_1);
+    float actual_result_1 = FeedForward::activate(test_value_1);
     float expected_result_1 = 0.5;
     REQUIRE(Approx(actual_result_1) == expected_result_1);
 
     float test_value_2 = 0.5;
-    float actual_result_2 = feed_forward.activate(test_value_2);
+    float actual_result_2 = FeedForward::activate(test_value_2);
     float expected_result_2 = 0.622459;
     REQUIRE(Approx(actual_result_2) == expected_result_2);
 
     float test_value_3 = 1.0;
-    float actual_result_3 = feed_forward.activate(test_value_3);
+    float actual_result_3 = FeedForward::activate(test_value_3);
     float expected_result_3 = 0.73106;
     REQUIRE(Approx(actual_result_3) == expected_result_3);
 
@@ -66,7 +64,7 @@ TEST_CASE( "feed_forward - unit test - test the logistic/ activation function wo
      * using another function, like TanH.
      */
     float test_value_4 = -1.0;
-    float actual_result_4 = feed_forward.activate(test_value_4);
+    float actual_result_4 = FeedForward::activate(test_value_4);
     float expected_result_4 = 0.26894;
     REQUIRE(Approx(actual_result_4) == expected_result_4);
 }
@@ -88,9 +86,8 @@ TEST_CASE( "feed_forward - integration test - activate one Neuron, via one incom
     neuron2.add_incoming_synapse(std::move(new_synapse));
 
     /* Incoming weights are equal to 1.0*0.8 = 0.8 */
-    FeedForward feed_forward;
-    neuron2.incoming_values = feed_forward.calculate_incoming_values(neuron2.incoming_synapses);
-    neuron2.outgoing_value = feed_forward.activate(neuron2.incoming_values);
+    neuron2.incoming_values = FeedForward::calculate_incoming_values(neuron2.incoming_synapses);
+    neuron2.outgoing_value = FeedForward::activate(neuron2.incoming_values);
 
     float expected_result = 0.689974;
     float actual_result = neuron2.outgoing_value;
@@ -114,9 +111,8 @@ TEST_CASE( "neuron - integration test - activate, via one incoming synapse #2 ")
     neuron2.add_incoming_synapse(std::move(new_synapse));
 
     /* Incoming weights are equal to 0.5*0.8 = 0.4*/
-    FeedForward feed_forward;
-    neuron2.incoming_values = feed_forward.calculate_incoming_values(neuron2.incoming_synapses);
-    neuron2.outgoing_value =feed_forward.activate(neuron2.incoming_values);
+    neuron2.incoming_values = FeedForward::calculate_incoming_values(neuron2.incoming_synapses);
+    neuron2.outgoing_value = FeedForward::activate(neuron2.incoming_values);
 
     float expected_result = 0.598688;
     float actual_result = neuron2.outgoing_value;
@@ -155,8 +151,7 @@ TEST_CASE( "neuron -  integration test - activate, via several incoming synapses
     neuron4.add_incoming_synapse(std::move(new_synapse_2));
     neuron4.add_incoming_synapse(std::move(new_synapse_3));
 
-    FeedForward feed_forward;
-    feed_forward.update_neuron(neuron4);
+    FeedForward::update_neuron(neuron4);
 
     /* Incoming values should be = 0.4*0.75 + 1.0*0.2 + 0.3*0.5 = 0.65 */
     float expected_result = 0.65701;

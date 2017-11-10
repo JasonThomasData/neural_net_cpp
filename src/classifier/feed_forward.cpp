@@ -2,8 +2,10 @@
 #include "../synapse/i_synapse.h"
 #include "../neuron/neuron.h"
 #include <cmath>
+#include <vector>
+#include <memory>
 
-FeedForward::FeedForward(){}
+//FeedForward::FeedForward(){}
 
 double FeedForward::calculate_incoming_values(std::vector<std::unique_ptr<ISynapse>>& incoming_synapses)
 {
@@ -41,3 +43,4 @@ void FeedForward::update_layer(std::vector<Neuron>& layer)
         update_neuron(neuron);
     }
 }
+
