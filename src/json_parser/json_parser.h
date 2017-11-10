@@ -2,20 +2,21 @@
 #define JsonParser_h
 
 #include "../../lib/json.hpp"
+#include "../network/network.h"
+#include "from_json.h"
+#include "to_json.h"
 
-struct TrainingData;
+class TrainingData;
 
 class JsonParser
 {
     private:
-        JsonParser();
-        static void structure_from_json(TrainingData& training_data, nlohmann::json json_data);
-        static void learning_rate_from_json(TrainingData& training_data, nlohmann::json json_data);
-        static void target_total_error_from_json(TrainingData& training_data, nlohmann::json json_data);
-        static void training_set_from_json(TrainingData& training_data, nlohmann::json json_data);
+        FromJson from_json;
+        ToJson to_json;
     public:
-        static TrainingData parse_training_data_from_json(nlohmann::json json_data);
+        JsonParser();
+        nlohmann::json parse_network_data_to_json(Network& network);
+        TrainingData parse_training_data_from_json(nlohmann::json json_data);
 };
 
 #endif
-
