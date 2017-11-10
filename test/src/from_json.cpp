@@ -11,8 +11,7 @@ TEST_CASE( "FromJson - unit test - structure from json")
     json_data["structure"] = {2,3,1};
     TrainingData training_data;
 
-    FromJson from_json;
-    from_json.structure(training_data, json_data);
+    FromJson::structure(training_data, json_data);
 
     std::vector<int> actual = training_data.structure;
     std::vector<int> expected = {2, 3, 1};
@@ -25,8 +24,7 @@ TEST_CASE( "FromJson - unit test - target_total_error from json")
     json_data["target_total_error"] = 0.03;
     TrainingData training_data;
 
-    FromJson from_json;
-    from_json.target_total_error(training_data, json_data);
+    FromJson::target_total_error(training_data, json_data);
 
     double actual = training_data.target_total_error;
     double expected = 0.03;
@@ -39,8 +37,7 @@ TEST_CASE( "FromJson - unit test - learning_rate from json")
     json_data["learning_rate"] = 0.1;
     TrainingData training_data;
 
-    FromJson from_json;
-    from_json.learning_rate(training_data, json_data);
+    FromJson::learning_rate(training_data, json_data);
 
     double actual = training_data.learning_rate;
     double expected = 0.1;
@@ -60,8 +57,7 @@ TEST_CASE( "FromJson - unit test - training_set from json")
 
     TrainingData training_data;
 
-    FromJson from_json;
-    from_json.training_set(training_data, json_data);
+    FromJson::training_set(training_data, json_data);
 
     std::vector<double> actual_input_values_0 = training_data.training_set.at(0).input_values;
     std::vector<double> expected_input_values_0 = {0.0, 1.0};

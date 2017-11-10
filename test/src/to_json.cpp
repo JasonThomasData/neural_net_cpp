@@ -13,8 +13,7 @@ TEST_CASE( "ToJson - integration test - structure to json")
 
     nlohmann::json json_data;
 
-    ToJson to_json;
-    to_json.structure(network, json_data);
+    ToJson::structure(network, json_data);
 
     std::vector<int> actual_targets = json_data["structure"];
     std::vector<int> expected_targets = {2, 3, 1};
@@ -87,8 +86,7 @@ TEST_CASE( "ToJson - integration test - layers of synapse weights to json")
 
     nlohmann::json json_data;
 
-    ToJson to_json;
-    to_json.synapse_weights(network, json_data);
+    ToJson::synapse_weights(network, json_data);
 
     nlohmann::json json_data_hidden_0 = json_data["layers"]["hidden"].at(0);
     nlohmann::json json_data_hidden_3 = json_data["layers"]["hidden"].at(3);
