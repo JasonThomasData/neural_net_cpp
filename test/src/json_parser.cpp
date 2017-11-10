@@ -5,7 +5,7 @@
 #include "../../src/json_parser/json_parser.h"
 #include "../../src/json_parser/parsed_data.h"
 
-TEST_CASE( "JsonParser - unit test - structure from json")
+TEST_CASE( "JsonParser - integration test - structure from json")
 {
 
     nlohmann::json json_data;
@@ -19,7 +19,8 @@ TEST_CASE( "JsonParser - unit test - structure from json")
                                                                          {"target_values", target_values } });
     json_data["training_set"].emplace_back(training_value_target_pair);
 
-    TrainingData training_data = JsonParser::parse_training_data_from_json(json_data);
+    JsonParser json_parser;
+    TrainingData training_data = json_parser.parse_training_data_from_json(json_data);
 
     std::vector<int> actual_structure = training_data.structure;
     std::vector<int> expected_structure = {2,3,1};

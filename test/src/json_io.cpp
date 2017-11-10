@@ -4,11 +4,9 @@
 
 TEST_CASE( "JsonReader - unit test - test there's no file")
 {
-    JsonIO reader;
-
     std::string file_name = "totally not a real file";
 
-    REQUIRE_THROWS( reader.read_training_data(file_name) );
+    REQUIRE_THROWS( JsonIO::read_training_data(file_name) );
 }
 
 /*
@@ -25,11 +23,9 @@ TEST_CASE( "JsonReader - unit test - test there's no file")
 
 TEST_CASE( "reader - integration test - test the dummy file is loaded")
 {
-    JsonIO reader;
-
     std::string file_name = "test/training_data.json";
 
-    TrainingData test_training_data = reader.read_training_data(file_name);
+    TrainingData test_training_data = JsonIO::read_training_data(file_name);
 
     std::vector<int> actual_structure = test_training_data.structure;
     std::vector<int> expected_structure = {2,3,1};

@@ -8,7 +8,7 @@ TEST_CASE( "classifier - integration test - set inputs") {
 
     std::vector<int> layer_counts {2, 3, 1};
 
-    Network neural_network = NetworkBuilder::build_network(layer_counts);
+    Network neural_network = NetworkBuilder::create_network(layer_counts);
 
     Classifier classifier(neural_network);
 
@@ -30,7 +30,7 @@ TEST_CASE( "classifier - integration test - set inputs, fail cause the inputs ar
 
     std::vector<int> layer_counts {2, 3, 1};
 
-    Network neural_network = NetworkBuilder::build_network(layer_counts);
+    Network neural_network = NetworkBuilder::create_network(layer_counts);
 
     Classifier classifier(neural_network);
 
@@ -45,7 +45,7 @@ TEST_CASE( "classifier - integration test - feed forward") {
 
     std::vector<int> layer_counts {2, 2, 1};
 
-    Network neural_network = NetworkBuilder::build_network(layer_counts);
+    Network neural_network = NetworkBuilder::create_network(layer_counts);
 
     //Note - synapses are shared_ptr objects, and use ->
 
