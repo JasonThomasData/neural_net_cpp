@@ -5,10 +5,6 @@
 #include <vector>
 #include <functional>
 
-/* This class has all logic to train the network. Set as a private data member inside Trainer().
- * This class will do all the work relating to backpropagation. 
- */
-
 class Neuron;      //  ../neuron/neuron.h 
 class ISynapse;    //  ../synapse/i_synapse.h
 

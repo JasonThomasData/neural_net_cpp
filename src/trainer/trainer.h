@@ -8,7 +8,6 @@
 /* The Trainer is the agent to do backpropagation and calculate errors for the Network. An Epoch is
  * one full round of training the network with all documents. */
 
-
 class Neuron;      //  ../neuron/neuron.h 
 class Network;     //  ../network/network.h
 
