@@ -24,7 +24,7 @@ TEST_CASE( "trainer - integration test - get total_error for network")
     output_layer.emplace_back(std::move(output_neuron_2));
 
     std::vector<int> layer_counts {2, 2, 2};
-    Network network = NetworkBuilder::create_network(layer_counts); /* Not actually used, but the trainer needs it for init */
+    Network network = NetworkBuilder::build_network(layer_counts); /* Not actually used, but the trainer needs it for init */
 
     Trainer trainer(network, learning_rate);
 
@@ -40,7 +40,7 @@ TEST_CASE( "trainer - integration test - set target_values")
 
     std::vector<int> layer_counts {2, 3, 2};
 
-    Network neural_network = NetworkBuilder::create_network(layer_counts);
+    Network neural_network = NetworkBuilder::build_network(layer_counts);
 
     double learning_rate = 0.0; /* used in backpropagation */
     Trainer trainer(neural_network, learning_rate);
@@ -64,7 +64,7 @@ TEST_CASE( "trainer - integration test - set target_values, will fail because le
 
     std::vector<int> layer_counts {2, 3, 1};
 
-    Network neural_network = NetworkBuilder::create_network(layer_counts);
+    Network neural_network = NetworkBuilder::build_network(layer_counts);
 
     double learning_rate = 0.0; /* used in backpropagation */
     Trainer trainer(neural_network, learning_rate);

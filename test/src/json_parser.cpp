@@ -5,7 +5,7 @@
 #include "../../src/json_parser/json_parser.h"
 #include "../../src/json_parser/parsed_data.h"
 
-TEST_CASE( "JsonParser - integration test - structure from json")
+TEST_CASE( "JsonParser - integration test - training_data from json")
 {
 
     nlohmann::json json_data;
@@ -23,7 +23,7 @@ TEST_CASE( "JsonParser - integration test - structure from json")
 
     std::vector<int> actual_structure = training_data.structure;
     std::vector<int> expected_structure = {2,3,1};
-    REQUIRE(actual_structure == expected_structure); 
+    REQUIRE(actual_structure == expected_structure);
 
     double actual_learning_rate = training_data.learning_rate;
     double expected_learning_rate = 0.2;
@@ -41,3 +41,4 @@ TEST_CASE( "JsonParser - integration test - structure from json")
     std::vector<double> expected_targets = {1.0};
     REQUIRE(actual_targets == expected_targets);
 }
+

@@ -148,7 +148,7 @@ TEST_CASE( "backpropagation - integration test - same as before but do forward f
 
     std::vector<int> layer_counts {2, 2, 1};
 
-    Network neural_network = NetworkBuilder::create_network(layer_counts);
+    Network neural_network = NetworkBuilder::build_network(layer_counts);
     
     /* For this test, we need to know exactly what the Synapse weights are. */
     neural_network.hidden_layer.at(0).incoming_synapses.at(0)->set_weight(0.5);
