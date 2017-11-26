@@ -1,3 +1,5 @@
+#include <iostream>
+
 #include "../../lib/json.hpp"
 
 #include "../network/network.h"
@@ -24,3 +26,10 @@ nlohmann::json JsonParser::parse_network_data_to_json(Network& network)
     return json_data;
 }
 
+NetworkData JsonParser::parse_network_data_from_json(nlohmann::json json_data)
+{
+    NetworkData network_data;
+    FromJson::structure(network_data, json_data);
+    FromJson::layers(network_data, json_data);
+    return network_data;
+}

@@ -15,13 +15,10 @@ void ToJson::structure(Network& network, nlohmann::json& json_data)
 void ToJson::synapse_weights(Network& network, nlohmann::json& json_data)
 {
     std::vector<Neuron>& hidden_layer = network.hidden_layer;
-    nlohmann::json hidden_layer_json_data = collect_synapse_data_in_layer(hidden_layer);
+    json_data["hidden_layer"] = collect_synapse_data_in_layer(hidden_layer);
 
     std::vector<Neuron>& output_layer = network.output_layer;
-    nlohmann::json output_layer_json_data = collect_synapse_data_in_layer(output_layer);
-
-    json_data["layers"] = nlohmann::json::object({ {"hidden", hidden_layer_json_data },
-                                                   {"output", output_layer_json_data } });
+    json_data["output_layer"] = collect_synapse_data_in_layer(output_layer);
 }
 
 nlohmann::json ToJson::collect_synapse_data_in_layer(std::vector<Neuron>& layer)
@@ -44,7 +41,7 @@ nlohmann::json ToJson::collect_synapse_data_in_layer(std::vector<Neuron>& layer)
 nlohmann::json ToJson::create_synapse_json_object(int neuron_index, int synapse_index, double synapse_weight)
 {
     nlohmann::json synapse_data = nlohmann::json::object({ {"neuron_index", neuron_index },
-                                                           {"synapse_index", synapse_index },
-                                                           {"synapse_weight", synapse_weight } });
+                                                           {"incoming_synapse_index", synapse_index },
+                                                           {"incoming_synapse_weight", synapse_weight } });
     return synapse_data;
 }

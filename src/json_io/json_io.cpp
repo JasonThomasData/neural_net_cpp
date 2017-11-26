@@ -25,6 +25,13 @@ void JsonIO::save_network_data(std::string file_name, Network& network)
     save_json_data(file_name, json_data);
 }
 
+NetworkData JsonIO::read_network_data(std::string file_name)
+{
+    nlohmann::json json_data = read_file(file_name);
+    NetworkData network_data = JsonParser::parse_network_data_from_json(json_data);
+    return network_data;
+}
+
 nlohmann::json JsonIO::read_file(std::string file_name)
 {
     try

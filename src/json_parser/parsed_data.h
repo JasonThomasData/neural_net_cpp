@@ -4,20 +4,34 @@
 #include <vector>
 #include <fstream>
 
-/* To be used in ./bin/train */
+struct DataCollection {
+    std::vector<int> structure;
+};
 
-struct TrainingDocument 
+struct TrainingDocument
 {
     std::vector<double> input_values;
     std::vector<double> target_values;
 };
 
-struct TrainingData
+struct TrainingData : public DataCollection
 {
     double learning_rate;
     double target_total_error;
-    std::vector<int> structure;
     std::vector<TrainingDocument> training_set;
+};
+
+struct SynapseData
+{
+    int neuron_index;
+    int incoming_synapse_index;
+    double incoming_synapse_weight;
+};
+
+struct NetworkData : public DataCollection
+{
+    std::vector<SynapseData> hidden_layer;
+    std::vector<SynapseData> output_layer;
 };
 
 #endif
