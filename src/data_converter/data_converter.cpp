@@ -39,6 +39,9 @@ nlohmann::json DataConverter::convert_to_json(std::ifstream& original_data)
         } else if (col_1 == "target_total_error")
         {
             json_data["target_total_error"] = SimpleParser::to_double(col_2);
+        } else if (col_1 == "#")
+        {
+            continue;
         } else
         {
             std::vector<std::string> data_string_list = SimpleParser::string_vector(col_1);

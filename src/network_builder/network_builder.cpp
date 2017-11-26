@@ -3,6 +3,9 @@
 #include <memory>
 #include <functional>
 
+#include "../../lib/json.hpp"
+
+#include "../json_parser/parsed_data.h"
 #include "../network/network.h"
 #include "../neuron/neuron.h"
 #include "../synapse/synapse.h"
@@ -12,6 +15,22 @@
 NetworkBuilder::NetworkBuilder(){}
 
 Network NetworkBuilder::build_network(std::vector<int> layer_counts)
+{
+    Network network = create_connected_network(layer_counts);
+    randomise_synapse_weights(network.hidden_layer);
+    randomise_synapse_weights(network.output_layer);
+    return network;
+}
+
+Network NetworkBuilder::build_network(std::vector<int> layer_counts, NetworkData network_data)
+{
+    Network network = create_connected_network(layer_counts);
+    set_synapse_weights(network.hidden_layer, network_data.hidden_layer);
+    set_synapse_weights(network.output_layer, network_data.output_layer);
+    return network;
+}
+
+Network NetworkBuilder::create_connected_network(std::vector<int> layer_counts)
 {
     int input_count = layer_counts.at(0);
     int hidden_count = layer_counts.at(1);
@@ -24,9 +43,6 @@ Network NetworkBuilder::build_network(std::vector<int> layer_counts)
         std::vector<Neuron> output_layer = create_layer(output_count);
         connect_layers(input_layer, hidden_layer);
         connect_layers(hidden_layer, output_layer);
-
-        randomise_synapse_weights(input_layer);
-        randomise_synapse_weights(hidden_layer);
 
         Network network(std::move(input_layer),
                         std::move(hidden_layer),
@@ -50,9 +66,6 @@ std::vector<Neuron> NetworkBuilder::create_layer(int neuron_count)
     return layer;
 }
 
-// With interface, the INeuron already has functions for adding data members, so does ISynapse
-// NOTE ! This function does too much, split this up
-// The task of adding synapses should be separate from randomising them
 void NetworkBuilder::connect_layers(std::vector<Neuron>& from_layer, std::vector<Neuron>& to_layer)
 {
     for(auto& from_neuron: from_layer)
@@ -72,11 +85,23 @@ void NetworkBuilder::randomise_synapse_weights(std::vector<Neuron>& owning_layer
     int seed_range = 20;
     for(auto& owning_neuron: owning_layer)
     {
-        for(auto& synapse: owning_neuron.outgoing_synapses)
+        for(auto& synapse: owning_neuron.incoming_synapses)
         {
             double random_number = rand() % seed_range;
             double weight = random_number / seed_range;
-            synapse.get().set_weight(weight);
+            synapse->set_weight(weight);
         }
+    }
+}
+
+void NetworkBuilder::set_synapse_weights(std::vector<Neuron>& owning_layer, std::vector<SynapseData> synapse_collection)
+{
+    for(auto& synapse_data: synapse_collection)
+    {
+        int neuron_index = synapse_data.neuron_index;
+        int synapse_index = synapse_data.incoming_synapse_index;
+        double synapse_weight = synapse_data.incoming_synapse_weight;
+
+        owning_layer.at(neuron_index).incoming_synapses.at(synapse_index)->set_weight(synapse_weight);
     }
 }

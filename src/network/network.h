@@ -10,16 +10,15 @@
 
 class Neuron;  //   ../neuron/neuron.h
 
-class Network
+struct Network
 {
-    public:
-        Network(std::vector<Neuron> input_layer,
-                std::vector<Neuron> hidden_layer,
-                std::vector<Neuron> output_layer);
-        float epoch_average_total_error;
-        std::vector<Neuron> input_layer;
-        std::vector<Neuron> hidden_layer;
-        std::vector<Neuron> output_layer;
+    Network(std::vector<Neuron> input_layer,
+            std::vector<Neuron> hidden_layer,
+            std::vector<Neuron> output_layer);
+    float epoch_average_total_error;
+    std::vector<Neuron> input_layer;
+    std::vector<Neuron> hidden_layer;
+    std::vector<Neuron> output_layer;
 };
 
 #endif

@@ -1,3 +1,8 @@
+#include <vector>
+#include <iostream>
+#include <sstream>
+#include <string>
+
 #include "../network/network.h"
 #include "../network_builder/network_builder.h"
 #include "../neuron/neuron.h"
@@ -5,11 +10,6 @@
 #include "../trainer/trainer.h"
 #include "../json_io/json_io.h"
 #include "../json_parser/parsed_data.h"
-#include <vector>
-#include <iostream>
-#include <sstream> //For char conversion
-#include <string> //For char conversion
-
 
 double get_average_error(std::vector<double> all_total_errors)
 {
@@ -47,7 +47,7 @@ void classify_epoch(Network& network, TrainingData& training_data, Classifier& c
         int updated_outputs_size = updated_outputs.size();
         for(int k=0; k<updated_outputs_size; k++)
         {
-            std::cout<< updated_outputs.at(k).outgoing_value;
+            std::cout<< round( updated_outputs.at(k).outgoing_value );
             std::cout<< ",";
         }
         std::cout<< std::endl;
@@ -79,7 +79,7 @@ void train_epoch(Network& network, TrainingData& training_data, Classifier& clas
     network.epoch_average_total_error = get_average_error(all_total_errors);
     if(trainer.epoch % 500 == 0)
     {
-        std::cout<< trainer.epoch<<", "<< network.epoch_average_total_error<< std::endl;
+        std::cout<< trainer.epoch<<", "<< std::setprecision(15)<< network.epoch_average_total_error<< std::endl;
     }
 }
 
@@ -91,15 +91,14 @@ int main(int argc, char** argv)
         file_name = std::string(argv[1]);
     } else
     {
-        file_name = "data/training/scatter_plot";
+        std::cout<< "You must declare a file path, like ./bin/train data/training/and_gate.json";
     }
-    JsonIO json_io;
-    TrainingData training_data = json_io.read_training_data(file_name);
+    TrainingData training_data = JsonIO::read_training_data(file_name);
     Network network = NetworkBuilder::build_network(training_data.structure);
     Classifier classifier(network);
     Trainer trainer(network, training_data.learning_rate);
 
-    std::cout<< "Epoch"<<", "<< "epoch_average_total_error"<< std::endl;
+    std::cout<< "Epoch, epoch_average_total_error"<< std::endl;
     train_epoch(network, training_data, classifier, trainer);
 
     while(network.epoch_average_total_error > training_data.target_total_error)
@@ -107,8 +106,10 @@ int main(int argc, char** argv)
         train_epoch(network, training_data, classifier, trainer);
     }
 
-    std::cout<< trainer.epoch<<", "<< network.epoch_average_total_error<< std::endl;
+    std::cout<< "Target total error achieved at epoch "<< trainer.epoch<< std::endl;
     classify_epoch(network, training_data, classifier);
+
+    JsonIO::save_network_data(file_name, network);
 
     return 0;
 }
