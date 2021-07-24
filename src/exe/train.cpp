@@ -22,38 +22,6 @@ double get_average_error(std::vector<double> all_total_errors)
     return average;
 }
 
-// Is this really classify_ ? If not then rename it.
-void classify_epoch(Network& network, TrainingData& training_data, Classifier& classifier)
-{
-    std::vector<TrainingDocument> training_set = training_data.training_set;
-
-    for(TrainingDocument training_document: training_set)
-    {
-        std::vector<double> new_inputs = training_document.input_values;
-        classifier.set_input_values(new_inputs);
-        classifier.classify();
-
-        int new_inputs_size = new_inputs.size();
-        for(int j=0; j<new_inputs_size; j++)
-        {
-            std::cout<< new_inputs.at(j);
-            std::cout<< ",";
-        }
-
-        std::cout<< " - ";
-
-        std::vector<Neuron>& updated_outputs = network.output_layer;
-
-        int updated_outputs_size = updated_outputs.size();
-        for(int k=0; k<updated_outputs_size; k++)
-        {
-            std::cout<< round( updated_outputs.at(k).outgoing_value );
-            std::cout<< ",";
-        }
-        std::cout<< std::endl;
-    }
-}
-
 // Rename to something that makes responsibility more obvious... is this really train_ ?
 void train_epoch(Network& network, TrainingData& training_data, Classifier& classifier, Trainer& trainer)
 {
@@ -85,15 +53,17 @@ void train_epoch(Network& network, TrainingData& training_data, Classifier& clas
 
 int main(int argc, char** argv)
 {
-    std::string file_name;
-    if(argc > 0)
+    std::string training_file_path;
+    std::string network_save_path;
+    if(argc == 3)
     {
-        file_name = std::string(argv[1]);
+        training_file_path = std::string(argv[1]);
+        network_save_path = std::string(argv[2]);
     } else
     {
-        std::cout<< "You must declare a file path, like ./bin/train data/training/and_gate.json";
+        std::cout<< "You must declare training and network save file paths, like ./bin/train data/training/and_gate.json data/networks/and_gate.json";
     }
-    TrainingData training_data = JsonIO::read_training_data(file_name);
+    TrainingData training_data = JsonIO::read_training_data(training_file_path);
     Network network = NetworkBuilder::build_network(training_data.structure);
     Classifier classifier(network);
     Trainer trainer(network, training_data.learning_rate);
@@ -107,9 +77,10 @@ int main(int argc, char** argv)
     }
 
     std::cout<< "Target total error achieved at epoch "<< trainer.epoch<< std::endl;
-    classify_epoch(network, training_data, classifier);
-
-    JsonIO::save_network_data(file_name, network);
+    std::cout<< "Saving the trained network to "<< network_save_path<< std::endl;
+    std::cout<< "Run:"<< std::endl;
+    std::cout<< "./bin/classify "<< network_save_path<< " data/new_data/<path>"<< std::endl;
+    JsonIO::save_network_data(network_save_path, network);
 
     return 0;
 }

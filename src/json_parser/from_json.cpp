@@ -154,3 +154,25 @@ void FromJson::incoming_synapse_weight(SynapseData& synapse_data, nlohmann::json
         throw exception;
     }
 }
+
+void FromJson::new_data(NewData& new_data, nlohmann::json json_data)
+{
+    for(auto new_document_json: json_data["new_data"])
+    {
+        NewDocument new_document;
+
+        try
+        {
+            std::vector<double> parsed_input_values = new_document_json;
+            new_document.input_values = parsed_input_values; 
+        }
+        catch (const std::exception& exception)
+        {
+            std::cout<< "check the new data"<< std::endl;
+            std::cout<< exception.what()<< std::endl;
+            throw exception;
+        }
+
+        new_data.new_documents.emplace_back(new_document);
+    }
+}

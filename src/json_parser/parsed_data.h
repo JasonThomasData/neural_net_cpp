@@ -34,4 +34,14 @@ struct NetworkData : public DataCollection
     std::vector<SynapseData> output_layer;
 };
 
+struct NewDocument
+{
+    std::vector<double> input_values;
+};
+
+struct NewData : public DataCollection
+{
+    std::vector<NewDocument> new_documents;
+};
+
 #endif

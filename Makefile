@@ -1,4 +1,4 @@
-all: $(objects) train convert test
+all: $(objects) train convert test classify
 .PHONY: all CXXFLAGS objects clean
 CXXFLAGS = -std=c++14 -Wall
 
@@ -88,8 +88,8 @@ build/convert_main.o: src/exe/convert.cpp
 # The actual executables
 train: $(obj_network) $(obj_classifier) $(obj_trainer) $(obj_read_write) build/train_main.o
 	g++ $(CXXFLAGS) $(obj_network) $(obj_classifier) $(obj_trainer) $(obj_read_write) build/train_main.o -o bin/train
-classify: $(obj_network) $(obj_classifier) build/classify_main.o
-	g++ $(CXXFLAGS) $(obj_network) $(obj_classifier) build/classify_main.o -o bin/classify
+classify: $(obj_network) $(obj_classifier) $(obj_read_write) build/classify_main.o
+	g++ $(CXXFLAGS) $(obj_network) $(obj_classifier) $(obj_read_write) build/classify_main.o -o bin/classify
 test: $(obj_network) $(obj_classifier) $(obj_trainer) $(obj_read_write) $(obj_tests) build/test_main.o
 	g++ $(CXXFLAGS) $(obj_network) $(obj_classifier) $(obj_trainer) $(obj_read_write) $(obj_tests) build/test_main.o -o bin/test
 convert: $(obj_read_write) build/convert_main.o

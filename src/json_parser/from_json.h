@@ -14,5 +14,6 @@ namespace FromJson
     void neuron_index(SynapseData& synapse_data, nlohmann::json json_data);
     void incoming_synapse_index(SynapseData& synapse_data, nlohmann::json json_data);
     void incoming_synapse_weight(SynapseData& synapse_data, nlohmann::json json_data);
+    void new_data(NewData& new_data, nlohmann::json json_data);
 };
 
