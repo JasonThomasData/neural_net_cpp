@@ -9,14 +9,9 @@ connect Neurons into a file.
 
 You might use it like this:
 
-    ./bin/train --data data/training/XnorGate --dump data/networks/231_XnorGate
-
-The --options mean:
-
-- training - the data to train the network. Should be documents and the labels, or categories, they
-  map to. This file should include details about the network's `structure`, `learning_rate` and
-  `target_total_error`. See docs for [training data](docs/data_files.md) for more.
-- dump - the save location for the finished state of the network. To be loaded later.
+    ./bin/train data/training/and_gate.json data/networks/and_gate.json
+  
+The first arg is where to load the labeled training data. The second is where the resulting network will be saved.
 
 When you run the program, the network will have a `total_error`, although the value printed will be
 the average for the entire epoch (all training documents). That average should approach zero until
@@ -25,15 +20,7 @@ amending the settings at the top of the training data file.
 
 Next, the classify program:
 
-    ./bin/classify --load data/networks/231_XnorGate --classify data/test/XnorGate
+    ./bin/classify data/networks/and_gate.json data/new_data/and_gate.json
 
-Similarly, these --options mean
-
-- load - the network state that was saved, we can use to recreate a network. Should include the
-  network `structure`. See docs for [persistent network structure](docs/data_files.md) for more.
-- classify - the data to test the network, to make sure it can classify (preferably unseen) documents.
-
-You should aim to test the network with documents that are unseen (not used for training) to test
-the network for how well it responds to real world applications.
-
-This last program will just print to the terminal, for now.
+The first arg is the network that was saved during training. The second is the data that is used with
+a trained classifier. This might be test data or unseen data.

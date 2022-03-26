@@ -30,7 +30,6 @@ void train_epoch(Network& network, TrainingData& training_data, Classifier& clas
 
     for(TrainingDocument training_document: training_set)
     {
-
         std::vector<double> new_inputs = training_document.input_values;
         classifier.set_input_values(new_inputs);
         classifier.classify();

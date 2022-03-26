@@ -1,6 +1,6 @@
 With the `./bin/train` program, you can point it at a training dataset, like this:
 
-    ./bin/train data/training/scatter_plot.json
+    ./bin/train data/training/scatter_plot.json data/networks/scatter_plot.json
 
 The training data referenced above contains elements to make the neural network, set its training
 parameters and then has an unspecified number of data for training. Those documents are training
@@ -18,10 +18,12 @@ concatenated, these appear in the file as 0,0,1,0,1,1,0,0.
 
 Similarly, the target labels can be represented in binary, and those three digit binary numbers are
 at the end of every line in the training dataset. For example, if 2(x), 12(y) = 3, then the line for
-that is `0,0,1,0,1,1,0,0 0,1,1`.
+that is `0,1,1`.
 
-I haven't yet made the test data executable program, but the intention is to make the neural network
-classify unseen documents, like this. By unseen, I mean documents that were not used in training the
-neural network.
+Once the training is complete and the network is saved, then do:
+
+    ./bin/classify data/networks/scatter_plot.json data/new_data/scatter_plot.json
+
+That file represents these unseen data:
 
 ![training_data](example_test.png)

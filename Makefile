@@ -1,4 +1,4 @@
-all: $(objects) train convert test classify
+all: $(objects) train dummy_to_json decimal_to_one_hot test classify
 .PHONY: all CXXFLAGS objects clean
 CXXFLAGS = -std=c++14 -Wall
 
@@ -13,7 +13,7 @@ obj_tests = build/test_synapse.o build/test_network_builder.o build/test_classif
 	build/test_feed_forward.o build/test_trainer.o build/test_backpropagation.o \
 	build/test_simple_parser.o build/test_json_io.o build/test_json_parser.o \
 	build/test_from_json.o build/test_to_json.o
-obj_main_files = build/train_main.o build/classify_main.o build/test_main.o build/convert_main.o
+obj_main_files = build/train_main.o build/classify_main.o build/test_main.o build/dummy_to_json_main.o
 
 #Network objects
 build/synapse.o: src/synapse/synapse.cpp
@@ -82,8 +82,11 @@ build/classify_main.o: src/exe/classify.cpp
 	g++ -c $(CXXFLAGS) src/exe/classify.cpp -o build/classify_main.o
 build/test_main.o: test/main.cpp
 	g++ -c $(CXXFLAGS) test/main.cpp -o build/test_main.o
-build/convert_main.o: src/exe/convert.cpp
-	g++ -c $(CXXFLAGS) src/exe/convert.cpp -o build/convert_main.o
+build/dummy_to_json_main.o: src/exe/dummy_to_json.cpp
+	g++ -c $(CXXFLAGS) src/exe/dummy_to_json.cpp -o build/dummy_to_json_main.o
+build/decimal_to_one_hot.o: src/exe/decimal_to_one_hot.cpp
+	g++ -c $(CXXFLAGS) src/exe/decimal_to_one_hot.cpp -o build/decimal_to_one_hot.o
+
 
 # The actual executables
 train: $(obj_network) $(obj_classifier) $(obj_trainer) $(obj_read_write) build/train_main.o
@@ -92,8 +95,10 @@ classify: $(obj_network) $(obj_classifier) $(obj_read_write) build/classify_main
 	g++ $(CXXFLAGS) $(obj_network) $(obj_classifier) $(obj_read_write) build/classify_main.o -o bin/classify
 test: $(obj_network) $(obj_classifier) $(obj_trainer) $(obj_read_write) $(obj_tests) build/test_main.o
 	g++ $(CXXFLAGS) $(obj_network) $(obj_classifier) $(obj_trainer) $(obj_read_write) $(obj_tests) build/test_main.o -o bin/test
-convert: $(obj_read_write) build/convert_main.o
-	g++ $(CXXFLAGS) $(obj_read_write) build/convert_main.o -o bin/convert
+dummy_to_json: $(obj_read_write) build/dummy_to_json_main.o
+	g++ $(CXXFLAGS) $(obj_read_write) build/dummy_to_json_main.o -o bin/dummy_to_json
+decimal_to_one_hot: $(obj_read_write) build/decimal_to_one_hot.o
+	g++ $(CXXFLAGS) $(obj_read_write) build/decimal_to_one_hot.o -o bin/decimal_to_one_hot
 
 clean:
 	\rm build/*
